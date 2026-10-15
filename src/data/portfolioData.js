@@ -1,0 +1,201 @@
+export const personalData = {
+  name: "Yazan",
+  title: "Full-Stack Web Developer",
+  tagline: "Architecting scalable web applications, sleek user interfaces, and robust backend ecosystems.",
+  status: "Available for new opportunities",
+  location: "India / Remote Worldwide",
+  email: "yazantechofficial89@gmail.com",
+  phone: "+91 7011906923",
+  resumeUrl: "#resume",
+  bio: `I am a passionate Full-Stack Developer with deep expertise in modern JavaScript/TypeScript ecosystems. I bridge the gap between intuitive, responsive frontend design and robust, high-performance backend architecture. From concept to deployment, I build web solutions that solve real-world problems.`,
+  detailedStory: `My engineering journey started with curiosity about how complex web applications handle millions of requests without breaking. Over the years, I've immersed myself in the React ecosystem, Node.js runtime, relational & non-relational database design, and cloud architecture. 
+
+I take pride in writing readable, maintainable, and type-safe code that scales gracefully. Whether designing distributed microservices, building pixel-perfect mobile-first interfaces, or configuring CI/CD deployment pipelines, I approach every challenge with high craftsmanship and relentless attention to detail.`,
+  stats: [
+    { label: "Projects Completed", value: "20+" },
+    { label: "Years Experience", value: "2+" },
+    { label: "Technologies Mastered", value: "15+" },
+    { label: "Code Commits", value: "1,200+" },
+  ],
+  socials: {
+    github: "https://github.com",
+    linkedin: "https://linkedin.com",
+    twitter: "https://twitter.com",
+    email: "mailto:yazantechofficial89@gmail.com",
+  },
+};
+
+export const skillsData = {
+  frontend: [
+    { name: "React.js", level: 90, icon: "Atom" },
+    { name: "Next.js", level: 85, icon: "Globe" },
+    { name: "TypeScript", level: 85, icon: "FileCode2" },
+    { name: "Tailwind CSS", level: 95, icon: "Palette" },
+    { name: "Redux / Zustand", level: 80, icon: "Cpu" },
+    { name: "HTML5 / CSS3 / JS", level: 95, icon: "Code" },
+  ],
+  backend: [
+    { name: "Node.js", level: 90, icon: "Server" },
+    { name: "Express.js", level: 88, icon: "Layers" },
+    { name: "RESTful APIs", level: 92, icon: "Network" },
+    { name: "GraphQL", level: 75, icon: "Boxes" },
+    { name: "JWT & Auth", level: 85, icon: "ShieldCheck" },
+    { name: "WebSockets", level: 78, icon: "Radio" },
+  ],
+  database: [
+    { name: "PostgreSQL", level: 85, icon: "Database" },
+    { name: "MongoDB", level: 90, icon: "HardDrive" },
+    { name: "Prisma ORM", level: 82, icon: "Binary" },
+    { name: "Redis", level: 75, icon: "Zap" },
+    { name: "Firebase / Supabase", level: 85, icon: "Flame" },
+  ],
+  tools: [
+    { name: "Git & GitHub", level: 92, icon: "GitBranch" },
+    { name: "Docker", level: 78, icon: "Container" },
+    { name: "Postman", level: 90, icon: "Send" },
+    { name: "Linux / Bash", level: 80, icon: "Terminal" },
+    { name: "Vercel / Netlify / AWS", level: 85, icon: "Cloud" },
+  ],
+};
+
+export const projectsData = [
+  {
+    id: 1,
+    title: "DevPulse - Cloud Developer Workspace & Collaboration",
+    category: "Full-Stack",
+    description: "Real-time collaborative developer workspace with integrated code editor, team chat, dynamic project boards, and automated CI/CD pipeline triggers.",
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80",
+    tags: ["React", "Node.js", "Socket.io", "PostgreSQL", "Tailwind CSS", "Docker"],
+    features: [
+      "Real-time pair programming using WebSockets",
+      "OAuth2 authentication & RBAC system",
+      "Automated unit testing & Docker container runner",
+    ],
+    demoUrl: "https://example.com",
+    githubUrl: "https://github.com",
+    featured: true,
+  },
+  {
+    id: 2,
+    title: "OmniCart - Headless E-Commerce & Payment Engine",
+    category: "Full-Stack",
+    description: "High-performance full-stack e-commerce engine with inventory tracking, Stripe webhook payments, customer analytics dashboard, and instant search.",
+    image: "https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&w=1200&q=80",
+    tags: ["Next.js", "Express.js", "MongoDB", "Stripe API", "Redux Toolkit"],
+    features: [
+      "Stripe payment gateway with webhook verification",
+      "Dynamic filtering, pagination, and multi-currency support",
+      "Admin analytics dashboard for revenue and inventory",
+    ],
+    demoUrl: "https://example.com",
+    githubUrl: "https://github.com",
+    featured: true,
+  },
+  {
+    id: 3,
+    title: "AI PromptForge - LLM Workflow & Agent Manager",
+    category: "Full-Stack",
+    description: "SaaS application for prompting, chaining, and fine-tuning AI agents with token cost metrics, prompt version control, and API key proxying.",
+    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
+    tags: ["React", "FastAPI", "OpenAI API", "PostgreSQL", "Framer Motion"],
+    features: [
+      "Streaming markdown AI responses with token counters",
+      "Prompt template version history & diff viewer",
+      "Exportable API endpoint generation for developers",
+    ],
+    demoUrl: "https://example.com",
+    githubUrl: "https://github.com",
+    featured: true,
+  },
+  {
+    id: 4,
+    title: "SaaSify - Modern Analytics & Billing Dashboard",
+    category: "Frontend",
+    description: "Ultra-responsive, glassmorphic analytics dashboard with interactive charts, dark mode support, and customizable metric widgets.",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
+    tags: ["React", "Tailwind CSS", "Recharts", "Framer Motion"],
+    features: [
+      "Interactive SVG charts with real-time data filtering",
+      "Glassmorphic UI with light/dark theme toggle",
+      "Export reports to PDF & CSV formats",
+    ],
+    demoUrl: "https://example.com",
+    githubUrl: "https://github.com",
+    featured: false,
+  },
+  {
+    id: 5,
+    title: "TaskFlow - Agile Kanban & Team Sprint Tracker",
+    category: "Full-Stack",
+    description: "Drag-and-drop task management tool inspired by Linear and Trello, built for rapid sprint cycles and automated burndown tracking.",
+    image: "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format&fit=crop&w=1200&q=80",
+    tags: ["React", "Node.js", "Express", "MongoDB", "dnd-kit"],
+    features: [
+      "Smooth 60fps drag and drop column sorting",
+      "Activity audit logs & automated email digests",
+      "Markdown notes support with image attachments",
+    ],
+    demoUrl: "https://example.com",
+    githubUrl: "https://github.com",
+    featured: false,
+  },
+  {
+    id: 6,
+    title: "Nexus API Gateway & Rate Limiter Microservice",
+    category: "Backend",
+    description: "High-throughput reverse proxy and rate-limiting middleware capable of handling 10k+ req/sec with token bucket algorithms and Redis caching.",
+    image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80",
+    tags: ["Node.js", "Redis", "Docker", "Jest", "Swagger"],
+    features: [
+      "Sliding window & token bucket rate limiting",
+      "Auto-generated OpenAPI 3.0 interactive docs",
+      "Comprehensive benchmark suites and health checks",
+    ],
+    demoUrl: "https://example.com",
+    githubUrl: "https://github.com",
+    featured: false,
+  },
+];
+
+export const experienceData = [
+  {
+    period: "2023 - Present",
+    role: "Full-Stack Web Developer",
+    company: "Tech Innovations & Freelance",
+    description: "Developing scalable full-stack applications with React, Node.js, and cloud databases. Leading frontend architecture, optimizing API endpoints for 40% latency reduction, and shipping client solutions.",
+    highlights: ["Built 15+ production-grade web applications", "Integrated microservices & payment gateways", "Implemented CI/CD pipelines with GitHub Actions"],
+  },
+  {
+    period: "2022 - 2023",
+    role: "Frontend Developer",
+    company: "Digital Solutions Studio",
+    description: "Collaborated with UI/UX designers to translate Figma prototypes into accessible, responsive, pixel-perfect web interfaces. Engineered reusable component libraries.",
+    highlights: ["Created 30+ reusable React UI components", "Boosted Lighthouse performance score to 98+", "Adopted Tailwind CSS across multiple client portals"],
+  },
+  {
+    period: "2020 - 2024",
+    role: "Bachelor of Technology in Computer Science",
+    company: "University / Institute",
+    description: "Relevant Coursework: Data Structures & Algorithms, Object-Oriented Programming, Database Management Systems, Computer Networks, Software Engineering.",
+    highlights: ["Graduated with Honors", "Active lead at Campus Developer Club", "Winner of Annual Hackathon"],
+  },
+];
+
+export const faqsData = [
+  {
+    question: "What types of roles or contracts are you open to?",
+    answer: "I am open to full-time remote software engineering roles, technical contracting, and freelance full-stack architecture projects.",
+  },
+  {
+    question: "What is your primary tech stack for new products?",
+    answer: "For frontend, I typically reach for React or Next.js with TypeScript and Tailwind CSS. For the backend, Node.js with Express or NestJS, paired with PostgreSQL or MongoDB, Redis for caching, and Docker for containerized deployment.",
+  },
+  {
+    question: "How do you handle project timelines and communication?",
+    answer: "I practice agile sprint cycles with regular asynchronous Loom/Slack updates, transparent GitHub PR reviews, and scheduled milestone demos.",
+  },
+  {
+    question: "Can you assist with existing codebases or refactoring?",
+    answer: "Yes! I frequently audit existing apps for performance bottlenecks, migrate legacy codebases to modern TypeScript/React, and optimize SQL queries and API latencies.",
+  },
+];
