@@ -6,7 +6,6 @@ import {
   Code2,
   Sparkles,
   Layers,
-  Terminal,
   ExternalLink,
   ChevronRight,
   CheckCircle2,
@@ -176,36 +175,36 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Terminal & Skills Teaser Banner */}
+      {/* Skills & Architecture Teaser Banner */}
       <section className="py-20 relative border-t border-slate-900 bg-gradient-to-b from-slate-950/40 via-purple-950/10 to-slate-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="rounded-3xl bg-slate-900/70 border border-slate-800 p-8 sm:p-12 relative overflow-hidden backdrop-blur-md">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               <div className="lg:col-span-8">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/50 border border-emerald-500/30 text-emerald-300 text-xs font-mono font-semibold uppercase mb-3">
-                  <Terminal className="w-3.5 h-3.5" />
-                  CLI Shell Ready
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-950/50 border border-purple-500/30 text-purple-300 text-xs font-mono font-semibold uppercase mb-3">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Full-Stack Architecture
                 </div>
                 <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
-                  Interactive Terminal for Engineers & Tech Leads
+                  Engineered with Modern Technologies & Best Practices
                 </h3>
                 <p className="mt-3 text-sm text-slate-300 max-w-xl leading-relaxed">
-                  Prefer keyboard navigation? Run live commands like <code className="text-purple-300 font-mono bg-purple-950/60 px-1.5 py-0.5 rounded">skills</code>, <code className="text-purple-300 font-mono bg-purple-950/60 px-1.5 py-0.5 rounded">projects</code>, and <code className="text-purple-300 font-mono bg-purple-950/60 px-1.5 py-0.5 rounded">sudo hire</code> in our dedicated terminal simulator.
+                  Specializing in the React 19 ecosystem, Node.js backend services, cloud databases, and scalable web solutions built for peak performance.
                 </p>
               </div>
               <div className="lg:col-span-4 flex flex-wrap gap-3 lg:justify-end">
                 <Link
-                  to="/terminal"
+                  to="/skills"
                   className="px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-lg shadow-purple-600/30 transition-all text-sm inline-flex items-center gap-2"
                 >
-                  <Terminal className="w-4 h-4" />
-                  <span>Launch Terminal</span>
+                  <span>Explore Skills Matrix</span>
+                  <ArrowRight className="w-4 h-4" />
                 </Link>
                 <Link
-                  to="/skills"
+                  to="/about"
                   className="px-5 py-3 rounded-xl font-semibold text-slate-300 bg-slate-800 hover:bg-slate-700 hover:text-white transition-all text-sm"
                 >
-                  <span>View Tech Stack</span>
+                  <span>About Me</span>
                 </Link>
               </div>
             </div>

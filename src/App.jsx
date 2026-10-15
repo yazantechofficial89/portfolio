@@ -10,10 +10,8 @@ import AboutPage from './pages/AboutPage';
 import SkillsPage from './pages/SkillsPage';
 import ProjectsPage from './pages/ProjectsPage';
 import ExperiencePage from './pages/ExperiencePage';
-import TerminalPage from './pages/TerminalPage';
 import ContactPage from './pages/ContactPage';
 import NotFoundPage from './pages/NotFoundPage';
-
 import AdminPage from './pages/AdminPage';
 
 export default function App() {
@@ -29,7 +27,6 @@ export default function App() {
             <Route path="/skills" element={<SkillsPage />} />
             <Route path="/projects" element={<ProjectsPage />} />
             <Route path="/experience" element={<ExperiencePage />} />
-            <Route path="/terminal" element={<TerminalPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/admin" element={<AdminPage />} />
             <Route path="*" element={<NotFoundPage />} />
