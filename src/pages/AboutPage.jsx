@@ -10,7 +10,8 @@ import {
   Layout,
   Server,
   Database,
-  ArrowRight
+  ArrowRight,
+  Award
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { personalData, experienceData } from '../data/portfolioData';
@@ -150,6 +151,26 @@ export default function AboutPage() {
                 <p className="text-xs text-slate-400 mt-2 leading-relaxed">{education.description}</p>
               </div>
             )}
+
+            {/* Certifications Quick Card */}
+            <div className="p-6 rounded-3xl bg-slate-900/60 border border-slate-800 backdrop-blur-md">
+              <div className="flex items-center justify-between mb-3">
+                <div className="w-10 h-10 rounded-xl bg-cyan-950/80 text-cyan-400 flex items-center justify-center">
+                  <Award className="w-5 h-5" />
+                </div>
+                <Link
+                  to="/certifications"
+                  className="text-xs text-purple-400 hover:text-purple-300 font-medium inline-flex items-center gap-1 group"
+                >
+                  <span>View All</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                </Link>
+              </div>
+              <h3 className="text-base font-bold text-white">Certifications & Accreditations</h3>
+              <p className="text-xs text-slate-400 mt-1 leading-relaxed">
+                Industry validated credentials in Full-Stack, Cloud systems, and Modern Databases.
+              </p>
+            </div>
           </div>
         </div>
 

@@ -9,7 +9,8 @@ import {
   ExternalLink,
   ChevronRight,
   CheckCircle2,
-  Star
+  Star,
+  Award
 } from 'lucide-react';
 import Hero from '../components/Hero';
 import { projectsData, skillsData, personalData } from '../data/portfolioData';
@@ -201,10 +202,11 @@ export default function Home() {
                   <ArrowRight className="w-4 h-4" />
                 </Link>
                 <Link
-                  to="/about"
-                  className="px-5 py-3 rounded-xl font-semibold text-slate-300 bg-slate-800 hover:bg-slate-700 hover:text-white transition-all text-sm"
+                  to="/certifications"
+                  className="px-5 py-3 rounded-xl font-semibold text-slate-300 bg-slate-800 hover:bg-slate-700 hover:text-white transition-all text-sm inline-flex items-center gap-2"
                 >
-                  <span>About Me</span>
+                  <Award className="w-4 h-4 text-purple-400" />
+                  <span>Certifications</span>
                 </Link>
               </div>
             </div>
