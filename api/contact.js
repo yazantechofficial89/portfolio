@@ -53,7 +53,12 @@ export default async function handler(req, res) {
         try {
           fetch(`https://formsubmit.co/ajax/yazantechofficial89@gmail.com`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+              Origin: 'https://portfolio-lyart-zeta-qgvvckbhpk.vercel.app',
+              Referer: 'https://portfolio-lyart-zeta-qgvvckbhpk.vercel.app/',
+            },
             body: JSON.stringify({
               Name: name,
               Email: email,
@@ -79,7 +84,12 @@ export default async function handler(req, res) {
         // Fallback: If MONGODB_URI is not set yet in Vercel, dispatch via Formsubmit so no lead is lost
         const fallbackRes = await fetch(`https://formsubmit.co/ajax/yazantechofficial89@gmail.com`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            Origin: 'https://portfolio-lyart-zeta-qgvvckbhpk.vercel.app',
+            Referer: 'https://portfolio-lyart-zeta-qgvvckbhpk.vercel.app/',
+          },
           body: JSON.stringify({
             Name: name,
             Email: email,

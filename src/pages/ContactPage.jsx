@@ -53,9 +53,30 @@ export default function ContactPage() {
     setErrorMessage('');
 
     try {
-      let success = false;
+      // 1. Send directly from user browser to FormSubmit
+      const emailResponse = await fetch(`https://formsubmit.co/ajax/${personalData.email}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          Name: formData.name,
+          Email: formData.email,
+          Phone: formData.phone || 'Not provided',
+          Subject: formData.subject,
+          Message: formData.message,
+          _subject: `New Portfolio Enquiry from ${formData.name}: ${formData.subject}`,
+          _template: 'table',
+          _captcha: 'false',
+        }),
+      });
+
+      const emailData = await emailResponse.json();
+
+      // 2. Also record in MongoDB database (if API active)
       try {
-        const apiRes = await fetch('/api/contact', {
+        fetch('/api/contact', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -65,37 +86,10 @@ export default function ContactPage() {
             subject: formData.subject,
             message: formData.message,
           }),
-        });
+        }).catch(() => {});
+      } catch (_) {}
 
-        const apiData = await apiRes.json();
-        if (apiRes.ok && apiData.success) {
-          success = true;
-        }
-      } catch (backendErr) {
-        console.warn('Serverless endpoint fallback:', backendErr);
-      }
-
-      if (!success) {
-        const fallbackRes = await fetch(`https://formsubmit.co/ajax/${personalData.email}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({
-            Name: formData.name,
-            Email: formData.email,
-            Phone: formData.phone || 'Not provided',
-            Subject: formData.subject,
-            Message: formData.message,
-            _subject: `New Portfolio Enquiry: ${formData.subject}`,
-            _captcha: 'false',
-          }),
-        });
-        const fallbackData = await fallbackRes.json();
-        if (fallbackRes.ok || fallbackData.success === 'true') {
-          success = true;
-        }
-      }
-
-      if (success) {
+      if (emailResponse.ok && (emailData.success === 'true' || emailData.success === true)) {
         setSubmitted(true);
         confetti({
           particleCount: 80,
@@ -104,12 +98,12 @@ export default function ContactPage() {
         });
         setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
       } else {
-        throw new Error('Failed to record inquiry.');
+        throw new Error(emailData.message || 'Email delivery failed.');
       }
     } catch (err) {
       console.error('Submission error:', err);
       setErrorMessage(
-        'Server dispatch took too long. You can also send directly via your email client using the button below.'
+        'Server delivery had an issue. Please click below to send directly using your email app.'
       );
     } finally {
       setIsSubmitting(false);
