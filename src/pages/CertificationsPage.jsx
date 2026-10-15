@@ -18,11 +18,13 @@ import {
   Image as ImageIcon,
   Tag,
   Download,
-  Star
+  Star,
+  RotateCcw
 } from 'lucide-react';
 import { certificationsData } from '../data/portfolioData';
 
 const STORAGE_KEY = 'yazan_custom_certificates';
+const DELETED_KEY = 'yazan_deleted_certificates';
 
 const CATEGORIES = [
   'All',
@@ -37,6 +39,15 @@ const CATEGORIES = [
 
 export default function CertificationsPage() {
   const [customCerts, setCustomCerts] = useState([]);
+  const [deletedIds, setDeletedIds] = useState(() => {
+    try {
+      const saved = localStorage.getItem(DELETED_KEY);
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      return [];
+    }
+  });
+
   const [allCertificates, setAllCertificates] = useState([]);
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
@@ -79,11 +90,12 @@ export default function CertificationsPage() {
     }
   }, []);
 
-  // Merge default portfolio certificates with custom uploaded ones
+  // Merge default portfolio certificates with custom uploaded ones, excluding deleted ones
   useEffect(() => {
     const combined = [...customCerts, ...certificationsData];
-    setAllCertificates(combined);
-  }, [customCerts]);
+    const visible = combined.filter((c) => !deletedIds.includes(c.id));
+    setAllCertificates(visible);
+  }, [customCerts, deletedIds]);
 
   // Handle file selection (Image or PDF)
   const handleFileChange = (e) => {
@@ -186,17 +198,49 @@ export default function CertificationsPage() {
     }, 900);
   };
 
-  // Delete a custom certificate
-  const handleDeleteCustomCert = (id) => {
-    const updated = customCerts.filter((c) => c.id !== id);
-    setCustomCerts(updated);
+  // Delete certificate (both custom & default)
+  const handleDeleteCert = (id) => {
+    // If it's custom, remove from custom list
+    if (customCerts.some((c) => c.id === id)) {
+      const updated = customCerts.filter((c) => c.id !== id);
+      setCustomCerts(updated);
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    // Add to deletedIds array in localStorage
+    const newDeleted = [...new Set([...deletedIds, id])];
+    setDeletedIds(newDeleted);
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+      localStorage.setItem(DELETED_KEY, JSON.stringify(newDeleted));
     } catch (e) {
       console.error(e);
     }
+
+    if (previewCert && previewCert.id === id) {
+      setPreviewCert(null);
+    }
     setDeleteConfirmId(null);
   };
+
+  // Restore all deleted certificates
+  const handleRestoreDeleted = () => {
+    setDeletedIds([]);
+    try {
+      localStorage.removeItem(DELETED_KEY);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  // Find cert to delete for confirmation dialog
+  const certToDelete =
+    allCertificates.find((c) => c.id === deleteConfirmId) ||
+    certificationsData.find((c) => c.id === deleteConfirmId) ||
+    customCerts.find((c) => c.id === deleteConfirmId);
 
   // Filter certificates
   const filteredCertificates = allCertificates.filter((cert) => {
@@ -232,24 +276,37 @@ export default function CertificationsPage() {
               Certifications & <span className="text-gradient">Accreditations</span>
             </h1>
             <p className="mt-4 text-base sm:text-lg text-slate-300">
-              Original certificates, national hackathon honors, and industry accreditations earned by Yazan. You can also upload new certificates to preview and keep in your portfolio.
+              Original certificates, national hackathon honors, and industry accreditations earned by Yazan. You can also upload new certificates or remove any certificate using the delete option.
             </p>
           </div>
 
-          {/* Upload Button */}
-          <button
-            onClick={() => setIsUploadModalOpen(true)}
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl font-semibold text-white bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 hover:shadow-lg hover:shadow-purple-600/30 transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 self-start md:self-auto shadow-md"
-          >
-            <Plus className="w-5 h-5" />
-            <span>Upload Certificate</span>
-          </button>
+          {/* Action Buttons */}
+          <div className="flex flex-wrap items-center gap-3 self-start md:self-auto">
+            {deletedIds.length > 0 && (
+              <button
+                onClick={handleRestoreDeleted}
+                className="inline-flex items-center gap-1.5 px-4 py-3 rounded-2xl font-semibold text-xs text-amber-300 bg-amber-950/60 border border-amber-500/30 hover:bg-amber-900/60 transition-colors shadow-sm"
+                title="Restore previously removed certificates"
+              >
+                <RotateCcw className="w-4 h-4" />
+                <span>Restore ({deletedIds.length})</span>
+              </button>
+            )}
+
+            <button
+              onClick={() => setIsUploadModalOpen(true)}
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl font-semibold text-white bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 hover:shadow-lg hover:shadow-purple-600/30 transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 shadow-md"
+            >
+              <Plus className="w-5 h-5" />
+              <span>Upload Certificate</span>
+            </button>
+          </div>
         </div>
 
         {/* Stats Row */}
         <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4">
           <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/60 border border-slate-800">
-            <span className="text-xs font-medium text-slate-400">Total Credentials</span>
+            <span className="text-xs font-medium text-slate-400">Active Certificates</span>
             <div className="mt-1 text-2xl sm:text-3xl font-extrabold text-white">
               {allCertificates.length}
             </div>
@@ -269,7 +326,7 @@ export default function CertificationsPage() {
           <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/60 border border-slate-800">
             <span className="text-xs font-medium text-slate-400">User Uploads</span>
             <div className="mt-1 text-2xl sm:text-3xl font-extrabold text-emerald-400">
-              {customCerts.length}
+              {customCerts.filter((c) => !deletedIds.includes(c.id)).length}
             </div>
           </div>
         </div>
@@ -303,7 +360,7 @@ export default function CertificationsPage() {
                 {cat}
                 {cat === 'Custom Uploads' && customCerts.length > 0 && (
                   <span className="ml-1.5 px-1.5 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-300">
-                    {customCerts.length}
+                    {customCerts.filter((c) => !deletedIds.includes(c.id)).length}
                   </span>
                 )}
               </button>
@@ -311,19 +368,32 @@ export default function CertificationsPage() {
           </div>
         </div>
 
-        {/* Counter */}
-        <div className="mt-6 flex items-center justify-between text-xs text-slate-400 font-mono">
+        {/* Counter & Clear / Restore Bar */}
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400 font-mono">
           <span>
             Showing {filteredCertificates.length} of {allCertificates.length} certificates
           </span>
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery('')}
-              className="text-purple-400 hover:underline"
-            >
-              Clear search
-            </button>
-          )}
+
+          <div className="flex items-center gap-4">
+            {deletedIds.length > 0 && (
+              <button
+                onClick={handleRestoreDeleted}
+                className="text-amber-400 hover:underline flex items-center gap-1"
+              >
+                <RotateCcw className="w-3.5 h-3.5" />
+                <span>Undo / Restore {deletedIds.length} deleted</span>
+              </button>
+            )}
+
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="text-purple-400 hover:underline"
+              >
+                Clear search
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Certificates Grid */}
@@ -441,7 +511,7 @@ export default function CertificationsPage() {
                     className="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors"
                   >
                     <Eye className="w-3.5 h-3.5" />
-                    <span>View Certificate</span>
+                    <span>View</span>
                   </button>
 
                   <div className="flex items-center gap-2">
@@ -457,15 +527,15 @@ export default function CertificationsPage() {
                       </a>
                     )}
 
-                    {cert.isCustom && (
-                      <button
-                        onClick={() => setDeleteConfirmId(cert.id)}
-                        className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"
-                        title="Delete custom uploaded certificate"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    )}
+                    {/* Delete Certificate Button for Any Certificate */}
+                    <button
+                      onClick={() => setDeleteConfirmId(cert.id)}
+                      className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors flex items-center gap-1 text-xs"
+                      title="Delete this certificate"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                      <span className="hidden sm:inline">Delete</span>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -479,17 +549,28 @@ export default function CertificationsPage() {
             <Award className="w-12 h-12 text-slate-600 mx-auto mb-4" />
             <h3 className="text-lg font-bold text-white">No certificates found</h3>
             <p className="text-sm text-slate-400 mt-2 max-w-sm mx-auto">
-              No credentials match your active filter or search query. Try clearing filters or upload a new certificate.
+              No credentials match your active filter or search query.
             </p>
-            <button
-              onClick={() => {
-                setActiveCategory('All');
-                setSearchQuery('');
-              }}
-              className="mt-4 px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-white transition-colors"
-            >
-              Reset Filters
-            </button>
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+              <button
+                onClick={() => {
+                  setActiveCategory('All');
+                  setSearchQuery('');
+                }}
+                className="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-white transition-colors"
+              >
+                Reset Filters
+              </button>
+              {deletedIds.length > 0 && (
+                <button
+                  onClick={handleRestoreDeleted}
+                  className="px-4 py-2 rounded-xl text-xs font-semibold bg-amber-950/80 border border-amber-500/40 text-amber-300 hover:bg-amber-900/80 transition-colors flex items-center gap-1.5"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                  <span>Restore Deleted ({deletedIds.length})</span>
+                </button>
+              )}
+            </div>
           </div>
         )}
       </div>
@@ -796,6 +877,15 @@ export default function CertificationsPage() {
                 </div>
 
                 <div className="flex items-center gap-2">
+                  {/* Delete from Preview Modal */}
+                  <button
+                    onClick={() => setDeleteConfirmId(previewCert.id)}
+                    className="p-2 rounded-xl bg-rose-950/60 text-rose-300 hover:bg-rose-900/60 border border-rose-500/30 transition-colors"
+                    title="Delete this Certificate"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+
                   <a
                     href={previewCert.image}
                     download={previewCert.fileName || `${previewCert.title}.jpg`}
@@ -806,6 +896,7 @@ export default function CertificationsPage() {
                   >
                     <Download className="w-4 h-4" />
                   </a>
+
                   <button
                     onClick={() => setPreviewCert(null)}
                     className="p-2 rounded-xl bg-slate-800 text-slate-400 hover:text-white transition-colors"
@@ -843,17 +934,27 @@ export default function CertificationsPage() {
                   <p className="mt-1 text-slate-300">{previewCert.description}</p>
                 </div>
 
-                {previewCert.credentialUrl && (
-                  <a
-                    href={previewCert.credentialUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="px-5 py-2.5 rounded-xl font-semibold text-xs text-white bg-purple-600 hover:bg-purple-500 shadow-md transition-colors inline-flex items-center gap-1.5 self-end sm:self-auto shrink-0"
+                <div className="flex items-center gap-2 self-end sm:self-auto shrink-0">
+                  <button
+                    onClick={() => setDeleteConfirmId(previewCert.id)}
+                    className="px-4 py-2.5 rounded-xl font-semibold text-xs text-rose-300 bg-rose-950/60 hover:bg-rose-900/60 border border-rose-500/30 transition-colors inline-flex items-center gap-1.5"
                   >
-                    <span>Verify Credential</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                )}
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span>Delete</span>
+                  </button>
+
+                  {previewCert.credentialUrl && (
+                    <a
+                      href={previewCert.credentialUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="px-5 py-2.5 rounded-xl font-semibold text-xs text-white bg-purple-600 hover:bg-purple-500 shadow-md transition-colors inline-flex items-center gap-1.5"
+                    >
+                      <span>Verify Credential</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  )}
+                </div>
               </div>
             </motion.div>
           </div>
@@ -875,24 +976,36 @@ export default function CertificationsPage() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              className="relative bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-sm w-full z-10 shadow-2xl"
+              className="relative bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-7 max-w-md w-full z-10 shadow-2xl"
             >
-              <h4 className="text-base font-bold text-white">Delete Certificate?</h4>
-              <p className="text-xs text-slate-400 mt-2">
-                Are you sure you want to remove this uploaded certificate from your portfolio? This action cannot be undone.
+              <div className="w-12 h-12 rounded-2xl bg-rose-950/80 border border-rose-500/30 text-rose-400 flex items-center justify-center mb-4">
+                <Trash2 className="w-6 h-6" />
+              </div>
+
+              <h4 className="text-lg font-bold text-white">Delete Certificate?</h4>
+              <p className="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
+                Are you sure you want to remove{' '}
+                <span className="text-white font-semibold underline decoration-rose-500">
+                  {certToDelete?.title || 'this certificate'}
+                </span>{' '}
+                from your portfolio?
               </p>
-              <div className="mt-5 flex items-center justify-end gap-3">
+              <p className="text-[11px] text-slate-500 mt-1">
+                (You can restore any removed certificate anytime using the "Restore" button).
+              </p>
+
+              <div className="mt-6 flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
                 <button
                   onClick={() => setDeleteConfirmId(null)}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white"
+                  className="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
-                  onClick={() => handleDeleteCustomCert(deleteConfirmId)}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold text-white bg-rose-600 hover:bg-rose-500 shadow-md shadow-rose-600/30"
+                  onClick={() => handleDeleteCert(deleteConfirmId)}
+                  className="px-5 py-2.5 rounded-xl text-xs font-semibold text-white bg-rose-600 hover:bg-rose-500 shadow-md shadow-rose-600/30 transition-all"
                 >
-                  Confirm Delete
+                  Yes, Delete Certificate
                 </button>
               </div>
             </motion.div>
