@@ -17,7 +17,8 @@ import {
   FileText,
   Image as ImageIcon,
   Tag,
-  Download
+  Download,
+  Star
 } from 'lucide-react';
 import { certificationsData } from '../data/portfolioData';
 
@@ -25,6 +26,8 @@ const STORAGE_KEY = 'yazan_custom_certificates';
 
 const CATEGORIES = [
   'All',
+  'Hackathons & Competitions',
+  'Government & Honors',
   'Web Development',
   'Cloud & DevOps',
   'Databases',
@@ -47,13 +50,14 @@ export default function CertificationsPage() {
   const [formTitle, setFormTitle] = useState('');
   const [formIssuer, setFormIssuer] = useState('');
   const [formDate, setFormDate] = useState(new Date().getFullYear().toString());
-  const [formCategory, setFormCategory] = useState('Web Development');
+  const [formCategory, setFormCategory] = useState('Hackathons & Competitions');
   const [formSkills, setFormSkills] = useState('');
   const [formCredentialId, setFormCredentialId] = useState('');
   const [formCredentialUrl, setFormCredentialUrl] = useState('');
   const [formDescription, setFormDescription] = useState('');
-  const [formImageFile, setFormImageFile] = useState(null);
   const [formImagePreview, setFormImagePreview] = useState('');
+  const [formFileType, setFormFileType] = useState('image');
+  const [formFileName, setFormFileName] = useState('');
   const [formImageUrl, setFormImageUrl] = useState('');
   const [uploadError, setUploadError] = useState('');
   const [uploadSuccess, setUploadSuccess] = useState(false);
@@ -81,26 +85,31 @@ export default function CertificationsPage() {
     setAllCertificates(combined);
   }, [customCerts]);
 
-  // Handle image file selection with Base64 conversion
+  // Handle file selection (Image or PDF)
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
     setUploadError('');
     if (!file) return;
 
-    if (!file.type.startsWith('image/')) {
-      setUploadError('Please select a valid image file (PNG, JPG, WEBP).');
+    const isImage = file.type.startsWith('image/');
+    const isPdf = file.type === 'application/pdf';
+
+    if (!isImage && !isPdf) {
+      setUploadError('Please select a valid image (PNG, JPG, WEBP) or PDF file.');
       return;
     }
 
-    if (file.size > 5 * 1024 * 1024) {
-      setUploadError('Image size exceeds 5MB. Please upload a compressed image.');
+    if (file.size > 25 * 1024 * 1024) {
+      setUploadError('File size exceeds 25MB limit.');
       return;
     }
+
+    setFormFileName(file.name);
+    setFormFileType(isPdf ? 'pdf' : 'image');
 
     const reader = new FileReader();
     reader.onload = () => {
       setFormImagePreview(reader.result);
-      setFormImageFile(reader.result);
     };
     reader.onerror = () => {
       setUploadError('Failed to read file.');
@@ -135,13 +144,15 @@ export default function CertificationsPage() {
       id: `custom-${Date.now()}`,
       title: formTitle.trim(),
       issuer: formIssuer.trim(),
-      issueDate: formDate.trim() || '2024',
+      issueDate: formDate.trim() || new Date().getFullYear().toString(),
       category: formCategory,
       skills: parsedSkills,
       credentialId: formCredentialId.trim() || `CERT-${Math.floor(100000 + Math.random() * 900000)}`,
       credentialUrl: formCredentialUrl.trim() || '',
-      description: formDescription.trim() || 'Official certificate uploaded by candidate.',
+      description: formDescription.trim() || 'Original certificate uploaded by candidate.',
       image: finalImage,
+      type: formFileType,
+      fileName: formFileName,
       isCustom: true,
       uploadedAt: new Date().toISOString(),
     };
@@ -161,13 +172,14 @@ export default function CertificationsPage() {
       setFormTitle('');
       setFormIssuer('');
       setFormDate(new Date().getFullYear().toString());
-      setFormCategory('Web Development');
+      setFormCategory('Hackathons & Competitions');
       setFormSkills('');
       setFormCredentialId('');
       setFormCredentialUrl('');
       setFormDescription('');
-      setFormImageFile(null);
       setFormImagePreview('');
+      setFormFileType('image');
+      setFormFileName('');
       setFormImageUrl('');
       setUploadSuccess(false);
       setIsUploadModalOpen(false);
@@ -214,13 +226,13 @@ export default function CertificationsPage() {
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-950/50 border border-purple-500/30 text-purple-300 text-xs font-semibold tracking-wider uppercase mb-3">
               <Award className="w-3.5 h-3.5 text-purple-400" />
-              Verified Credentials
+              Verified Credentials & Achievements
             </div>
             <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
               Certifications & <span className="text-gradient">Accreditations</span>
             </h1>
             <p className="mt-4 text-base sm:text-lg text-slate-300">
-              Professional credentials, technical certifications, and course accreditations validating real-world industry skills. You can also upload new certificates to preview them in your portfolio.
+              Original certificates, national hackathon honors, and industry accreditations earned by Yazan. You can also upload new certificates to preview and keep in your portfolio.
             </p>
           </div>
 
@@ -243,9 +255,9 @@ export default function CertificationsPage() {
             </div>
           </div>
           <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/60 border border-slate-800">
-            <span className="text-xs font-medium text-slate-400">Tech Domains</span>
-            <div className="mt-1 text-2xl sm:text-3xl font-extrabold text-purple-400">
-              {new Set(allCertificates.map((c) => c.category)).size}
+            <span className="text-xs font-medium text-slate-400">Original / Verified</span>
+            <div className="mt-1 text-2xl sm:text-3xl font-extrabold text-amber-400">
+              {allCertificates.filter((c) => c.isOriginal).length}
             </div>
           </div>
           <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/60 border border-slate-800">
@@ -255,7 +267,7 @@ export default function CertificationsPage() {
             </div>
           </div>
           <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/60 border border-slate-800">
-            <span className="text-xs font-medium text-slate-400">User Uploaded</span>
+            <span className="text-xs font-medium text-slate-400">User Uploads</span>
             <div className="mt-1 text-2xl sm:text-3xl font-extrabold text-emerald-400">
               {customCerts.length}
             </div>
@@ -319,26 +331,44 @@ export default function CertificationsPage() {
           {filteredCertificates.map((cert) => (
             <div
               key={cert.id}
-              className="group flex flex-col rounded-3xl bg-slate-900/60 border border-slate-800/80 hover:border-purple-500/50 overflow-hidden shadow-xl shadow-black/30 hover:-translate-y-2 transition-all duration-300 relative"
+              className={`group flex flex-col rounded-3xl bg-slate-900/60 border ${
+                cert.isOriginal
+                  ? 'border-amber-500/40 shadow-amber-950/20 hover:border-amber-400/80'
+                  : 'border-slate-800/80 hover:border-purple-500/50'
+              } overflow-hidden shadow-xl shadow-black/30 hover:-translate-y-2 transition-all duration-300 relative`}
             >
-              {/* Image Preview Banner with Click to Enlarge */}
+              {/* Image / Thumbnail Preview with Click to Enlarge */}
               <div
                 onClick={() => setPreviewCert(cert)}
-                className="relative h-48 w-full overflow-hidden bg-slate-950 cursor-pointer"
+                className="relative h-52 w-full overflow-hidden bg-slate-950 cursor-pointer"
               >
-                <img
-                  src={cert.image}
-                  alt={cert.title}
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
+                {cert.type === 'pdf' ? (
+                  <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 to-purple-950/40 p-6">
+                    <FileText className="w-14 h-14 text-purple-400 mb-2" />
+                    <span className="text-xs font-semibold text-white text-center line-clamp-1">{cert.title}</span>
+                    <span className="text-[11px] text-slate-400 mt-1">PDF Document • Click to View</span>
+                  </div>
+                ) : (
+                  <img
+                    src={cert.image}
+                    alt={cert.title}
+                    className="w-full h-full object-contain p-2 bg-slate-950/90 group-hover:scale-105 transition-transform duration-500"
+                  />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent pointer-events-none" />
 
                 {/* Badges Overlay */}
-                <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
-                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-slate-950/80 backdrop-blur-md text-cyan-300 border border-cyan-500/30">
+                <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-slate-950/85 backdrop-blur-md text-cyan-300 border border-cyan-500/30">
                     {cert.category}
                   </span>
-                  {cert.isCustom ? (
+
+                  {cert.isOriginal ? (
+                    <span className="flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-amber-950/90 backdrop-blur-md text-amber-300 border border-amber-500/50 shadow-md shadow-amber-950/50">
+                      <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+                      Original
+                    </span>
+                  ) : cert.isCustom ? (
                     <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-950/80 backdrop-blur-md text-emerald-300 border border-emerald-500/40">
                       User Uploaded
                     </span>
@@ -377,7 +407,7 @@ export default function CertificationsPage() {
                     {cert.title}
                   </h3>
 
-                  <p className="mt-2.5 text-xs sm:text-sm text-slate-400 line-clamp-2 leading-relaxed">
+                  <p className="mt-2.5 text-xs sm:text-sm text-slate-400 line-clamp-3 leading-relaxed">
                     {cert.description}
                   </p>
 
@@ -397,8 +427,9 @@ export default function CertificationsPage() {
 
                   {/* Credential ID */}
                   {cert.credentialId && (
-                    <div className="mt-4 text-[11px] font-mono text-slate-400 bg-slate-950/60 px-3 py-1.5 rounded-lg border border-slate-800/60">
-                      ID: <span className="text-slate-300 select-all">{cert.credentialId}</span>
+                    <div className="mt-4 text-[11px] font-mono text-slate-400 bg-slate-950/60 px-3 py-1.5 rounded-lg border border-slate-800/60 flex items-center justify-between">
+                      <span>ID:</span>
+                      <span className="text-slate-300 font-semibold select-all">{cert.credentialId}</span>
                     </div>
                   )}
                 </div>
@@ -410,7 +441,7 @@ export default function CertificationsPage() {
                     className="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors"
                   >
                     <Eye className="w-3.5 h-3.5" />
-                    <span>View Image</span>
+                    <span>View Certificate</span>
                   </button>
 
                   <div className="flex items-center gap-2">
@@ -496,9 +527,9 @@ export default function CertificationsPage() {
                   <UploadCloud className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white">Upload New Certificate</h3>
+                  <h3 className="text-xl font-bold text-white">Upload Original Certificate</h3>
                   <p className="text-xs text-slate-400">
-                    Add your certificates to your portfolio with image preview and verification info.
+                    Upload your Image (JPG, PNG) or PDF certificate to add it to your portfolio.
                   </p>
                 </div>
               </div>
@@ -522,7 +553,7 @@ export default function CertificationsPage() {
                   {/* File Upload Zone */}
                   <div>
                     <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-                      Certificate Image / Screenshot
+                      Certificate File (Image or PDF)
                     </label>
                     <div
                       onClick={() => fileInputRef.current?.click()}
@@ -530,30 +561,40 @@ export default function CertificationsPage() {
                     >
                       {formImagePreview ? (
                         <div className="relative group max-h-48 overflow-hidden rounded-xl">
-                          <img
-                            src={formImagePreview}
-                            alt="Uploaded preview"
-                            className="w-full h-44 object-contain mx-auto"
-                          />
-                          <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                            <span className="text-xs text-white font-medium">Click to change image</span>
-                          </div>
+                          {formFileType === 'pdf' ? (
+                            <div className="py-8 flex flex-col items-center justify-center">
+                              <FileText className="w-12 h-12 text-purple-400 mb-2" />
+                              <span className="text-sm font-semibold text-white">{formFileName || 'PDF Document Selected'}</span>
+                              <span className="text-xs text-purple-300 mt-1">Click to change file</span>
+                            </div>
+                          ) : (
+                            <>
+                              <img
+                                src={formImagePreview}
+                                alt="Uploaded preview"
+                                className="w-full h-44 object-contain mx-auto"
+                              />
+                              <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                <span className="text-xs text-white font-medium">Click to change image</span>
+                              </div>
+                            </>
+                          )}
                         </div>
                       ) : (
                         <div className="flex flex-col items-center">
                           <ImageIcon className="w-8 h-8 text-purple-400 mb-2" />
                           <p className="text-sm font-medium text-white">
-                            Click to select certificate image
+                            Click to select certificate image or PDF
                           </p>
                           <p className="text-xs text-slate-400 mt-1">
-                            PNG, JPG, or WEBP up to 5MB
+                            JPG, PNG, WEBP, or PDF up to 25MB
                           </p>
                         </div>
                       )}
                       <input
                         ref={fileInputRef}
                         type="file"
-                        accept="image/*"
+                        accept="image/*,application/pdf"
                         onChange={handleFileChange}
                         className="hidden"
                       />
@@ -563,7 +604,7 @@ export default function CertificationsPage() {
                   {/* Or Image URL */}
                   <div>
                     <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
-                      Or Image URL (Optional)
+                      Or Online Image / Document URL (Optional)
                     </label>
                     <input
                       type="url"
@@ -572,7 +613,7 @@ export default function CertificationsPage() {
                         setFormImageUrl(e.target.value);
                         if (!formImagePreview) setFormImagePreview(e.target.value);
                       }}
-                      placeholder="https://images.unsplash.com/... or hosted image link"
+                      placeholder="https://... direct link to certificate image or PDF"
                       className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
                     />
                   </div>
@@ -588,7 +629,7 @@ export default function CertificationsPage() {
                         required
                         value={formTitle}
                         onChange={(e) => setFormTitle(e.target.value)}
-                        placeholder="e.g. AWS Certified Developer"
+                        placeholder="e.g. All India Hackathon 2026"
                         className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
                       />
                     </div>
@@ -601,7 +642,7 @@ export default function CertificationsPage() {
                         required
                         value={formIssuer}
                         onChange={(e) => setFormIssuer(e.target.value)}
-                        placeholder="e.g. Amazon Web Services / Google"
+                        placeholder="e.g. Axcentra / Google / College"
                         className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
                       />
                     </div>
@@ -618,12 +659,13 @@ export default function CertificationsPage() {
                         onChange={(e) => setFormCategory(e.target.value)}
                         className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
                       >
+                        <option value="Hackathons & Competitions">Hackathons & Competitions</option>
+                        <option value="Government & Honors">Government & Honors</option>
                         <option value="Web Development">Web Development</option>
                         <option value="Cloud & DevOps">Cloud & DevOps</option>
                         <option value="Databases">Databases</option>
                         <option value="Programming">Programming</option>
                         <option value="AI & Machine Learning">AI & Machine Learning</option>
-                        <option value="General Engineering">General Engineering</option>
                       </select>
                     </div>
                     <div>
@@ -634,7 +676,7 @@ export default function CertificationsPage() {
                         type="text"
                         value={formDate}
                         onChange={(e) => setFormDate(e.target.value)}
-                        placeholder="e.g. 2024 or Oct 2024"
+                        placeholder="e.g. 2026 or Sept 2026"
                         className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
                       />
                     </div>
@@ -649,7 +691,7 @@ export default function CertificationsPage() {
                       type="text"
                       value={formSkills}
                       onChange={(e) => setFormSkills(e.target.value)}
-                      placeholder="e.g. React, Next.js, Node.js, TypeScript"
+                      placeholder="e.g. Problem Solving, Algorithms, React, Node.js"
                       className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
                     />
                   </div>
@@ -664,7 +706,7 @@ export default function CertificationsPage() {
                         type="text"
                         value={formCredentialId}
                         onChange={(e) => setFormCredentialId(e.target.value)}
-                        placeholder="e.g. AWS-123456"
+                        placeholder="e.g. AIH-2026-12345"
                         className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
                       />
                     </div>
@@ -676,7 +718,7 @@ export default function CertificationsPage() {
                         type="url"
                         value={formCredentialUrl}
                         onChange={(e) => setFormCredentialUrl(e.target.value)}
-                        placeholder="https://coursera.org/verify/..."
+                        placeholder="https://verification-link.com/..."
                         className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
                       />
                     </div>
@@ -691,7 +733,7 @@ export default function CertificationsPage() {
                       rows={2}
                       value={formDescription}
                       onChange={(e) => setFormDescription(e.target.value)}
-                      placeholder="Brief overview of skills learned or key projects built during this certification..."
+                      placeholder="Brief overview of achievements, challenges solved, or skills validated..."
                       className="w-full px-4 py-2 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500 resize-none"
                     />
                   </div>
@@ -719,7 +761,7 @@ export default function CertificationsPage() {
         )}
       </AnimatePresence>
 
-      {/* Full Certificate Image Viewer Modal */}
+      {/* Full Certificate Image / PDF Viewer Modal */}
       <AnimatePresence>
         {previewCert && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
@@ -756,10 +798,11 @@ export default function CertificationsPage() {
                 <div className="flex items-center gap-2">
                   <a
                     href={previewCert.image}
+                    download={previewCert.fileName || `${previewCert.title}.jpg`}
                     target="_blank"
                     rel="noreferrer"
                     className="p-2 rounded-xl bg-slate-800 text-slate-300 hover:text-white transition-colors"
-                    title="Open Full Image"
+                    title="Open / Download"
                   >
                     <Download className="w-4 h-4" />
                   </a>
@@ -772,13 +815,21 @@ export default function CertificationsPage() {
                 </div>
               </div>
 
-              {/* Image Preview Container */}
+              {/* Preview Container */}
               <div className="p-4 sm:p-6 bg-slate-950 flex-1 flex items-center justify-center overflow-auto max-h-[60vh]">
-                <img
-                  src={previewCert.image}
-                  alt={previewCert.title}
-                  className="max-w-full max-h-[55vh] object-contain rounded-xl shadow-2xl border border-slate-800"
-                />
+                {previewCert.type === 'pdf' ? (
+                  <iframe
+                    src={previewCert.image}
+                    title={previewCert.title}
+                    className="w-full h-[55vh] rounded-xl border border-slate-800"
+                  />
+                ) : (
+                  <img
+                    src={previewCert.image}
+                    alt={previewCert.title}
+                    className="max-w-full max-h-[55vh] object-contain rounded-xl shadow-2xl border border-slate-800"
+                  />
+                )}
               </div>
 
               {/* Footer info */}
