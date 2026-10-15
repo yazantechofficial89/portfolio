@@ -26,17 +26,6 @@ import { certificationsData } from '../data/portfolioData';
 const STORAGE_KEY = 'yazan_custom_certificates';
 const DELETED_KEY = 'yazan_deleted_certificates';
 
-const CATEGORIES = [
-  'All',
-  'Hackathons & Competitions',
-  'Government & Honors',
-  'Web Development',
-  'Cloud & DevOps',
-  'Databases',
-  'Programming',
-  'Custom Uploads'
-];
-
 export default function CertificationsPage() {
   const [customCerts, setCustomCerts] = useState([]);
   const [deletedIds, setDeletedIds] = useState(() => {
@@ -242,6 +231,13 @@ export default function CertificationsPage() {
     certificationsData.find((c) => c.id === deleteConfirmId) ||
     customCerts.find((c) => c.id === deleteConfirmId);
 
+  // Dynamic categories based on active certificates
+  const availableCategories = [
+    'All',
+    ...Array.from(new Set(allCertificates.map((c) => c.category))).filter(Boolean),
+    ...(allCertificates.some((c) => c.isCustom) ? ['Custom Uploads'] : [])
+  ];
+
   // Filter certificates
   const filteredCertificates = allCertificates.filter((cert) => {
     const matchesCategory =
@@ -347,7 +343,7 @@ export default function CertificationsPage() {
 
           {/* Category Filter Buttons */}
           <div className="flex flex-wrap gap-2">
-            {CATEGORIES.map((cat) => (
+            {availableCategories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
