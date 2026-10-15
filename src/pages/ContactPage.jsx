@@ -53,28 +53,49 @@ export default function ContactPage() {
     setErrorMessage('');
 
     try {
-      // Direct email dispatch to yazantechofficial89@gmail.com via formsubmit
-      const response = await fetch(`https://formsubmit.co/ajax/${personalData.email}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({
-          Name: formData.name,
-          Email: formData.email,
-          Phone: formData.phone || 'Not provided',
-          Subject: formData.subject,
-          Message: formData.message,
-          _subject: `New Portfolio Enquiry from ${formData.name}: ${formData.subject}`,
-          _template: 'table',
-          _captcha: 'false',
-        }),
-      });
+      let success = false;
+      try {
+        const apiRes = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone || '',
+            subject: formData.subject,
+            message: formData.message,
+          }),
+        });
 
-      const data = await response.json();
+        const apiData = await apiRes.json();
+        if (apiRes.ok && apiData.success) {
+          success = true;
+        }
+      } catch (backendErr) {
+        console.warn('Serverless endpoint fallback:', backendErr);
+      }
 
-      if (response.ok || data.success === 'true') {
+      if (!success) {
+        const fallbackRes = await fetch(`https://formsubmit.co/ajax/${personalData.email}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            Name: formData.name,
+            Email: formData.email,
+            Phone: formData.phone || 'Not provided',
+            Subject: formData.subject,
+            Message: formData.message,
+            _subject: `New Portfolio Enquiry: ${formData.subject}`,
+            _captcha: 'false',
+          }),
+        });
+        const fallbackData = await fallbackRes.json();
+        if (fallbackRes.ok || fallbackData.success === 'true') {
+          success = true;
+        }
+      }
+
+      if (success) {
         setSubmitted(true);
         confetti({
           particleCount: 80,
@@ -83,7 +104,7 @@ export default function ContactPage() {
         });
         setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
       } else {
-        throw new Error(data.message || 'Failed to dispatch email.');
+        throw new Error('Failed to record inquiry.');
       }
     } catch (err) {
       console.error('Submission error:', err);

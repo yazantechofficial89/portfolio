@@ -14,6 +14,8 @@ import TerminalPage from './pages/TerminalPage';
 import ContactPage from './pages/ContactPage';
 import NotFoundPage from './pages/NotFoundPage';
 
+import AdminPage from './pages/AdminPage';
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -29,6 +31,7 @@ export default function App() {
             <Route path="/experience" element={<ExperiencePage />} />
             <Route path="/terminal" element={<TerminalPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/admin" element={<AdminPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>
