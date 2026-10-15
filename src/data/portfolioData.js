@@ -18,7 +18,7 @@ I take pride in writing readable, maintainable, and type-safe code that scales g
     { label: "Code Commits", value: "1,200+" },
   ],
   socials: {
-    github: "https://github.com",
+    github: "https://github.com/yazantechofficial89",
     linkedin: "https://linkedin.com",
     twitter: "https://twitter.com",
     email: "mailto:yazantechofficial89@gmail.com",
