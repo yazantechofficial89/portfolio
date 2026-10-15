@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUp, Code2, Heart } from 'lucide-react';
 import { personalData } from '../data/portfolioData';
+import { Github, Linkedin, Instagram, WhatsApp } from './Icons';
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -38,14 +39,55 @@ export default function Footer() {
             <Link to="/contact" className="hover:text-purple-300 transition-colors">Contact</Link>
           </div>
 
-          {/* Back to top button */}
-          <button
-            onClick={scrollToTop}
-            className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-purple-500/40 text-slate-400 hover:text-white transition-all group"
-            title="Back to top"
-          >
-            <ArrowUp className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
-          </button>
+          {/* Social Icons & Back to top button */}
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 mr-2">
+              <a
+                href={personalData.socials.github}
+                target="_blank"
+                rel="noreferrer"
+                className="p-2 rounded-lg bg-slate-900 border border-slate-800 hover:text-white hover:border-purple-500/40 text-slate-400 transition-colors"
+                title="GitHub"
+              >
+                <Github className="w-4 h-4" />
+              </a>
+              <a
+                href={personalData.socials.linkedin}
+                target="_blank"
+                rel="noreferrer"
+                className="p-2 rounded-lg bg-slate-900 border border-slate-800 hover:text-blue-400 hover:border-blue-500/40 text-slate-400 transition-colors"
+                title="LinkedIn"
+              >
+                <Linkedin className="w-4 h-4" />
+              </a>
+              <a
+                href={personalData.socials.instagram}
+                target="_blank"
+                rel="noreferrer"
+                className="p-2 rounded-lg bg-slate-900 border border-slate-800 hover:text-pink-400 hover:border-pink-500/40 text-slate-400 transition-colors"
+                title="Instagram"
+              >
+                <Instagram className="w-4 h-4" />
+              </a>
+              <a
+                href={personalData.socials.whatsapp}
+                target="_blank"
+                rel="noreferrer"
+                className="p-2 rounded-lg bg-slate-900 border border-slate-800 hover:text-emerald-400 hover:border-emerald-500/40 text-slate-400 transition-colors"
+                title="WhatsApp"
+              >
+                <WhatsApp className="w-4 h-4 fill-current" />
+              </a>
+            </div>
+
+            <button
+              onClick={scrollToTop}
+              className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-purple-500/40 text-slate-400 hover:text-white transition-all group"
+              title="Back to top"
+            >
+              <ArrowUp className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
+            </button>
+          </div>
         </div>
 
         {/* Bottom Credits */}

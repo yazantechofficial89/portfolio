@@ -12,7 +12,7 @@ import {
   ExternalLink,
   Code
 } from 'lucide-react';
-import { Github, Linkedin } from './Icons';
+import { Github, Linkedin, Instagram, WhatsApp } from './Icons';
 import { personalData } from '../data/portfolioData';
 
 export default function Hero() {
@@ -140,12 +140,13 @@ export default function Hero() {
               className="mt-8 flex items-center gap-4 text-slate-400"
             >
               <span className="text-xs uppercase tracking-wider font-mono text-slate-400">Connect:</span>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2.5">
                 <a
                   href={personalData.socials.github}
                   target="_blank"
                   rel="noreferrer"
                   className="p-2 rounded-lg bg-slate-900 border border-slate-800 hover:border-purple-500/50 hover:text-white transition-all"
+                  title="GitHub Profile"
                 >
                   <Github className="w-4 h-4" />
                 </a>
@@ -153,9 +154,28 @@ export default function Hero() {
                   href={personalData.socials.linkedin}
                   target="_blank"
                   rel="noreferrer"
-                  className="p-2 rounded-lg bg-slate-900 border border-slate-800 hover:border-purple-500/50 hover:text-white transition-all"
+                  className="p-2 rounded-lg bg-slate-900 border border-slate-800 hover:border-purple-500/50 hover:text-blue-400 transition-all"
+                  title="LinkedIn Profile"
                 >
                   <Linkedin className="w-4 h-4" />
+                </a>
+                <a
+                  href={personalData.socials.instagram}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="p-2 rounded-lg bg-slate-900 border border-slate-800 hover:border-pink-500/50 hover:text-pink-400 transition-all"
+                  title="Instagram Profile"
+                >
+                  <Instagram className="w-4 h-4" />
+                </a>
+                <a
+                  href={personalData.socials.whatsapp}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="p-2 rounded-lg bg-slate-900 border border-slate-800 hover:border-emerald-500/50 hover:text-emerald-400 transition-all"
+                  title="Chat on WhatsApp"
+                >
+                  <WhatsApp className="w-4 h-4 fill-current" />
                 </a>
               </div>
               <span className="text-xs text-slate-400 font-mono hidden sm:inline">

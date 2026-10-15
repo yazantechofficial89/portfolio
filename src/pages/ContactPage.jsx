@@ -15,7 +15,7 @@ import {
   ExternalLink
 } from 'lucide-react';
 import { personalData, faqsData } from '../data/portfolioData';
-import { Github, Linkedin, Twitter, WhatsApp } from '../components/Icons';
+import { Github, Linkedin, Twitter, WhatsApp, Instagram } from '../components/Icons';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -227,33 +227,42 @@ export default function ContactPage() {
                 <span className="text-xs font-mono uppercase tracking-wider text-slate-400 block mb-3">
                   Find me online
                 </span>
-                <div className="flex items-center gap-3">
+                <div className="grid grid-cols-2 gap-3">
                   <a
                     href={personalData.socials.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-950 border border-slate-800 text-sm text-slate-300 hover:text-white hover:border-purple-500/50 transition-colors"
+                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-300 hover:text-white hover:border-purple-500/50 transition-colors"
                   >
-                    <Github className="w-4 h-4" />
+                    <Github className="w-4 h-4 text-purple-400" />
                     <span>GitHub</span>
                   </a>
                   <a
                     href={personalData.socials.linkedin}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-950 border border-slate-800 text-sm text-slate-300 hover:text-white hover:border-purple-500/50 transition-colors"
+                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-300 hover:text-white hover:border-blue-500/50 transition-colors"
                   >
                     <Linkedin className="w-4 h-4 text-blue-400" />
                     <span>LinkedIn</span>
                   </a>
                   <a
-                    href={personalData.socials.twitter}
+                    href={personalData.socials.instagram}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-950 border border-slate-800 text-sm text-slate-300 hover:text-white hover:border-purple-500/50 transition-colors"
+                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-300 hover:text-white hover:border-pink-500/50 transition-colors"
                   >
-                    <Twitter className="w-4 h-4 text-sky-400" />
-                    <span>Twitter</span>
+                    <Instagram className="w-4 h-4 text-pink-400" />
+                    <span>Instagram</span>
+                  </a>
+                  <a
+                    href={personalData.socials.whatsapp}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-300 hover:text-white hover:border-emerald-500/50 transition-colors"
+                  >
+                    <WhatsApp className="w-4 h-4 text-emerald-400 fill-current" />
+                    <span>WhatsApp</span>
                   </a>
                 </div>
               </div>

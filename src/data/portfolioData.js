@@ -19,8 +19,9 @@ I take pride in writing readable, maintainable, and type-safe code that scales g
   ],
   socials: {
     github: "https://github.com/yazantechofficial89",
-    linkedin: "https://linkedin.com",
-    twitter: "https://twitter.com",
+    linkedin: "https://www.linkedin.com/in/yazan-gupta-939b46281?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+    instagram: "https://www.instagram.com/yazan2006.tech?psln=YWtkcTM2amVtZnVr",
+    whatsapp: "https://wa.me/917011906923",
     email: "mailto:yazantechofficial89@gmail.com",
   },
 };
