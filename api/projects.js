@@ -1,0 +1,133 @@
+import dbConnect from './lib/dbConnect.js';
+import Project from './models/Project.js';
+
+export default async function handler(req, res) {
+  // CORS configuration
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,POST,DELETE');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization, x-admin-key'
+  );
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
+  // Security check: only allow POST & DELETE with valid admin passkey
+  const adminKey = req.headers['x-admin-key'] || req.query.key;
+  const validKey = process.env.ADMIN_SECRET || 'yazanAdmin2026';
+
+  if (req.method === 'POST' || req.method === 'DELETE') {
+    if (!adminKey || adminKey !== validKey) {
+      return res.status(401).json({
+        success: false,
+        error: 'Unauthorized: Only the portfolio owner can add or delete projects.',
+      });
+    }
+  }
+
+  // Check if MongoDB is connected
+  if (!process.env.MONGODB_URI) {
+    if (req.method === 'GET') {
+      return res.status(200).json({
+        success: true,
+        projects: [],
+        warning: 'MONGODB_URI is not set in environment. Storing locally in browser.',
+      });
+    }
+
+    if (req.method === 'POST') {
+      return res.status(200).json({
+        success: true,
+        project: req.body,
+        warning: 'MONGODB_URI not configured; saved to local browser cache.',
+      });
+    }
+
+    return res.status(200).json({ success: true });
+  }
+
+  try {
+    await dbConnect();
+
+    // GET /api/projects -> Retrieve all custom projects from MongoDB
+    if (req.method === 'GET') {
+      const projects = await Project.find({}).sort({ createdAt: -1 }).lean();
+      return res.status(200).json({
+        success: true,
+        count: projects.length,
+        projects,
+      });
+    }
+
+    // POST /api/projects -> Save new project permanently
+    if (req.method === 'POST') {
+      const {
+        title,
+        category,
+        description,
+        image,
+        tags,
+        features,
+        demoUrl,
+        githubUrl,
+        featured,
+      } = req.body || {};
+
+      if (!title || !description || !image) {
+        return res.status(400).json({
+          success: false,
+          error: 'Title, description, and preview image are required.',
+        });
+      }
+
+      const newProject = await Project.create({
+        title: title.trim(),
+        category: category || 'Full-Stack',
+        description: description.trim(),
+        image,
+        tags: Array.isArray(tags) ? tags : ['React', 'JavaScript'],
+        features: Array.isArray(features) ? features : [],
+        demoUrl: demoUrl ? demoUrl.trim() : '',
+        githubUrl: githubUrl ? githubUrl.trim() : '',
+        featured: Boolean(featured),
+        isCustom: true,
+      });
+
+      return res.status(201).json({
+        success: true,
+        message: 'Project created and saved permanently!',
+        project: newProject,
+      });
+    }
+
+    // DELETE /api/projects?id=XYZ
+    if (req.method === 'DELETE') {
+      const { id } = req.query;
+      if (!id) {
+        return res.status(400).json({ success: false, error: 'Project ID is required' });
+      }
+
+      try {
+        await Project.findByIdAndDelete(id);
+      } catch {
+        await Project.deleteOne({ _id: id });
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: 'Project deleted permanently',
+      });
+    }
+
+    return res.status(405).json({ success: false, error: 'Method not allowed' });
+  } catch (error) {
+    console.error('Projects API Error:', error);
+    return res.status(500).json({
+      success: false,
+      error: error.message || 'Server error occurred while handling projects',
+    });
+  }
+}
