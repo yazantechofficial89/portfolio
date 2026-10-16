@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { WhatsApp } from './Icons';
 import { personalData } from '../data/portfolioData';
+import { trackWhatsAppClick } from '../utils/analytics';
 
 export default function FloatingWhatsApp() {
   const [hovered, setHovered] = useState(false);
@@ -28,6 +29,7 @@ export default function FloatingWhatsApp() {
         href={`https://wa.me/${cleanPhone}?text=Hi%20Yazan,%20I%20am%20reaching%20out%20from%20your%20portfolio.`}
         target="_blank"
         rel="noreferrer"
+        onClick={() => trackWhatsAppClick('floating_button')}
         className="relative group p-3.5 rounded-full bg-emerald-500 text-slate-950 shadow-xl shadow-emerald-500/30 hover:shadow-emerald-500/60 hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center"
         aria-label="Direct message on WhatsApp"
       >

@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { projectsData } from '../data/portfolioData';
 import { Github } from '../components/Icons';
+import { trackProjectClick } from '../utils/analytics';
 
 const STORAGE_KEY = 'yazan_custom_projects';
 const DELETED_KEY = 'yazan_deleted_projects';
@@ -569,6 +570,7 @@ export default function ProjectsPage() {
                         href={project.demoUrl}
                         target="_blank"
                         rel="noreferrer"
+                        onClick={() => trackProjectClick(project, 'demo')}
                         className="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors"
                       >
                         <span>Live Demo</span>
@@ -581,6 +583,7 @@ export default function ProjectsPage() {
                         href={project.githubUrl}
                         target="_blank"
                         rel="noreferrer"
+                        onClick={() => trackProjectClick(project, 'github')}
                         className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white transition-colors"
                       >
                         <Github className="w-4 h-4" />

@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
+import AnalyticsTracker from './components/AnalyticsTracker';
 
 // Pages
 import Home from './pages/Home';
@@ -20,6 +21,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <AnalyticsTracker />
       <div className="min-h-screen bg-slate-950 text-slate-100 selection:bg-purple-600/30 selection:text-purple-200 flex flex-col justify-between">
         <Navbar />
         <main className="flex-1">
