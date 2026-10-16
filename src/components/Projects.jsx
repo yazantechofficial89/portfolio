@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, CheckCircle2, Star, Sparkles, ArrowUpRight } from 'lucide-react';
 import { Github } from './Icons';
 import { projectsData } from '../data/portfolioData';
-import { trackProjectClick } from '../utils/analytics';
 
 const categories = ['All', 'Full-Stack', 'Frontend', 'Backend'];
 
@@ -126,7 +125,6 @@ export default function Projects() {
                       href={project.demoUrl}
                       target="_blank"
                       rel="noreferrer"
-                      onClick={() => trackProjectClick(project, 'demo')}
                       className="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors"
                     >
                       <span>Live Preview</span>
@@ -137,7 +135,6 @@ export default function Projects() {
                       href={project.githubUrl}
                       target="_blank"
                       rel="noreferrer"
-                      onClick={() => trackProjectClick(project, 'github')}
                       className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white transition-colors"
                     >
                       <Github className="w-4 h-4" />

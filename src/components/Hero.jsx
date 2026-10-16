@@ -14,7 +14,6 @@ import {
 } from 'lucide-react';
 import { Github, Linkedin, Instagram, WhatsApp } from './Icons';
 import { personalData } from '../data/portfolioData';
-import { trackResumeDownload, trackContactClick } from '../utils/analytics';
 
 export default function Hero() {
   const [copiedEmail, setCopiedEmail] = useState(false);
@@ -107,10 +106,7 @@ export default function Hero() {
 
               <a
                 href="#contact"
-                onClick={() => {
-                  handleConfetti();
-                  trackResumeDownload();
-                }}
+                onClick={handleConfetti}
                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-slate-200 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 hover:border-purple-500/50 hover:text-white transition-all text-sm"
               >
                 <Download className="w-4 h-4 text-purple-400" />
