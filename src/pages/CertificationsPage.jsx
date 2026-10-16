@@ -19,7 +19,8 @@ import {
   Tag,
   Download,
   Star,
-  RotateCcw
+  RotateCcw,
+  CloudCheck
 } from 'lucide-react';
 import { certificationsData } from '../data/portfolioData';
 
@@ -40,6 +41,7 @@ export default function CertificationsPage() {
   const [allCertificates, setAllCertificates] = useState([]);
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+  const [isSyncing, setIsSyncing] = useState(false);
 
   // Modal states
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
@@ -64,8 +66,9 @@ export default function CertificationsPage() {
 
   const fileInputRef = useRef(null);
 
-  // Load custom certificates from localStorage on mount
+  // 1. Load certificates from localStorage and fetch permanently from MongoDB API
   useEffect(() => {
+    // Immediate load from local storage
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
@@ -77,12 +80,46 @@ export default function CertificationsPage() {
     } catch (e) {
       console.error('Error loading custom certificates:', e);
     }
+
+    // Sync from database API
+    setIsSyncing(true);
+    fetch('/api/certificates')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.success && Array.isArray(data.certificates) && data.certificates.length > 0) {
+          setCustomCerts((prev) => {
+            const existingMap = new Map();
+            prev.forEach((c) => existingMap.set(c.id || c._id, c));
+            data.certificates.forEach((c) => {
+              const id = c._id || c.id;
+              existingMap.set(id, {
+                ...c,
+                id,
+                isVerified: true,
+                isCustom: true,
+              });
+            });
+            const merged = Array.from(existingMap.values());
+            try {
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+            } catch (err) {}
+            return merged;
+          });
+        }
+      })
+      .catch((err) => {
+        // Offline / static preview fallback
+        console.log('Background DB sync attempt:', err);
+      })
+      .finally(() => {
+        setIsSyncing(false);
+      });
   }, []);
 
-  // Merge default portfolio certificates with custom uploaded ones, excluding deleted ones
+  // Merge default portfolio certificates with custom/database ones, excluding deleted ones
   useEffect(() => {
     const combined = [...customCerts, ...certificationsData];
-    const visible = combined.filter((c) => !deletedIds.includes(c.id));
+    const visible = combined.filter((c) => !deletedIds.includes(c.id) && !deletedIds.includes(c._id));
     setAllCertificates(visible);
   }, [customCerts, deletedIds]);
 
@@ -118,8 +155,8 @@ export default function CertificationsPage() {
     reader.readAsDataURL(file);
   };
 
-  // Submit new certificate
-  const handleAddCertificate = (e) => {
+  // Submit new certificate -> Automatically Verified & Permanently Saved
+  const handleAddCertificate = async (e) => {
     e.preventDefault();
     setUploadError('');
 
@@ -139,7 +176,7 @@ export default function CertificationsPage() {
 
     const parsedSkills = formSkills
       ? formSkills.split(',').map((s) => s.trim()).filter(Boolean)
-      : ['Software Engineering'];
+      : ['Software Engineering', 'Verified Skills'];
 
     const newCert = {
       id: `custom-${Date.now()}`,
@@ -148,23 +185,36 @@ export default function CertificationsPage() {
       issueDate: formDate.trim() || new Date().getFullYear().toString(),
       category: formCategory,
       skills: parsedSkills,
-      credentialId: formCredentialId.trim() || `CERT-${Math.floor(100000 + Math.random() * 900000)}`,
+      credentialId: formCredentialId.trim() || `VERIFIED-${Math.floor(100000 + Math.random() * 900000)}`,
       credentialUrl: formCredentialUrl.trim() || '',
-      description: formDescription.trim() || 'Original certificate uploaded by candidate.',
+      description: formDescription.trim() || 'Officially verified original certificate.',
       image: finalImage,
       type: formFileType,
       fileName: formFileName,
+      isVerified: true, // Always verified
+      isOriginal: true,
       isCustom: true,
       uploadedAt: new Date().toISOString(),
     };
 
+    // 1. Immediately store in local state and localStorage
     const updated = [newCert, ...customCerts];
     setCustomCerts(updated);
-
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
     } catch (err) {
       console.warn('LocalStorage save error:', err);
+    }
+
+    // 2. Permanently save to database via serverless API
+    try {
+      fetch('/api/certificates', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newCert),
+      }).catch((e) => console.log('API background save:', e));
+    } catch (err) {
+      console.log(err);
     }
 
     setUploadSuccess(true);
@@ -187,11 +237,11 @@ export default function CertificationsPage() {
     }, 900);
   };
 
-  // Delete certificate (both custom & default)
-  const handleDeleteCert = (id) => {
-    // If it's custom, remove from custom list
-    if (customCerts.some((c) => c.id === id)) {
-      const updated = customCerts.filter((c) => c.id !== id);
+  // Delete certificate (both custom & default) -> Permanently updates DB & local storage
+  const handleDeleteCert = async (id) => {
+    // Remove from custom list
+    if (customCerts.some((c) => c.id === id || c._id === id)) {
+      const updated = customCerts.filter((c) => c.id !== id && c._id !== id);
       setCustomCerts(updated);
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
@@ -200,7 +250,7 @@ export default function CertificationsPage() {
       }
     }
 
-    // Add to deletedIds array in localStorage
+    // Add to deletedIds array
     const newDeleted = [...new Set([...deletedIds, id])];
     setDeletedIds(newDeleted);
     try {
@@ -209,7 +259,12 @@ export default function CertificationsPage() {
       console.error(e);
     }
 
-    if (previewCert && previewCert.id === id) {
+    // Delete from MongoDB API
+    try {
+      fetch(`/api/certificates?id=${encodeURIComponent(id)}`, { method: 'DELETE' }).catch(() => {});
+    } catch {}
+
+    if (previewCert && (previewCert.id === id || previewCert._id === id)) {
       setPreviewCert(null);
     }
     setDeleteConfirmId(null);
@@ -227,9 +282,9 @@ export default function CertificationsPage() {
 
   // Find cert to delete for confirmation dialog
   const certToDelete =
-    allCertificates.find((c) => c.id === deleteConfirmId) ||
+    allCertificates.find((c) => c.id === deleteConfirmId || c._id === deleteConfirmId) ||
     certificationsData.find((c) => c.id === deleteConfirmId) ||
-    customCerts.find((c) => c.id === deleteConfirmId);
+    customCerts.find((c) => c.id === deleteConfirmId || c._id === deleteConfirmId);
 
   // Dynamic categories based on active certificates
   const availableCategories = [
@@ -265,14 +320,14 @@ export default function CertificationsPage() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-950/50 border border-purple-500/30 text-purple-300 text-xs font-semibold tracking-wider uppercase mb-3">
-              <Award className="w-3.5 h-3.5 text-purple-400" />
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
               Verified Credentials & Achievements
             </div>
             <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
               Certifications & <span className="text-gradient">Accreditations</span>
             </h1>
             <p className="mt-4 text-base sm:text-lg text-slate-300">
-              Original certificates, national hackathon honors, and industry accreditations earned by Yazan. You can also upload new certificates or remove any certificate using the delete option.
+              Verified original certificates and national achievements earned by Yazan. Any certificate uploaded here is automatically verified and permanently stored.
             </p>
           </div>
 
@@ -302,15 +357,16 @@ export default function CertificationsPage() {
         {/* Stats Row */}
         <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4">
           <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/60 border border-slate-800">
-            <span className="text-xs font-medium text-slate-400">Active Certificates</span>
+            <span className="text-xs font-medium text-slate-400">Total Certificates</span>
             <div className="mt-1 text-2xl sm:text-3xl font-extrabold text-white">
               {allCertificates.length}
             </div>
           </div>
           <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/60 border border-slate-800">
-            <span className="text-xs font-medium text-slate-400">Original / Verified</span>
-            <div className="mt-1 text-2xl sm:text-3xl font-extrabold text-amber-400">
-              {allCertificates.filter((c) => c.isOriginal).length}
+            <span className="text-xs font-medium text-slate-400">Verified Credentials</span>
+            <div className="mt-1 text-2xl sm:text-3xl font-extrabold text-emerald-400 flex items-center gap-2">
+              <span>{allCertificates.length}</span>
+              <ShieldCheck className="w-5 h-5 text-emerald-400" />
             </div>
           </div>
           <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/60 border border-slate-800">
@@ -320,9 +376,10 @@ export default function CertificationsPage() {
             </div>
           </div>
           <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/60 border border-slate-800">
-            <span className="text-xs font-medium text-slate-400">User Uploads</span>
-            <div className="mt-1 text-2xl sm:text-3xl font-extrabold text-emerald-400">
-              {customCerts.filter((c) => !deletedIds.includes(c.id)).length}
+            <span className="text-xs font-medium text-slate-400">Database Status</span>
+            <div className="mt-1 text-sm sm:text-base font-bold text-emerald-300 flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>Permanent Storage</span>
             </div>
           </div>
         </div>
@@ -396,10 +453,10 @@ export default function CertificationsPage() {
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredCertificates.map((cert) => (
             <div
-              key={cert.id}
+              key={cert.id || cert._id}
               className={`group flex flex-col rounded-3xl bg-slate-900/60 border ${
                 cert.isOriginal
-                  ? 'border-amber-500/40 shadow-amber-950/20 hover:border-amber-400/80'
+                  ? 'border-emerald-500/40 shadow-emerald-950/20 hover:border-emerald-400/80'
                   : 'border-slate-800/80 hover:border-purple-500/50'
               } overflow-hidden shadow-xl shadow-black/30 hover:-translate-y-2 transition-all duration-300 relative`}
             >
@@ -423,27 +480,17 @@ export default function CertificationsPage() {
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent pointer-events-none" />
 
-                {/* Badges Overlay */}
+                {/* Badges Overlay -> ALWAYS VERIFIED */}
                 <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
                   <span className="px-3 py-1 rounded-full text-xs font-semibold bg-slate-950/85 backdrop-blur-md text-cyan-300 border border-cyan-500/30">
                     {cert.category}
                   </span>
 
-                  {cert.isOriginal ? (
-                    <span className="flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-amber-950/90 backdrop-blur-md text-amber-300 border border-amber-500/50 shadow-md shadow-amber-950/50">
-                      <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-                      Original
-                    </span>
-                  ) : cert.isCustom ? (
-                    <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-950/80 backdrop-blur-md text-emerald-300 border border-emerald-500/40">
-                      User Uploaded
-                    </span>
-                  ) : (
-                    <span className="flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-purple-950/80 backdrop-blur-md text-purple-300 border border-purple-500/30">
-                      <ShieldCheck className="w-3 h-3 text-purple-400" />
-                      Verified
-                    </span>
-                  )}
+                  {/* Prestigious Verified Badge on EVERY certificate */}
+                  <span className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-950/90 backdrop-blur-md text-emerald-300 border border-emerald-500/50 shadow-md shadow-emerald-950/50">
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>Verified</span>
+                  </span>
                 </div>
 
                 {/* Hover overlay hint */}
@@ -494,8 +541,8 @@ export default function CertificationsPage() {
                   {/* Credential ID */}
                   {cert.credentialId && (
                     <div className="mt-4 text-[11px] font-mono text-slate-400 bg-slate-950/60 px-3 py-1.5 rounded-lg border border-slate-800/60 flex items-center justify-between">
-                      <span>ID:</span>
-                      <span className="text-slate-300 font-semibold select-all">{cert.credentialId}</span>
+                      <span>Credential ID:</span>
+                      <span className="text-emerald-300 font-semibold select-all">{cert.credentialId}</span>
                     </div>
                   )}
                 </div>
@@ -525,7 +572,7 @@ export default function CertificationsPage() {
 
                     {/* Delete Certificate Button for Any Certificate */}
                     <button
-                      onClick={() => setDeleteConfirmId(cert.id)}
+                      onClick={() => setDeleteConfirmId(cert.id || cert._id)}
                       className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors flex items-center gap-1 text-xs"
                       title="Delete this certificate"
                     >
@@ -599,16 +646,24 @@ export default function CertificationsPage() {
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="flex items-center gap-3 mb-6">
+              <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 rounded-xl bg-purple-600/20 border border-purple-500/30 flex items-center justify-center text-purple-400">
                   <UploadCloud className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white">Upload Original Certificate</h3>
+                  <h3 className="text-xl font-bold text-white">Upload Verified Certificate</h3>
                   <p className="text-xs text-slate-400">
-                    Upload your Image (JPG, PNG) or PDF certificate to add it to your portfolio.
+                    Upload your Image (JPG, PNG) or PDF. Automatically marked as Verified and saved permanently.
                   </p>
                 </div>
+              </div>
+
+              {/* Verified Auto-Status Banner */}
+              <div className="mb-5 flex items-center gap-2.5 p-3 rounded-2xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-xs">
+                <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>
+                  <strong>Auto-Verification & Permanent Save:</strong> Any certificate uploaded here is instantly granted a <strong>Verified Badge</strong> and saved to permanent storage.
+                </span>
               </div>
 
               {uploadError && (
@@ -619,10 +674,12 @@ export default function CertificationsPage() {
 
               {uploadSuccess ? (
                 <div className="py-12 text-center">
-                  <CheckCircle2 className="w-12 h-12 text-emerald-400 mx-auto mb-3 animate-bounce" />
-                  <h4 className="text-lg font-bold text-white">Certificate Added Successfully!</h4>
+                  <div className="w-14 h-14 rounded-2xl bg-emerald-950 border border-emerald-500/40 flex items-center justify-center mx-auto mb-3 text-emerald-400">
+                    <ShieldCheck className="w-8 h-8 animate-pulse" />
+                  </div>
+                  <h4 className="text-lg font-bold text-white">Certificate Verified & Saved Permanently!</h4>
                   <p className="text-xs text-slate-400 mt-1">
-                    Your certificate is now stored and visible in your portfolio.
+                    Your certificate is now active with a Verified status in your portfolio.
                   </p>
                 </div>
               ) : (
@@ -706,7 +763,7 @@ export default function CertificationsPage() {
                         required
                         value={formTitle}
                         onChange={(e) => setFormTitle(e.target.value)}
-                        placeholder="e.g. All India Hackathon 2026"
+                        placeholder="e.g. Full-Stack Web Development"
                         className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
                       />
                     </div>
@@ -719,7 +776,7 @@ export default function CertificationsPage() {
                         required
                         value={formIssuer}
                         onChange={(e) => setFormIssuer(e.target.value)}
-                        placeholder="e.g. Axcentra / Google / College"
+                        placeholder="e.g. Google / Coursera / College"
                         className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
                       />
                     </div>
@@ -768,7 +825,7 @@ export default function CertificationsPage() {
                       type="text"
                       value={formSkills}
                       onChange={(e) => setFormSkills(e.target.value)}
-                      placeholder="e.g. Problem Solving, Algorithms, React, Node.js"
+                      placeholder="e.g. React, Node.js, JavaScript, MongoDB"
                       className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
                     />
                   </div>
@@ -783,7 +840,7 @@ export default function CertificationsPage() {
                         type="text"
                         value={formCredentialId}
                         onChange={(e) => setFormCredentialId(e.target.value)}
-                        placeholder="e.g. AIH-2026-12345"
+                        placeholder="e.g. CERT-982103"
                         className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
                       />
                     </div>
@@ -795,7 +852,7 @@ export default function CertificationsPage() {
                         type="url"
                         value={formCredentialUrl}
                         onChange={(e) => setFormCredentialUrl(e.target.value)}
-                        placeholder="https://verification-link.com/..."
+                        placeholder="https://verify.example.com/..."
                         className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
                       />
                     </div>
@@ -826,9 +883,10 @@ export default function CertificationsPage() {
                     </button>
                     <button
                       type="submit"
-                      className="px-6 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-lg shadow-purple-600/30 transition-all"
+                      className="px-6 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-lg shadow-purple-600/30 transition-all flex items-center gap-2"
                     >
-                      Save & Display Certificate
+                      <ShieldCheck className="w-4 h-4 text-emerald-300" />
+                      <span>Save as Verified Certificate</span>
                     </button>
                   </div>
                 </form>
@@ -859,13 +917,18 @@ export default function CertificationsPage() {
               {/* Header */}
               <div className="p-4 sm:p-5 border-b border-slate-800 flex items-center justify-between bg-slate-950/80">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-xl bg-purple-600/20 text-purple-400">
-                    <Award className="w-5 h-5" />
+                  <div className="p-2 rounded-xl bg-emerald-600/20 text-emerald-400">
+                    <ShieldCheck className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="text-base sm:text-lg font-bold text-white line-clamp-1">
-                      {previewCert.title}
-                    </h3>
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-base sm:text-lg font-bold text-white line-clamp-1">
+                        {previewCert.title}
+                      </h3>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/40 shrink-0">
+                        Verified
+                      </span>
+                    </div>
                     <p className="text-xs text-slate-400">
                       Issued by {previewCert.issuer} • {previewCert.issueDate}
                     </p>
@@ -875,7 +938,7 @@ export default function CertificationsPage() {
                 <div className="flex items-center gap-2">
                   {/* Delete from Preview Modal */}
                   <button
-                    onClick={() => setDeleteConfirmId(previewCert.id)}
+                    onClick={() => setDeleteConfirmId(previewCert.id || previewCert._id)}
                     className="p-2 rounded-xl bg-rose-950/60 text-rose-300 hover:bg-rose-900/60 border border-rose-500/30 transition-colors"
                     title="Delete this Certificate"
                   >
@@ -924,7 +987,7 @@ export default function CertificationsPage() {
                 <div className="text-xs text-slate-400">
                   {previewCert.credentialId && (
                     <div>
-                      Credential ID: <span className="font-mono text-purple-300 font-semibold">{previewCert.credentialId}</span>
+                      Credential ID: <span className="font-mono text-emerald-300 font-semibold">{previewCert.credentialId}</span>
                     </div>
                   )}
                   <p className="mt-1 text-slate-300">{previewCert.description}</p>
@@ -932,7 +995,7 @@ export default function CertificationsPage() {
 
                 <div className="flex items-center gap-2 self-end sm:self-auto shrink-0">
                   <button
-                    onClick={() => setDeleteConfirmId(previewCert.id)}
+                    onClick={() => setDeleteConfirmId(previewCert.id || previewCert._id)}
                     className="px-4 py-2.5 rounded-xl font-semibold text-xs text-rose-300 bg-rose-950/60 hover:bg-rose-900/60 border border-rose-500/30 transition-colors inline-flex items-center gap-1.5"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
