@@ -14,7 +14,6 @@ import ExperiencePage from './pages/ExperiencePage';
 import CertificationsPage from './pages/CertificationsPage';
 import ContactPage from './pages/ContactPage';
 import NotFoundPage from './pages/NotFoundPage';
-import AdminPage from './pages/AdminPage';
 
 export default function App() {
   return (
@@ -31,7 +30,6 @@ export default function App() {
             <Route path="/certifications" element={<CertificationsPage />} />
             <Route path="/experience" element={<ExperiencePage />} />
             <Route path="/contact" element={<ContactPage />} />
-            <Route path="/admin" element={<AdminPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>

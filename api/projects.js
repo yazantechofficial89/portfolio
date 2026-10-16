@@ -8,25 +8,14 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,POST,DELETE');
   res.setHeader(
     'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization, x-admin-key'
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization'
   );
 
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
 
-  // Security check: only allow POST & DELETE with valid admin passkey
-  const adminKey = req.headers['x-admin-key'] || req.query.key;
-  const validKey = process.env.ADMIN_SECRET || 'yazanAdmin2026';
 
-  if (req.method === 'POST' || req.method === 'DELETE') {
-    if (!adminKey || adminKey !== validKey) {
-      return res.status(401).json({
-        success: false,
-        error: 'Unauthorized: Only the portfolio owner can add or delete projects.',
-      });
-    }
-  }
 
   // Check if MongoDB is connected
   if (!process.env.MONGODB_URI) {

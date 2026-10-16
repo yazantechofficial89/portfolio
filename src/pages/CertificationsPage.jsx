@@ -11,51 +11,27 @@ import {
   Building2,
   Sparkles,
   CheckCircle2,
-  Trash2,
   Eye,
   ShieldCheck,
   FileText,
   Image as ImageIcon,
   Tag,
   Download,
-  Star,
-  RotateCcw,
-  Lock,
-  Unlock,
-  KeyRound
+  Star
 } from 'lucide-react';
 import { certificationsData } from '../data/portfolioData';
 
 const STORAGE_KEY = 'yazan_custom_certificates';
-const DELETED_KEY = 'yazan_deleted_certificates';
-const ADMIN_PASSKEY = 'yazanAdmin2026';
 
 export default function CertificationsPage() {
   const [customCerts, setCustomCerts] = useState([]);
-  const [deletedIds, setDeletedIds] = useState(() => {
-    try {
-      const saved = localStorage.getItem(DELETED_KEY);
-      return saved ? JSON.parse(saved) : [];
-    } catch (e) {
-      return [];
-    }
-  });
-
-  const [allCertificates, setAllCertificates] = useState([]);
+  const [allCertificates, setAllCertificates] = useState(certificationsData);
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
-  const [isSyncing, setIsSyncing] = useState(false);
 
-  // Admin authentication state (Only owner can edit/delete/upload)
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
-  const [adminInputKey, setAdminInputKey] = useState('');
-  const [adminError, setAdminError] = useState('');
-
-  // Modal states
+  // Modals
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [previewCert, setPreviewCert] = useState(null);
-  const [deleteConfirmId, setDeleteConfirmId] = useState(null);
 
   // Form states for Upload
   const [formTitle, setFormTitle] = useState('');
@@ -75,19 +51,8 @@ export default function CertificationsPage() {
 
   const fileInputRef = useRef(null);
 
-  // Check saved admin passkey on mount
+  // Load custom certificates from localStorage on mount
   useEffect(() => {
-    try {
-      const savedKey = localStorage.getItem('admin_passkey');
-      if (savedKey === ADMIN_PASSKEY) {
-        setIsAdmin(true);
-      }
-    } catch {}
-  }, []);
-
-  // 1. Load certificates from localStorage and fetch permanently from MongoDB API
-  useEffect(() => {
-    // Immediate load from local storage
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
@@ -99,93 +64,35 @@ export default function CertificationsPage() {
     } catch (e) {
       console.error('Error loading custom certificates:', e);
     }
-
-    // Sync from database API
-    setIsSyncing(true);
-    fetch('/api/certificates')
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.success && Array.isArray(data.certificates) && data.certificates.length > 0) {
-          setCustomCerts((prev) => {
-            const existingMap = new Map();
-            prev.forEach((c) => existingMap.set(c.id || c._id, c));
-            data.certificates.forEach((c) => {
-              const id = c._id || c.id;
-              existingMap.set(id, {
-                ...c,
-                id,
-                isVerified: true,
-                isCustom: true,
-              });
-            });
-            const merged = Array.from(existingMap.values());
-            try {
-              localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
-            } catch (err) {}
-            return merged;
-          });
-        }
-      })
-      .catch((err) => {
-        console.log('Background DB sync attempt:', err);
-      })
-      .finally(() => {
-        setIsSyncing(false);
-      });
   }, []);
 
-  // Merge default portfolio certificates with custom/database ones, excluding deleted ones
+  // Merge default portfolio certificates with custom ones
   useEffect(() => {
     const combined = [...customCerts, ...certificationsData];
-    const visible = combined.filter((c) => !deletedIds.includes(c.id) && !deletedIds.includes(c._id));
-    setAllCertificates(visible);
-  }, [customCerts, deletedIds]);
+    setAllCertificates(combined);
+  }, [customCerts]);
 
-  // Admin Login Handler
-  const handleAdminLogin = (e) => {
-    e.preventDefault();
-    setAdminError('');
-
-    if (adminInputKey.trim() === ADMIN_PASSKEY) {
-      setIsAdmin(true);
-      try {
-        localStorage.setItem('admin_passkey', ADMIN_PASSKEY);
-      } catch {}
-      setIsAdminModalOpen(false);
-      setAdminInputKey('');
-    } else {
-      setAdminError('Incorrect Admin Passkey. Access restricted to portfolio owner.');
-    }
-  };
-
-  const handleAdminLogout = () => {
-    setIsAdmin(false);
-    try {
-      localStorage.removeItem('admin_passkey');
-    } catch {}
-  };
-
-  // Handle file selection (Image or PDF)
+  // Handle local file selection
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
     setUploadError('');
     if (!file) return;
 
-    const isImage = file.type.startsWith('image/');
     const isPdf = file.type === 'application/pdf';
+    const isImage = file.type.startsWith('image/');
 
-    if (!isImage && !isPdf) {
-      setUploadError('Please select a valid image (PNG, JPG, WEBP) or PDF file.');
+    if (!isPdf && !isImage) {
+      setUploadError('Please select a valid image file (JPG, PNG, WEBP) or PDF.');
       return;
     }
 
-    if (file.size > 25 * 1024 * 1024) {
-      setUploadError('File size exceeds 25MB limit.');
+    if (file.size > 15 * 1024 * 1024) {
+      setUploadError('File size exceeds 15MB limit.');
       return;
     }
 
-    setFormFileName(file.name);
     setFormFileType(isPdf ? 'pdf' : 'image');
+    setFormFileName(file.name);
 
     const reader = new FileReader();
     reader.onload = () => {
@@ -197,15 +104,10 @@ export default function CertificationsPage() {
     reader.readAsDataURL(file);
   };
 
-  // Submit new certificate -> Automatically Verified & Permanently Saved
-  const handleAddCertificate = async (e) => {
+  // Submit new certificate
+  const handleUploadSubmit = (e) => {
     e.preventDefault();
     setUploadError('');
-
-    if (!isAdmin) {
-      setUploadError('Unauthorized: Admin passkey required to upload.');
-      return;
-    }
 
     if (!formTitle.trim()) {
       setUploadError('Certificate Title is required.');
@@ -219,67 +121,50 @@ export default function CertificationsPage() {
     const finalImage =
       formImagePreview ||
       formImageUrl.trim() ||
-      'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1200&q=80';
+      'https://images.unsplash.com/photo-1589330694653-dad6d3240a2b?auto=format&fit=crop&w=1200&q=80';
 
     const parsedSkills = formSkills
       ? formSkills.split(',').map((s) => s.trim()).filter(Boolean)
-      : ['Software Engineering', 'Verified Skills'];
+      : ['Web Development', 'Full-Stack'];
 
     const newCert = {
-      id: `custom-${Date.now()}`,
+      id: `cert-${Date.now()}`,
       title: formTitle.trim(),
       issuer: formIssuer.trim(),
       issueDate: formDate.trim() || new Date().getFullYear().toString(),
       category: formCategory,
-      skills: parsedSkills,
-      credentialId: formCredentialId.trim() || `VERIFIED-${Math.floor(100000 + Math.random() * 900000)}`,
+      credentialId: formCredentialId.trim() || `VERIFIED-${Date.now().toString().slice(-6)}`,
       credentialUrl: formCredentialUrl.trim() || '',
-      description: formDescription.trim() || 'Officially verified original certificate.',
+      description:
+        formDescription.trim() ||
+        `Verified certification awarded to Yazan Gupta by ${formIssuer.trim()}.`,
       image: finalImage,
       type: formFileType,
-      fileName: formFileName,
-      isVerified: true, // Always verified
-      isOriginal: true,
+      fileName: formFileName || 'certificate.jpg',
+      skills: parsedSkills,
+      featured: true,
+      isVerified: true,
       isCustom: true,
-      uploadedAt: new Date().toISOString(),
     };
 
-    // 1. Immediately store in local state and localStorage
     const updated = [newCert, ...customCerts];
     setCustomCerts(updated);
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
     } catch (err) {
-      console.warn('LocalStorage save error:', err);
-    }
-
-    // 2. Permanently save to database via serverless API
-    try {
-      fetch('/api/certificates', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-key': ADMIN_PASSKEY,
-        },
-        body: JSON.stringify(newCert),
-      }).catch((e) => console.log('API background save:', e));
-    } catch (err) {
-      console.log(err);
+      console.warn('LocalStorage error:', err);
     }
 
     setUploadSuccess(true);
     setTimeout(() => {
-      // Reset form
       setFormTitle('');
       setFormIssuer('');
       setFormDate(new Date().getFullYear().toString());
-      setFormCategory('Hackathons & Competitions');
       setFormSkills('');
       setFormCredentialId('');
       setFormCredentialUrl('');
       setFormDescription('');
       setFormImagePreview('');
-      setFormFileType('image');
       setFormFileName('');
       setFormImageUrl('');
       setUploadSuccess(false);
@@ -287,78 +172,16 @@ export default function CertificationsPage() {
     }, 900);
   };
 
-  // Delete certificate (Admin only)
-  const handleDeleteCert = async (id) => {
-    if (!isAdmin) return;
-
-    // Remove from custom list
-    if (customCerts.some((c) => c.id === id || c._id === id)) {
-      const updated = customCerts.filter((c) => c.id !== id && c._id !== id);
-      setCustomCerts(updated);
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-      } catch (e) {
-        console.error(e);
-      }
-    }
-
-    // Add to deletedIds array
-    const newDeleted = [...new Set([...deletedIds, id])];
-    setDeletedIds(newDeleted);
-    try {
-      localStorage.setItem(DELETED_KEY, JSON.stringify(newDeleted));
-    } catch (e) {
-      console.error(e);
-    }
-
-    // Delete from MongoDB API
-    try {
-      fetch(`/api/certificates?id=${encodeURIComponent(id)}`, {
-        method: 'DELETE',
-        headers: {
-          'x-admin-key': ADMIN_PASSKEY,
-        },
-      }).catch(() => {});
-    } catch {}
-
-    if (previewCert && (previewCert.id === id || previewCert._id === id)) {
-      setPreviewCert(null);
-    }
-    setDeleteConfirmId(null);
-  };
-
-  // Restore all deleted certificates (Admin only)
-  const handleRestoreDeleted = () => {
-    if (!isAdmin) return;
-    setDeletedIds([]);
-    try {
-      localStorage.removeItem(DELETED_KEY);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  // Find cert to delete for confirmation dialog
-  const certToDelete =
-    allCertificates.find((c) => c.id === deleteConfirmId || c._id === deleteConfirmId) ||
-    certificationsData.find((c) => c.id === deleteConfirmId) ||
-    customCerts.find((c) => c.id === deleteConfirmId || c._id === deleteConfirmId);
-
-  // Dynamic categories based on active certificates
+  // Categories list
   const availableCategories = [
     'All',
-    ...Array.from(new Set(allCertificates.map((c) => c.category))).filter(Boolean),
-    ...(allCertificates.some((c) => c.isCustom) ? ['Custom Uploads'] : [])
+    ...Array.from(new Set(allCertificates.map((c) => c.category))).filter(Boolean)
   ];
 
-  // Filter certificates
+  // Filtered certificates
   const filteredCertificates = allCertificates.filter((cert) => {
     const matchesCategory =
-      activeCategory === 'All'
-        ? true
-        : activeCategory === 'Custom Uploads'
-        ? Boolean(cert.isCustom)
-        : cert.category === activeCategory;
+      activeCategory === 'All' || cert.category === activeCategory;
 
     const query = searchQuery.toLowerCase();
     const matchesQuery =
@@ -379,112 +202,72 @@ export default function CertificationsPage() {
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-950/50 border border-purple-500/30 text-purple-300 text-xs font-semibold tracking-wider uppercase mb-3">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              Verified Credentials & Achievements
+              Verified Credentials &amp; Achievements
             </div>
             <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
-              Certifications & <span className="text-gradient">Accreditations</span>
+              Certifications &amp; <span className="text-gradient">Accreditations</span>
             </h1>
             <p className="mt-4 text-base sm:text-lg text-slate-300">
-              Verified original certificates and national achievements earned by Yazan. Protected showcase — credentials are authentically displayed and tamper-proof.
+              Verified original certificates and national achievements earned by Yazan Gupta. High-resolution document previews and official credential verifications.
             </p>
           </div>
 
-          {/* Action Header Controls */}
-          <div className="flex flex-wrap items-center gap-3 self-start md:self-auto">
-            {isAdmin ? (
-              // Owner / Admin Mode Active
-              <div className="flex items-center gap-2">
-                <div className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-purple-950/80 border border-purple-500/40 text-purple-200 text-xs font-semibold">
-                  <Unlock className="w-3.5 h-3.5 text-purple-400" />
-                  <span>Owner Mode</span>
-                </div>
-
-                <button
-                  onClick={() => setIsUploadModalOpen(true)}
-                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl font-semibold text-xs text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:shadow-lg hover:shadow-purple-600/30 transition-all shadow-md"
-                >
-                  <Plus className="w-4 h-4" />
-                  <span>Upload Certificate</span>
-                </button>
-
-                {deletedIds.length > 0 && (
-                  <button
-                    onClick={handleRestoreDeleted}
-                    className="inline-flex items-center gap-1 px-3 py-2 rounded-xl font-semibold text-xs text-amber-300 bg-amber-950/60 border border-amber-500/30 hover:bg-amber-900/60 transition-colors"
-                    title="Restore deleted"
-                  >
-                    <RotateCcw className="w-3.5 h-3.5" />
-                    <span>({deletedIds.length})</span>
-                  </button>
-                )}
-
-                <button
-                  onClick={handleAdminLogout}
-                  className="p-2 rounded-xl text-slate-400 hover:text-white bg-slate-900 border border-slate-800 transition-colors"
-                  title="Lock Owner Mode"
-                >
-                  <Lock className="w-4 h-4" />
-                </button>
-              </div>
-            ) : (
-              // Public Visitor Mode -> Protected & Tamper-proof
-              <button
-                onClick={() => setIsAdminModalOpen(true)}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-medium text-slate-400 hover:text-slate-200 bg-slate-900/60 border border-slate-800/80 hover:border-purple-500/40 transition-colors"
-                title="Portfolio Owner Access"
-              >
-                <Lock className="w-3.5 h-3.5 text-slate-400" />
-                <span>Owner Login</span>
-              </button>
-            )}
+          {/* Action Header Button */}
+          <div className="flex items-center gap-3 self-start md:self-auto">
+            <button
+              onClick={() => setIsUploadModalOpen(true)}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-xs text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:shadow-lg hover:shadow-purple-600/30 transition-all shadow-md"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Add Certificate</span>
+            </button>
           </div>
         </div>
 
         {/* Stats Row */}
         <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4">
           <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/60 border border-slate-800">
-            <span className="text-xs font-medium text-slate-400">Total Certificates</span>
+            <span className="text-xs font-medium text-slate-400">Total Credentials</span>
             <div className="mt-1 text-2xl sm:text-3xl font-extrabold text-white">
               {allCertificates.length}
             </div>
           </div>
           <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/60 border border-slate-800">
-            <span className="text-xs font-medium text-slate-400">Verified Credentials</span>
-            <div className="mt-1 text-2xl sm:text-3xl font-extrabold text-emerald-400 flex items-center gap-2">
-              <span>{allCertificates.length}</span>
-              <ShieldCheck className="w-5 h-5 text-emerald-400" />
+            <span className="text-xs font-medium text-slate-400">Verification Status</span>
+            <div className="mt-1 text-base sm:text-lg font-bold text-emerald-400 flex items-center gap-1.5">
+              <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0" />
+              100% Authentic
             </div>
           </div>
           <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/60 border border-slate-800">
-            <span className="text-xs font-medium text-slate-400">Issuing Entities</span>
+            <span className="text-xs font-medium text-slate-400">Govt &amp; National</span>
+            <div className="mt-1 text-2xl sm:text-3xl font-extrabold text-purple-400">
+              {allCertificates.filter((c) => c.category?.includes('Government') || c.category?.includes('National')).length || 1}
+            </div>
+          </div>
+          <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/60 border border-slate-800">
+            <span className="text-xs font-medium text-slate-400">Hackathons &amp; Awards</span>
             <div className="mt-1 text-2xl sm:text-3xl font-extrabold text-cyan-400">
-              {new Set(allCertificates.map((c) => c.issuer)).size}
-            </div>
-          </div>
-          <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/60 border border-slate-800">
-            <span className="text-xs font-medium text-slate-400">Protection Status</span>
-            <div className="mt-1 text-xs sm:text-sm font-bold text-emerald-300 flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
-              <span>Tamper-Proof Locked</span>
+              {allCertificates.filter((c) => c.category?.includes('Hackathon')).length || 1}
             </div>
           </div>
         </div>
 
         {/* Search & Category Filter Controls */}
         <div className="mt-10 flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center">
-          {/* Search Input */}
+          {/* Search Bar */}
           <div className="relative flex-1 max-w-md">
             <Search className="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by title, issuer, credential ID, or skill..."
+              placeholder="Search by title, organization, or skills..."
               className="w-full pl-11 pr-4 py-3 rounded-2xl bg-slate-900/80 border border-slate-800 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-purple-500 transition-colors"
             />
           </div>
 
-          {/* Category Filter Buttons */}
+          {/* Category Filter Pills */}
           <div className="flex flex-wrap gap-2">
             {availableCategories.map((cat) => (
               <button
@@ -497,93 +280,78 @@ export default function CertificationsPage() {
                 }`}
               >
                 {cat}
-                {cat === 'Custom Uploads' && customCerts.length > 0 && (
-                  <span className="ml-1.5 px-1.5 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-300">
-                    {customCerts.filter((c) => !deletedIds.includes(c.id)).length}
-                  </span>
-                )}
               </button>
             ))}
           </div>
         </div>
 
-        {/* Counter Bar */}
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400 font-mono">
+        {/* Counter */}
+        <div className="mt-6 flex items-center justify-between text-xs text-slate-400 font-mono">
           <span>
             Showing {filteredCertificates.length} of {allCertificates.length} certificates
           </span>
-
-          <div className="flex items-center gap-4">
-            {isAdmin && deletedIds.length > 0 && (
-              <button
-                onClick={handleRestoreDeleted}
-                className="text-amber-400 hover:underline flex items-center gap-1"
-              >
-                <RotateCcw className="w-3.5 h-3.5" />
-                <span>Undo / Restore {deletedIds.length} deleted</span>
-              </button>
-            )}
-
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                className="text-purple-400 hover:underline"
-              >
-                Clear search
-              </button>
-            )}
-          </div>
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery('')}
+              className="text-purple-400 hover:underline"
+            >
+              Clear search
+            </button>
+          )}
         </div>
 
         {/* Certificates Grid */}
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredCertificates.map((cert) => (
-            <div
+            <motion.div
+              layout
               key={cert.id || cert._id}
-              className={`group flex flex-col rounded-3xl bg-slate-900/60 border ${
-                cert.isOriginal
-                  ? 'border-emerald-500/40 shadow-emerald-950/20 hover:border-emerald-400/80'
-                  : 'border-slate-800/80 hover:border-purple-500/50'
-              } overflow-hidden shadow-xl shadow-black/30 hover:-translate-y-2 transition-all duration-300 relative`}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="group flex flex-col rounded-3xl bg-slate-900/70 border border-slate-800/80 hover:border-purple-500/50 overflow-hidden shadow-xl shadow-black/30 hover:-translate-y-1.5 transition-all duration-300"
             >
-              {/* Image / Thumbnail Preview with Click to Enlarge */}
+              {/* Certificate Image Preview */}
               <div
                 onClick={() => setPreviewCert(cert)}
-                className="relative h-52 w-full overflow-hidden bg-slate-950 cursor-pointer"
+                className="relative h-56 w-full overflow-hidden bg-slate-950 cursor-pointer"
               >
                 {cert.type === 'pdf' ? (
-                  <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 to-purple-950/40 p-6">
-                    <FileText className="w-14 h-14 text-purple-400 mb-2" />
-                    <span className="text-xs font-semibold text-white text-center line-clamp-1">{cert.title}</span>
-                    <span className="text-[11px] text-slate-400 mt-1">PDF Document • Click to View</span>
+                  <div className="w-full h-full flex flex-col items-center justify-center p-4 bg-slate-950 text-slate-400 group-hover:text-purple-300 transition-colors">
+                    <FileText className="w-16 h-16 text-purple-400 mb-2" />
+                    <span className="text-xs font-mono font-medium">PDF Certificate Document</span>
+                    <span className="text-[10px] text-slate-500 mt-1">Click to preview full-screen</span>
                   </div>
                 ) : (
                   <img
                     src={cert.image}
                     alt={cert.title}
-                    className="w-full h-full object-contain p-2 bg-slate-950/90 group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
                   />
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
 
-                {/* Badges Overlay -> ALWAYS VERIFIED */}
+                {/* Top Badges */}
                 <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
-                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-slate-950/85 backdrop-blur-md text-cyan-300 border border-cyan-500/30">
-                    {cert.category}
+                  <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-950/90 text-emerald-300 border border-emerald-500/30 backdrop-blur-md">
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                    Verified
                   </span>
 
-                  {/* Prestigious Verified Badge on EVERY certificate */}
-                  <span className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-950/90 backdrop-blur-md text-emerald-300 border border-emerald-500/50 shadow-md shadow-emerald-950/50">
-                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>Verified</span>
-                  </span>
+                  {cert.featured && (
+                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-purple-950/90 text-purple-300 border border-purple-500/30 backdrop-blur-md">
+                      <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
+                      Original
+                    </span>
+                  )}
                 </div>
 
                 {/* Hover overlay hint */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-slate-950/60 backdrop-blur-[2px] transition-opacity">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 text-white text-xs font-medium border border-white/20">
-                    <Eye className="w-3.5 h-3.5" />
-                    Click to View Full Certificate
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                  <span className="px-4 py-2 rounded-xl bg-purple-600/90 text-white text-xs font-semibold backdrop-blur-md flex items-center gap-1.5 shadow-lg">
+                    <Eye className="w-4 h-4" />
+                    <span>View Certificate</span>
                   </span>
                 </div>
               </div>
@@ -591,200 +359,69 @@ export default function CertificationsPage() {
               {/* Certificate Details */}
               <div className="p-6 flex-1 flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center gap-2 text-xs text-slate-400 mb-2">
-                    <Building2 className="w-3.5 h-3.5 text-purple-400" />
-                    <span className="font-medium text-slate-300">{cert.issuer}</span>
-                    <span>•</span>
-                    <Calendar className="w-3.5 h-3.5 text-slate-400" />
-                    <span>{cert.issueDate}</span>
+                  <div className="flex items-center gap-2 text-xs text-purple-400 font-medium mb-1.5">
+                    <Building2 className="w-3.5 h-3.5" />
+                    <span className="truncate">{cert.issuer}</span>
                   </div>
 
-                  <h3
-                    onClick={() => setPreviewCert(cert)}
-                    className="text-lg font-bold text-white group-hover:text-purple-300 transition-colors cursor-pointer line-clamp-2"
-                  >
+                  <h3 className="text-lg font-bold text-white group-hover:text-purple-300 transition-colors line-clamp-2">
                     {cert.title}
                   </h3>
 
-                  <p className="mt-2.5 text-xs sm:text-sm text-slate-400 line-clamp-3 leading-relaxed">
+                  <p className="mt-2 text-xs sm:text-sm text-slate-400 leading-relaxed line-clamp-2">
                     {cert.description}
                   </p>
 
-                  {/* Skills / Topics */}
+                  {/* Skills tags */}
                   {cert.skills && cert.skills.length > 0 && (
                     <div className="mt-4 flex flex-wrap gap-1.5">
                       {cert.skills.map((skill) => (
                         <span
                           key={skill}
-                          className="px-2.5 py-1 rounded-md text-[11px] font-mono font-medium bg-slate-800/80 text-purple-200 border border-slate-700/60"
+                          className="px-2.5 py-1 rounded-md text-[10px] font-mono font-medium bg-slate-800/80 text-purple-200 border border-slate-700/60"
                         >
                           {skill}
                         </span>
                       ))}
                     </div>
                   )}
-
-                  {/* Credential ID */}
-                  {cert.credentialId && (
-                    <div className="mt-4 text-[11px] font-mono text-slate-400 bg-slate-950/60 px-3 py-1.5 rounded-lg border border-slate-800/60 flex items-center justify-between">
-                      <span>Credential ID:</span>
-                      <span className="text-emerald-300 font-semibold select-all">{cert.credentialId}</span>
-                    </div>
-                  )}
                 </div>
 
-                {/* Bottom Action Footer */}
+                {/* Footer details & Action */}
                 <div className="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between">
+                  <div className="flex items-center gap-1 text-[11px] font-mono text-slate-400">
+                    <Calendar className="w-3 h-3 text-slate-500" />
+                    <span>{cert.issueDate}</span>
+                  </div>
+
                   <button
                     onClick={() => setPreviewCert(cert)}
                     className="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors"
                   >
-                    <Eye className="w-3.5 h-3.5" />
-                    <span>View</span>
+                    <span>Inspect</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
                   </button>
-
-                  <div className="flex items-center gap-2">
-                    {cert.credentialUrl && (
-                      <a
-                        href={cert.credentialUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white transition-colors"
-                      >
-                        <span>Verify</span>
-                        <ExternalLink className="w-3.5 h-3.5" />
-                      </a>
-                    )}
-
-                    {/* Delete button only shown to authenticated Admin/Owner */}
-                    {isAdmin && (
-                      <button
-                        onClick={() => setDeleteConfirmId(cert.id || cert._id)}
-                        className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors flex items-center gap-1 text-xs"
-                        title="Delete this certificate (Admin Only)"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                        <span className="hidden sm:inline">Delete</span>
-                      </button>
-                    )}
-                  </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
         {/* Empty State */}
         {filteredCertificates.length === 0 && (
-          <div className="mt-16 text-center py-16 px-4 rounded-3xl bg-slate-900/40 border border-slate-800/60">
-            <Award className="w-12 h-12 text-slate-600 mx-auto mb-4" />
+          <div className="py-20 text-center rounded-3xl bg-slate-900/40 border border-slate-800/80 mt-8">
+            <Award className="w-12 h-12 text-slate-600 mx-auto mb-3" />
             <h3 className="text-lg font-bold text-white">No certificates found</h3>
-            <p className="text-sm text-slate-400 mt-2 max-w-sm mx-auto">
-              No credentials match your active filter or search query.
+            <p className="text-sm text-slate-400 mt-1">
+              Try adjusting your search query or selected category.
             </p>
-            <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
-              <button
-                onClick={() => {
-                  setActiveCategory('All');
-                  setSearchQuery('');
-                }}
-                className="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-white transition-colors"
-              >
-                Reset Filters
-              </button>
-              {isAdmin && deletedIds.length > 0 && (
-                <button
-                  onClick={handleRestoreDeleted}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold bg-amber-950/80 border border-amber-500/40 text-amber-300 hover:bg-amber-900/80 transition-colors flex items-center gap-1.5"
-                >
-                  <RotateCcw className="w-3.5 h-3.5" />
-                  <span>Restore Deleted ({deletedIds.length})</span>
-                </button>
-              )}
-            </div>
           </div>
         )}
       </div>
 
-      {/* Admin Passkey Login Modal */}
+      {/* Add Certificate Modal */}
       <AnimatePresence>
-        {isAdminModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsAdminModalOpen(false)}
-              className="fixed inset-0 bg-black/80 backdrop-blur-md"
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="relative w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 z-10 shadow-2xl"
-            >
-              <button
-                onClick={() => setIsAdminModalOpen(false)}
-                className="absolute top-5 right-5 p-2 rounded-xl bg-slate-800/80 text-slate-400 hover:text-white transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
-
-              <div className="w-12 h-12 rounded-2xl bg-purple-600/20 border border-purple-500/30 text-purple-400 flex items-center justify-center mb-4">
-                <KeyRound className="w-6 h-6" />
-              </div>
-
-              <h3 className="text-xl font-bold text-white">Owner / Admin Access</h3>
-              <p className="text-xs text-slate-400 mt-1.5 leading-relaxed">
-                Enter your Admin Passkey to unlock certificate uploading, editing, and deletion controls.
-              </p>
-
-              {adminError && (
-                <div className="mt-4 p-3 rounded-xl bg-rose-950/60 border border-rose-500/40 text-rose-300 text-xs">
-                  {adminError}
-                </div>
-              )}
-
-              <form onSubmit={handleAdminLogin} className="mt-5 space-y-4">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
-                    Admin Passkey
-                  </label>
-                  <input
-                    type="password"
-                    required
-                    value={adminInputKey}
-                    onChange={(e) => setAdminInputKey(e.target.value)}
-                    placeholder="Enter passkey..."
-                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
-                    autoFocus
-                  />
-                </div>
-
-                <div className="pt-2 flex items-center justify-end gap-3">
-                  <button
-                    type="button"
-                    onClick={() => setIsAdminModalOpen(false)}
-                    className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-5 py-2.5 rounded-xl text-xs font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:shadow-lg hover:shadow-purple-600/30 transition-all shadow-md"
-                  >
-                    Unlock Controls
-                  </button>
-                </div>
-              </form>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
-
-      {/* Upload Certificate Modal (Admin Only) */}
-      <AnimatePresence>
-        {isUploadModalOpen && isAdmin && (
+        {isUploadModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
             {/* Backdrop */}
             <motion.div
@@ -795,39 +432,30 @@ export default function CertificationsPage() {
               className="fixed inset-0 bg-black/80 backdrop-blur-md"
             />
 
-            {/* Modal Dialog */}
+            {/* Modal Body */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              className="relative w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl p-6 sm:p-8 z-10 max-h-[90vh] overflow-y-auto"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="relative w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 z-10 shadow-2xl max-h-[90vh] overflow-y-auto my-auto"
             >
-              {/* Close Button */}
               <button
                 onClick={() => setIsUploadModalOpen(false)}
-                className="absolute top-5 right-5 p-2 rounded-xl bg-slate-800/80 text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"
+                className="absolute top-5 right-5 p-2 rounded-xl bg-slate-800/80 text-slate-400 hover:text-white transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
 
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-purple-600/20 border border-purple-500/30 flex items-center justify-center text-purple-400">
-                  <UploadCloud className="w-5 h-5" />
+                <div className="w-12 h-12 rounded-2xl bg-purple-600/20 border border-purple-500/30 text-purple-400 flex items-center justify-center">
+                  <Award className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white">Upload Verified Certificate</h3>
+                  <h3 className="text-xl font-bold text-white">Add New Certificate</h3>
                   <p className="text-xs text-slate-400">
-                    Upload your Image (JPG, PNG) or PDF. Automatically marked as Verified and saved permanently.
+                    Upload image or PDF of your original credential.
                   </p>
                 </div>
-              </div>
-
-              {/* Verified Auto-Status Banner */}
-              <div className="mb-5 flex items-center gap-2.5 p-3 rounded-2xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-xs">
-                <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>
-                  <strong>Owner Mode Active:</strong> Certificate will be granted a permanent <strong>Verified Badge</strong> and saved to database.
-                </span>
               </div>
 
               {uploadError && (
@@ -835,235 +463,171 @@ export default function CertificationsPage() {
                   {uploadError}
                 </div>
               )}
-
-              {uploadSuccess ? (
-                <div className="py-12 text-center">
-                  <div className="w-14 h-14 rounded-2xl bg-emerald-950 border border-emerald-500/40 flex items-center justify-center mx-auto mb-3 text-emerald-400">
-                    <ShieldCheck className="w-8 h-8 animate-pulse" />
-                  </div>
-                  <h4 className="text-lg font-bold text-white">Certificate Verified & Saved Permanently!</h4>
-                  <p className="text-xs text-slate-400 mt-1">
-                    Your certificate is now active with a Verified status in your portfolio.
-                  </p>
+              {uploadSuccess && (
+                <div className="mb-4 p-3 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-xs font-semibold flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  <span>Certificate added successfully!</span>
                 </div>
-              ) : (
-                <form onSubmit={handleAddCertificate} className="space-y-4">
-                  {/* File Upload Zone */}
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-                      Certificate File (Image or PDF)
-                    </label>
-                    <div
-                      onClick={() => fileInputRef.current?.click()}
-                      className="border-2 border-dashed border-slate-700 hover:border-purple-500/60 rounded-2xl p-6 text-center cursor-pointer transition-colors bg-slate-950/40"
-                    >
-                      {formImagePreview ? (
-                        <div className="relative group max-h-48 overflow-hidden rounded-xl">
-                          {formFileType === 'pdf' ? (
-                            <div className="py-8 flex flex-col items-center justify-center">
-                              <FileText className="w-12 h-12 text-purple-400 mb-2" />
-                              <span className="text-sm font-semibold text-white">{formFileName || 'PDF Document Selected'}</span>
-                              <span className="text-xs text-purple-300 mt-1">Click to change file</span>
-                            </div>
-                          ) : (
-                            <>
-                              <img
-                                src={formImagePreview}
-                                alt="Uploaded preview"
-                                className="w-full h-44 object-contain mx-auto"
-                              />
-                              <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                <span className="text-xs text-white font-medium">Click to change image</span>
-                              </div>
-                            </>
-                          )}
-                        </div>
-                      ) : (
-                        <div className="flex flex-col items-center">
-                          <ImageIcon className="w-8 h-8 text-purple-400 mb-2" />
-                          <p className="text-sm font-medium text-white">
-                            Click to select certificate image or PDF
-                          </p>
-                          <p className="text-xs text-slate-400 mt-1">
-                            JPG, PNG, WEBP, or PDF up to 25MB
-                          </p>
-                        </div>
-                      )}
-                      <input
-                        ref={fileInputRef}
-                        type="file"
-                        accept="image/*,application/pdf"
-                        onChange={handleFileChange}
-                        className="hidden"
-                      />
-                    </div>
-                  </div>
+              )}
 
-                  {/* Or Image URL */}
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
-                      Or Online Image / Document URL (Optional)
-                    </label>
+              <form onSubmit={handleUploadSubmit} className="space-y-4">
+                {/* File Upload Zone */}
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+                    Certificate Document (Image or PDF)
+                  </label>
+                  <div
+                    onClick={() => fileInputRef.current?.click()}
+                    className="border-2 border-dashed border-slate-700 hover:border-purple-500 rounded-2xl p-6 text-center cursor-pointer transition-colors bg-slate-950/50"
+                  >
                     <input
-                      type="url"
-                      value={formImageUrl}
-                      onChange={(e) => {
-                        setFormImageUrl(e.target.value);
-                        if (!formImagePreview) setFormImagePreview(e.target.value);
-                      }}
-                      placeholder="https://... direct link to certificate image or PDF"
-                      className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
+                      type="file"
+                      ref={fileInputRef}
+                      onChange={handleFileChange}
+                      accept="image/*,application/pdf"
+                      className="hidden"
                     />
+                    <UploadCloud className="w-10 h-10 text-purple-400 mx-auto mb-2" />
+                    <p className="text-sm font-medium text-white">
+                      Click to browse or drag &amp; drop
+                    </p>
+                    <p className="text-xs text-slate-400 mt-1">
+                      PNG, JPG, WEBP, or PDF (Max 15MB)
+                    </p>
+                    {formFileName && (
+                      <div className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-purple-950/80 border border-purple-500/30 text-purple-300 text-xs font-mono">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                        <span>{formFileName}</span>
+                      </div>
+                    )}
                   </div>
+                </div>
 
-                  {/* Title & Issuer Grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
-                        Certificate Title *
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        value={formTitle}
-                        onChange={(e) => setFormTitle(e.target.value)}
-                        placeholder="e.g. Full-Stack Web Development"
-                        className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
-                        Issuing Organization *
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        value={formIssuer}
-                        onChange={(e) => setFormIssuer(e.target.value)}
-                        placeholder="e.g. Google / Coursera / College"
-                        className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Category & Date Grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
-                        Category
-                      </label>
-                      <select
-                        value={formCategory}
-                        onChange={(e) => setFormCategory(e.target.value)}
-                        className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
-                      >
-                        <option value="Hackathons & Competitions">Hackathons & Competitions</option>
-                        <option value="Government & Honors">Government & Honors</option>
-                        <option value="Web Development">Web Development</option>
-                        <option value="Cloud & DevOps">Cloud & DevOps</option>
-                        <option value="Databases">Databases</option>
-                        <option value="Programming">Programming</option>
-                        <option value="AI & Machine Learning">AI & Machine Learning</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
-                        Issue Year / Date
-                      </label>
-                      <input
-                        type="text"
-                        value={formDate}
-                        onChange={(e) => setFormDate(e.target.value)}
-                        placeholder="e.g. 2026 or Sept 2026"
-                        className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Skills tags */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
-                      Skills / Technologies (Comma Separated)
+                    <label className="block text-xs font-medium text-slate-300 mb-1">
+                      Certificate Title *
                     </label>
                     <input
                       type="text"
-                      value={formSkills}
-                      onChange={(e) => setFormSkills(e.target.value)}
-                      placeholder="e.g. React, Node.js, JavaScript, MongoDB"
+                      required
+                      value={formTitle}
+                      onChange={(e) => setFormTitle(e.target.value)}
+                      placeholder="e.g. All India Hackathon Winner"
                       className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
                     />
                   </div>
 
-                  {/* Credential ID & URL */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
-                        Credential ID (Optional)
-                      </label>
-                      <input
-                        type="text"
-                        value={formCredentialId}
-                        onChange={(e) => setFormCredentialId(e.target.value)}
-                        placeholder="e.g. CERT-982103"
-                        className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
-                        Verification URL (Optional)
-                      </label>
-                      <input
-                        type="url"
-                        value={formCredentialUrl}
-                        onChange={(e) => setFormCredentialUrl(e.target.value)}
-                        placeholder="https://verify.example.com/..."
-                        className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
-                      />
-                    </div>
+                  <div>
+                    <label className="block text-xs font-medium text-slate-300 mb-1">
+                      Issuing Organization *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={formIssuer}
+                      onChange={(e) => setFormIssuer(e.target.value)}
+                      placeholder="e.g. Ministry of Youth Affairs / IEEE"
+                      className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-xs font-medium text-slate-300 mb-1">
+                      Category
+                    </label>
+                    <select
+                      value={formCategory}
+                      onChange={(e) => setFormCategory(e.target.value)}
+                      className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
+                    >
+                      <option value="Hackathons & Competitions">Hackathons &amp; Competitions</option>
+                      <option value="Government of India / National Recognitions">Govt &amp; National</option>
+                      <option value="Full-Stack & Cloud Architecture">Full-Stack &amp; Cloud</option>
+                      <option value="Artificial Intelligence & ML">AI &amp; Machine Learning</option>
+                    </select>
                   </div>
 
-                  {/* Description */}
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
-                      Description / Learning Highlights
+                    <label className="block text-xs font-medium text-slate-300 mb-1">
+                      Issue Date / Year
                     </label>
-                    <textarea
-                      rows={2}
-                      value={formDescription}
-                      onChange={(e) => setFormDescription(e.target.value)}
-                      placeholder="Brief overview of achievements, challenges solved, or skills validated..."
-                      className="w-full px-4 py-2 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500 resize-none"
+                    <input
+                      type="text"
+                      value={formDate}
+                      onChange={(e) => setFormDate(e.target.value)}
+                      placeholder="e.g. 2026"
+                      className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
                     />
                   </div>
 
-                  {/* Modal Actions */}
-                  <div className="pt-4 flex items-center justify-end gap-3 border-t border-slate-800">
-                    <button
-                      type="button"
-                      onClick={() => setIsUploadModalOpen(false)}
-                      className="px-5 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      className="px-6 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-lg shadow-purple-600/30 transition-all flex items-center gap-2"
-                    >
-                      <ShieldCheck className="w-4 h-4 text-emerald-300" />
-                      <span>Save as Verified Certificate</span>
-                    </button>
+                  <div>
+                    <label className="block text-xs font-medium text-slate-300 mb-1">
+                      Credential ID (Optional)
+                    </label>
+                    <input
+                      type="text"
+                      value={formCredentialId}
+                      onChange={(e) => setFormCredentialId(e.target.value)}
+                      placeholder="e.g. MYB-2026-CERT"
+                      className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
+                    />
                   </div>
-                </form>
-              )}
+                </div>
+
+                <div>
+                  <label className="block text-xs font-medium text-slate-300 mb-1">
+                    Skills / Tech Covered (Comma separated)
+                  </label>
+                  <input
+                    type="text"
+                    value={formSkills}
+                    onChange={(e) => setFormSkills(e.target.value)}
+                    placeholder="e.g. React, Node.js, AI Innovation, Problem Solving"
+                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-medium text-slate-300 mb-1">
+                    Description / Key Highlights
+                  </label>
+                  <textarea
+                    rows={2}
+                    value={formDescription}
+                    onChange={(e) => setFormDescription(e.target.value)}
+                    placeholder="Brief description of the certificate honor..."
+                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500 resize-none"
+                  />
+                </div>
+
+                <div className="pt-2 flex items-center justify-end gap-3 border-t border-slate-800">
+                  <button
+                    type="button"
+                    onClick={() => setIsUploadModalOpen(false)}
+                    className="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-6 py-2.5 rounded-xl text-xs font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:shadow-lg hover:shadow-purple-600/30 transition-all shadow-md"
+                  >
+                    Save Certificate
+                  </button>
+                </div>
+              </form>
             </motion.div>
           </div>
         )}
       </AnimatePresence>
 
-      {/* Full Certificate Image / PDF Viewer Modal */}
+      {/* Full Certificate Preview Modal */}
       <AnimatePresence>
         {previewCert && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -1094,30 +658,19 @@ export default function CertificationsPage() {
                       </span>
                     </div>
                     <p className="text-xs text-slate-400">
-                      Issued by {previewCert.issuer} • {previewCert.issueDate}
+                      Issued by {previewCert.issuer} &bull; {previewCert.issueDate}
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  {/* Delete from Preview Modal (Admin Only) */}
-                  {isAdmin && (
-                    <button
-                      onClick={() => setDeleteConfirmId(previewCert.id || previewCert._id)}
-                      className="p-2 rounded-xl bg-rose-950/60 text-rose-300 hover:bg-rose-900/60 border border-rose-500/30 transition-colors"
-                      title="Delete this Certificate (Admin Only)"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  )}
-
                   <a
                     href={previewCert.image}
                     download={previewCert.fileName || `${previewCert.title}.jpg`}
                     target="_blank"
                     rel="noreferrer"
                     className="p-2 rounded-xl bg-slate-800 text-slate-300 hover:text-white transition-colors"
-                    title="Open / Download"
+                    title="Download Certificate"
                   >
                     <Download className="w-4 h-4" />
                   </a>
@@ -1160,16 +713,6 @@ export default function CertificationsPage() {
                 </div>
 
                 <div className="flex items-center gap-2 self-end sm:self-auto shrink-0">
-                  {isAdmin && (
-                    <button
-                      onClick={() => setDeleteConfirmId(previewCert.id || previewCert._id)}
-                      className="px-4 py-2.5 rounded-xl font-semibold text-xs text-rose-300 bg-rose-950/60 hover:bg-rose-900/60 border border-rose-500/30 transition-colors inline-flex items-center gap-1.5"
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                      <span>Delete</span>
-                    </button>
-                  )}
-
                   {previewCert.credentialUrl && (
                     <a
                       href={previewCert.credentialUrl}
@@ -1182,58 +725,6 @@ export default function CertificationsPage() {
                     </a>
                   )}
                 </div>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
-
-      {/* Delete Confirmation Modal (Admin Only) */}
-      <AnimatePresence>
-        {deleteConfirmId && isAdmin && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setDeleteConfirmId(null)}
-              className="fixed inset-0 bg-black/80 backdrop-blur-sm"
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="relative bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-7 max-w-md w-full z-10 shadow-2xl"
-            >
-              <div className="w-12 h-12 rounded-2xl bg-rose-950/80 border border-rose-500/30 text-rose-400 flex items-center justify-center mb-4">
-                <Trash2 className="w-6 h-6" />
-              </div>
-
-              <h4 className="text-lg font-bold text-white">Delete Certificate?</h4>
-              <p className="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
-                Are you sure you want to remove{' '}
-                <span className="text-white font-semibold underline decoration-rose-500">
-                  {certToDelete?.title || 'this certificate'}
-                </span>{' '}
-                from your portfolio?
-              </p>
-              <p className="text-[11px] text-slate-500 mt-1">
-                (You can restore any removed certificate anytime using the "Restore" button).
-              </p>
-
-              <div className="mt-6 flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
-                <button
-                  onClick={() => setDeleteConfirmId(null)}
-                  className="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={() => handleDeleteCert(deleteConfirmId)}
-                  className="px-5 py-2.5 rounded-xl text-xs font-semibold text-white bg-rose-600 hover:bg-rose-500 shadow-md shadow-rose-600/30 transition-all"
-                >
-                  Yes, Delete Certificate
-                </button>
               </div>
             </motion.div>
           </div>
