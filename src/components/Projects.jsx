@@ -4,7 +4,7 @@ import { ExternalLink, CheckCircle2, Star, Sparkles, ArrowUpRight } from 'lucide
 import { Github } from './Icons';
 import { projectsData } from '../data/portfolioData';
 
-const categories = ['All', 'Full-Stack', 'Frontend', 'Backend'];
+const categories = ['All', ...Array.from(new Set(projectsData.map((p) => p.category)))];
 
 export default function Projects() {
   const [activeCategory, setActiveCategory] = useState('All');
@@ -24,10 +24,10 @@ export default function Projects() {
               Portfolio Work
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-              Featured <span className="text-gradient">Projects & Products</span>
+              Featured <span className="text-gradient">Projects &amp; Products</span>
             </h2>
             <p className="mt-3 text-base text-slate-400 max-w-xl">
-              A curated selection of production-ready applications, SaaS platforms, and developer tooling I've built.
+              A curated selection of production-ready applications, civic platforms, and developer tooling I've built.
             </p>
           </div>
 
@@ -50,7 +50,14 @@ export default function Projects() {
         </div>
 
         {/* Projects Grid */}
-        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <motion.div
+          layout
+          className={
+            filteredProjects.length === 1
+              ? "max-w-2xl mx-auto"
+              : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          }
+        >
           <AnimatePresence>
             {filteredProjects.map((project) => (
               <motion.div
@@ -63,7 +70,7 @@ export default function Projects() {
                 className="group flex flex-col rounded-3xl bg-slate-900/60 border border-slate-800/80 hover:border-purple-500/50 overflow-hidden shadow-xl shadow-black/30 hover:-translate-y-2 transition-all duration-300"
               >
                 {/* Project Image Preview */}
-                <div className="relative h-48 w-full overflow-hidden bg-slate-950">
+                <div className={`relative ${filteredProjects.length === 1 ? 'h-56 sm:h-64' : 'h-48'} w-full overflow-hidden bg-slate-950`}>
                   <img
                     src={project.image}
                     alt={project.title}

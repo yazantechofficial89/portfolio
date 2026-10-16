@@ -9,7 +9,7 @@ import {
 import { projectsData } from '../data/portfolioData';
 import { Github } from '../components/Icons';
 
-const categories = ['All', 'Full-Stack', 'Frontend', 'Backend'];
+const categories = ['All', ...Array.from(new Set(projectsData.map((p) => p.category)))];
 
 export default function ProjectsPage() {
   const [activeCategory, setActiveCategory] = useState('All');
@@ -91,14 +91,14 @@ export default function ProjectsPage() {
         </div>
 
         {/* Projects Grid */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className={filteredProjects.length === 1 ? "mt-8 max-w-3xl mx-auto" : "mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"}>
           {filteredProjects.map((project) => (
             <div
               key={project.id}
               className="group flex flex-col rounded-3xl bg-slate-900/60 border border-slate-800/80 hover:border-purple-500/50 overflow-hidden shadow-xl shadow-black/30 hover:-translate-y-2 transition-all duration-300"
             >
               {/* Image Preview */}
-              <div className="relative h-48 w-full overflow-hidden bg-slate-950">
+              <div className={`relative ${filteredProjects.length === 1 ? 'h-64 sm:h-72' : 'h-48'} w-full overflow-hidden bg-slate-950`}>
                 <img
                   src={project.image}
                   alt={project.title}

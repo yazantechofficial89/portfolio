@@ -105,13 +105,13 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className={featuredProjects.length === 1 ? "max-w-2xl mx-auto" : "grid grid-cols-1 md:grid-cols-3 gap-8"}>
             {featuredProjects.map((project) => (
               <div
                 key={project.id}
                 className="group flex flex-col rounded-3xl bg-slate-900/60 border border-slate-800/80 hover:border-purple-500/50 overflow-hidden shadow-xl shadow-black/30 hover:-translate-y-2 transition-all duration-300"
               >
-                <div className="relative h-48 w-full overflow-hidden bg-slate-950">
+                <div className={`relative ${featuredProjects.length === 1 ? 'h-56 sm:h-64' : 'h-48'} w-full overflow-hidden bg-slate-950`}>
                   <img
                     src={project.image}
                     alt={project.title}
