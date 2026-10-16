@@ -20,12 +20,15 @@ import {
   Download,
   Star,
   RotateCcw,
-  CloudCheck
+  Lock,
+  Unlock,
+  KeyRound
 } from 'lucide-react';
 import { certificationsData } from '../data/portfolioData';
 
 const STORAGE_KEY = 'yazan_custom_certificates';
 const DELETED_KEY = 'yazan_deleted_certificates';
+const ADMIN_PASSKEY = 'yazanAdmin2026';
 
 export default function CertificationsPage() {
   const [customCerts, setCustomCerts] = useState([]);
@@ -42,6 +45,12 @@ export default function CertificationsPage() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [isSyncing, setIsSyncing] = useState(false);
+
+  // Admin authentication state (Only owner can edit/delete/upload)
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
+  const [adminInputKey, setAdminInputKey] = useState('');
+  const [adminError, setAdminError] = useState('');
 
   // Modal states
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
@@ -65,6 +74,16 @@ export default function CertificationsPage() {
   const [uploadSuccess, setUploadSuccess] = useState(false);
 
   const fileInputRef = useRef(null);
+
+  // Check saved admin passkey on mount
+  useEffect(() => {
+    try {
+      const savedKey = localStorage.getItem('admin_passkey');
+      if (savedKey === ADMIN_PASSKEY) {
+        setIsAdmin(true);
+      }
+    } catch {}
+  }, []);
 
   // 1. Load certificates from localStorage and fetch permanently from MongoDB API
   useEffect(() => {
@@ -108,7 +127,6 @@ export default function CertificationsPage() {
         }
       })
       .catch((err) => {
-        // Offline / static preview fallback
         console.log('Background DB sync attempt:', err);
       })
       .finally(() => {
@@ -122,6 +140,30 @@ export default function CertificationsPage() {
     const visible = combined.filter((c) => !deletedIds.includes(c.id) && !deletedIds.includes(c._id));
     setAllCertificates(visible);
   }, [customCerts, deletedIds]);
+
+  // Admin Login Handler
+  const handleAdminLogin = (e) => {
+    e.preventDefault();
+    setAdminError('');
+
+    if (adminInputKey.trim() === ADMIN_PASSKEY) {
+      setIsAdmin(true);
+      try {
+        localStorage.setItem('admin_passkey', ADMIN_PASSKEY);
+      } catch {}
+      setIsAdminModalOpen(false);
+      setAdminInputKey('');
+    } else {
+      setAdminError('Incorrect Admin Passkey. Access restricted to portfolio owner.');
+    }
+  };
+
+  const handleAdminLogout = () => {
+    setIsAdmin(false);
+    try {
+      localStorage.removeItem('admin_passkey');
+    } catch {}
+  };
 
   // Handle file selection (Image or PDF)
   const handleFileChange = (e) => {
@@ -159,6 +201,11 @@ export default function CertificationsPage() {
   const handleAddCertificate = async (e) => {
     e.preventDefault();
     setUploadError('');
+
+    if (!isAdmin) {
+      setUploadError('Unauthorized: Admin passkey required to upload.');
+      return;
+    }
 
     if (!formTitle.trim()) {
       setUploadError('Certificate Title is required.');
@@ -210,7 +257,10 @@ export default function CertificationsPage() {
     try {
       fetch('/api/certificates', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-key': ADMIN_PASSKEY,
+        },
         body: JSON.stringify(newCert),
       }).catch((e) => console.log('API background save:', e));
     } catch (err) {
@@ -237,8 +287,10 @@ export default function CertificationsPage() {
     }, 900);
   };
 
-  // Delete certificate (both custom & default) -> Permanently updates DB & local storage
+  // Delete certificate (Admin only)
   const handleDeleteCert = async (id) => {
+    if (!isAdmin) return;
+
     // Remove from custom list
     if (customCerts.some((c) => c.id === id || c._id === id)) {
       const updated = customCerts.filter((c) => c.id !== id && c._id !== id);
@@ -261,7 +313,12 @@ export default function CertificationsPage() {
 
     // Delete from MongoDB API
     try {
-      fetch(`/api/certificates?id=${encodeURIComponent(id)}`, { method: 'DELETE' }).catch(() => {});
+      fetch(`/api/certificates?id=${encodeURIComponent(id)}`, {
+        method: 'DELETE',
+        headers: {
+          'x-admin-key': ADMIN_PASSKEY,
+        },
+      }).catch(() => {});
     } catch {}
 
     if (previewCert && (previewCert.id === id || previewCert._id === id)) {
@@ -270,8 +327,9 @@ export default function CertificationsPage() {
     setDeleteConfirmId(null);
   };
 
-  // Restore all deleted certificates
+  // Restore all deleted certificates (Admin only)
   const handleRestoreDeleted = () => {
+    if (!isAdmin) return;
     setDeletedIds([]);
     try {
       localStorage.removeItem(DELETED_KEY);
@@ -327,30 +385,58 @@ export default function CertificationsPage() {
               Certifications & <span className="text-gradient">Accreditations</span>
             </h1>
             <p className="mt-4 text-base sm:text-lg text-slate-300">
-              Verified original certificates and national achievements earned by Yazan. Any certificate uploaded here is automatically verified and permanently stored.
+              Verified original certificates and national achievements earned by Yazan. Protected showcase — credentials are authentically displayed and tamper-proof.
             </p>
           </div>
 
-          {/* Action Buttons */}
+          {/* Action Header Controls */}
           <div className="flex flex-wrap items-center gap-3 self-start md:self-auto">
-            {deletedIds.length > 0 && (
+            {isAdmin ? (
+              // Owner / Admin Mode Active
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-purple-950/80 border border-purple-500/40 text-purple-200 text-xs font-semibold">
+                  <Unlock className="w-3.5 h-3.5 text-purple-400" />
+                  <span>Owner Mode</span>
+                </div>
+
+                <button
+                  onClick={() => setIsUploadModalOpen(true)}
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl font-semibold text-xs text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:shadow-lg hover:shadow-purple-600/30 transition-all shadow-md"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>Upload Certificate</span>
+                </button>
+
+                {deletedIds.length > 0 && (
+                  <button
+                    onClick={handleRestoreDeleted}
+                    className="inline-flex items-center gap-1 px-3 py-2 rounded-xl font-semibold text-xs text-amber-300 bg-amber-950/60 border border-amber-500/30 hover:bg-amber-900/60 transition-colors"
+                    title="Restore deleted"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" />
+                    <span>({deletedIds.length})</span>
+                  </button>
+                )}
+
+                <button
+                  onClick={handleAdminLogout}
+                  className="p-2 rounded-xl text-slate-400 hover:text-white bg-slate-900 border border-slate-800 transition-colors"
+                  title="Lock Owner Mode"
+                >
+                  <Lock className="w-4 h-4" />
+                </button>
+              </div>
+            ) : (
+              // Public Visitor Mode -> Protected & Tamper-proof
               <button
-                onClick={handleRestoreDeleted}
-                className="inline-flex items-center gap-1.5 px-4 py-3 rounded-2xl font-semibold text-xs text-amber-300 bg-amber-950/60 border border-amber-500/30 hover:bg-amber-900/60 transition-colors shadow-sm"
-                title="Restore previously removed certificates"
+                onClick={() => setIsAdminModalOpen(true)}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-medium text-slate-400 hover:text-slate-200 bg-slate-900/60 border border-slate-800/80 hover:border-purple-500/40 transition-colors"
+                title="Portfolio Owner Access"
               >
-                <RotateCcw className="w-4 h-4" />
-                <span>Restore ({deletedIds.length})</span>
+                <Lock className="w-3.5 h-3.5 text-slate-400" />
+                <span>Owner Login</span>
               </button>
             )}
-
-            <button
-              onClick={() => setIsUploadModalOpen(true)}
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl font-semibold text-white bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 hover:shadow-lg hover:shadow-purple-600/30 transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 shadow-md"
-            >
-              <Plus className="w-5 h-5" />
-              <span>Upload Certificate</span>
-            </button>
           </div>
         </div>
 
@@ -376,10 +462,10 @@ export default function CertificationsPage() {
             </div>
           </div>
           <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/60 border border-slate-800">
-            <span className="text-xs font-medium text-slate-400">Database Status</span>
-            <div className="mt-1 text-sm sm:text-base font-bold text-emerald-300 flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span>Permanent Storage</span>
+            <span className="text-xs font-medium text-slate-400">Protection Status</span>
+            <div className="mt-1 text-xs sm:text-sm font-bold text-emerald-300 flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+              <span>Tamper-Proof Locked</span>
             </div>
           </div>
         </div>
@@ -421,14 +507,14 @@ export default function CertificationsPage() {
           </div>
         </div>
 
-        {/* Counter & Clear / Restore Bar */}
+        {/* Counter Bar */}
         <div className="mt-6 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400 font-mono">
           <span>
             Showing {filteredCertificates.length} of {allCertificates.length} certificates
           </span>
 
           <div className="flex items-center gap-4">
-            {deletedIds.length > 0 && (
+            {isAdmin && deletedIds.length > 0 && (
               <button
                 onClick={handleRestoreDeleted}
                 className="text-amber-400 hover:underline flex items-center gap-1"
@@ -570,15 +656,17 @@ export default function CertificationsPage() {
                       </a>
                     )}
 
-                    {/* Delete Certificate Button for Any Certificate */}
-                    <button
-                      onClick={() => setDeleteConfirmId(cert.id || cert._id)}
-                      className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors flex items-center gap-1 text-xs"
-                      title="Delete this certificate"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                      <span className="hidden sm:inline">Delete</span>
-                    </button>
+                    {/* Delete button only shown to authenticated Admin/Owner */}
+                    {isAdmin && (
+                      <button
+                        onClick={() => setDeleteConfirmId(cert.id || cert._id)}
+                        className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors flex items-center gap-1 text-xs"
+                        title="Delete this certificate (Admin Only)"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                        <span className="hidden sm:inline">Delete</span>
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -604,7 +692,7 @@ export default function CertificationsPage() {
               >
                 Reset Filters
               </button>
-              {deletedIds.length > 0 && (
+              {isAdmin && deletedIds.length > 0 && (
                 <button
                   onClick={handleRestoreDeleted}
                   className="px-4 py-2 rounded-xl text-xs font-semibold bg-amber-950/80 border border-amber-500/40 text-amber-300 hover:bg-amber-900/80 transition-colors flex items-center gap-1.5"
@@ -618,9 +706,85 @@ export default function CertificationsPage() {
         )}
       </div>
 
-      {/* Upload Certificate Modal */}
+      {/* Admin Passkey Login Modal */}
       <AnimatePresence>
-        {isUploadModalOpen && (
+        {isAdminModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsAdminModalOpen(false)}
+              className="fixed inset-0 bg-black/80 backdrop-blur-md"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="relative w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 z-10 shadow-2xl"
+            >
+              <button
+                onClick={() => setIsAdminModalOpen(false)}
+                className="absolute top-5 right-5 p-2 rounded-xl bg-slate-800/80 text-slate-400 hover:text-white transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="w-12 h-12 rounded-2xl bg-purple-600/20 border border-purple-500/30 text-purple-400 flex items-center justify-center mb-4">
+                <KeyRound className="w-6 h-6" />
+              </div>
+
+              <h3 className="text-xl font-bold text-white">Owner / Admin Access</h3>
+              <p className="text-xs text-slate-400 mt-1.5 leading-relaxed">
+                Enter your Admin Passkey to unlock certificate uploading, editing, and deletion controls.
+              </p>
+
+              {adminError && (
+                <div className="mt-4 p-3 rounded-xl bg-rose-950/60 border border-rose-500/40 text-rose-300 text-xs">
+                  {adminError}
+                </div>
+              )}
+
+              <form onSubmit={handleAdminLogin} className="mt-5 space-y-4">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+                    Admin Passkey
+                  </label>
+                  <input
+                    type="password"
+                    required
+                    value={adminInputKey}
+                    onChange={(e) => setAdminInputKey(e.target.value)}
+                    placeholder="Enter passkey..."
+                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
+                    autoFocus
+                  />
+                </div>
+
+                <div className="pt-2 flex items-center justify-end gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setIsAdminModalOpen(false)}
+                    className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-5 py-2.5 rounded-xl text-xs font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:shadow-lg hover:shadow-purple-600/30 transition-all shadow-md"
+                  >
+                    Unlock Controls
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Upload Certificate Modal (Admin Only) */}
+      <AnimatePresence>
+        {isUploadModalOpen && isAdmin && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
             {/* Backdrop */}
             <motion.div
@@ -662,7 +826,7 @@ export default function CertificationsPage() {
               <div className="mb-5 flex items-center gap-2.5 p-3 rounded-2xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-xs">
                 <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span>
-                  <strong>Auto-Verification & Permanent Save:</strong> Any certificate uploaded here is instantly granted a <strong>Verified Badge</strong> and saved to permanent storage.
+                  <strong>Owner Mode Active:</strong> Certificate will be granted a permanent <strong>Verified Badge</strong> and saved to database.
                 </span>
               </div>
 
@@ -936,14 +1100,16 @@ export default function CertificationsPage() {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  {/* Delete from Preview Modal */}
-                  <button
-                    onClick={() => setDeleteConfirmId(previewCert.id || previewCert._id)}
-                    className="p-2 rounded-xl bg-rose-950/60 text-rose-300 hover:bg-rose-900/60 border border-rose-500/30 transition-colors"
-                    title="Delete this Certificate"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
+                  {/* Delete from Preview Modal (Admin Only) */}
+                  {isAdmin && (
+                    <button
+                      onClick={() => setDeleteConfirmId(previewCert.id || previewCert._id)}
+                      className="p-2 rounded-xl bg-rose-950/60 text-rose-300 hover:bg-rose-900/60 border border-rose-500/30 transition-colors"
+                      title="Delete this Certificate (Admin Only)"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  )}
 
                   <a
                     href={previewCert.image}
@@ -994,13 +1160,15 @@ export default function CertificationsPage() {
                 </div>
 
                 <div className="flex items-center gap-2 self-end sm:self-auto shrink-0">
-                  <button
-                    onClick={() => setDeleteConfirmId(previewCert.id || previewCert._id)}
-                    className="px-4 py-2.5 rounded-xl font-semibold text-xs text-rose-300 bg-rose-950/60 hover:bg-rose-900/60 border border-rose-500/30 transition-colors inline-flex items-center gap-1.5"
-                  >
-                    <Trash2 className="w-3.5 h-3.5" />
-                    <span>Delete</span>
-                  </button>
+                  {isAdmin && (
+                    <button
+                      onClick={() => setDeleteConfirmId(previewCert.id || previewCert._id)}
+                      className="px-4 py-2.5 rounded-xl font-semibold text-xs text-rose-300 bg-rose-950/60 hover:bg-rose-900/60 border border-rose-500/30 transition-colors inline-flex items-center gap-1.5"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                      <span>Delete</span>
+                    </button>
+                  )}
 
                   {previewCert.credentialUrl && (
                     <a
@@ -1020,9 +1188,9 @@ export default function CertificationsPage() {
         )}
       </AnimatePresence>
 
-      {/* Delete Confirmation Modal */}
+      {/* Delete Confirmation Modal (Admin Only) */}
       <AnimatePresence>
-        {deleteConfirmId && (
+        {deleteConfirmId && isAdmin && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <motion.div
               initial={{ opacity: 0 }}
