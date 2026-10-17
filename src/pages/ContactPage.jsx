@@ -27,6 +27,7 @@ export default function ContactPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
@@ -62,45 +63,55 @@ export default function ContactPage() {
     return `https://mail.google.com/mail/?view=cm&fs=1&to=${personalData.email}&su=${su}&body=${body}`;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setIsSubmitting(true);
+    setErrorMessage('');
 
-    // Also trigger save to MongoDB API
     try {
-      fetch('/api/contact', {
+      const response = await fetch(`https://formsubmit.co/ajax/${personalData.email}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
         body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone || '',
-          subject: formData.subject,
-          message: formData.message,
+          Name: formData.name,
+          Email: formData.email,
+          Phone: formData.phone || 'Not provided',
+          Subject: formData.subject,
+          Message: formData.message,
+          _subject: `New Portfolio Enquiry from ${formData.name}: ${formData.subject}`,
+          _template: 'table',
+          _captcha: 'false',
         }),
-      }).catch(() => {});
-    } catch (_) {}
-
-    // Simulated short delay while native form POST executes in the hidden iframe
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitted(true);
-      confetti({
-        particleCount: 80,
-        spread: 70,
-        origin: { y: 0.7 },
       });
-    }, 1000);
+
+      const data = await response.json();
+
+      if (response.ok || data.success === 'true' || data.success === true) {
+        setSubmitted(true);
+        confetti({
+          particleCount: 80,
+          spread: 70,
+          origin: { y: 0.7 },
+        });
+        setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+      } else {
+        throw new Error(data.message || 'Failed to dispatch email.');
+      }
+    } catch (err) {
+      console.error('Contact Form Error:', err);
+      setErrorMessage(
+        'Email delivery failed. If this is your first time using this email, please check your Gmail Spam/Inbox to activate FormSubmit, or use WhatsApp/Gmail directly below.'
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <div className="pt-28 pb-20">
-      {/* Hidden iframe for native FormSubmit execution without page reload */}
-      <iframe
-        name="formsubmit_frame"
-        id="formsubmit_frame"
-        title="Form Dispatch Target"
-        style={{ display: 'none' }}
-      />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
@@ -325,20 +336,37 @@ export default function ContactPage() {
                 </div>
               ) : (
                 <form
-                  action={`https://formsubmit.co/${personalData.email}`}
-                  method="POST"
-                  target="formsubmit_frame"
                   onSubmit={handleSubmit}
                   className="space-y-4"
                 >
-                  {/* FormSubmit Configuration Fields */}
-                  <input type="hidden" name="_captcha" value="false" />
-                  <input type="hidden" name="_template" value="table" />
-                  <input
-                    type="hidden"
-                    name="_subject"
-                    value={`New Portfolio Enquiry from ${formData.name || 'Visitor'}: ${formData.subject || 'Inquiry'}`}
-                  />
+                  {errorMessage && (
+                    <div className="p-4 rounded-2xl bg-red-950/50 border border-red-500/30 text-red-300 text-xs flex items-start gap-3">
+                      <AlertCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
+                      <div className="space-y-2">
+                        <p className="font-medium text-white">{errorMessage}</p>
+                        <div className="flex flex-wrap gap-2 pt-1">
+                          <a
+                            href={generateGmailLink()}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-900/60 hover:bg-red-800/80 text-white font-medium transition-colors"
+                          >
+                            <Mail className="w-3.5 h-3.5" />
+                            <span>Open in Gmail Directly</span>
+                          </a>
+                          <a
+                            href={generateWhatsAppLink()}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-900/60 hover:bg-emerald-800/80 text-emerald-200 font-medium transition-colors"
+                          >
+                            <WhatsApp className="w-3.5 h-3.5 fill-current" />
+                            <span>Send on WhatsApp</span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
