@@ -1,5 +1,5 @@
 export const personalData = {
-  name: "Yazan",
+  name: "Yazan Gupta",
   title: "Full-Stack Web Developer",
   tagline: "Architecting scalable web applications, sleek user interfaces, and robust backend ecosystems.",
   status: "Available for new opportunities",

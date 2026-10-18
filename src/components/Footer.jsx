@@ -20,8 +20,7 @@ export default function Footer() {
             </div>
             <div>
               <span className="font-bold text-white text-base group-hover:text-purple-300 transition-colors">
-                {personalData.name}
-                <span className="text-purple-400">.dev</span>
+                Yazan <span className="text-purple-400">Gupta</span>
               </span>
               <p className="text-xs text-slate-400">
                 Full-Stack Web Developer & Engineer

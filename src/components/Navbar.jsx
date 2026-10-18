@@ -51,8 +51,7 @@ export default function Navbar() {
           </div>
           <div className="flex flex-col">
             <span className="font-extrabold text-lg tracking-tight text-white group-hover:text-purple-300 transition-colors">
-              {personalData.name}
-              <span className="text-purple-400">.dev</span>
+              Yazan <span className="text-purple-400">Gupta</span>
             </span>
             <span className="text-[11px] text-slate-400 tracking-wider font-mono -mt-1">
               FULLSTACK
