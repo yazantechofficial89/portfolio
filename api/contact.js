@@ -56,8 +56,8 @@ export default async function handler(req, res) {
             headers: {
               'Content-Type': 'application/json',
               Accept: 'application/json',
-              Origin: 'https://yazangupta.com',
-              Referer: 'https://yazangupta.com/',
+              Origin: 'https://yazangupta.online',
+              Referer: 'https://yazangupta.online/',
             },
             body: JSON.stringify({
               Name: name,
@@ -87,8 +87,8 @@ export default async function handler(req, res) {
           headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
-            Origin: 'https://yazangupta.com',
-            Referer: 'https://yazangupta.com/',
+            Origin: 'https://yazangupta.online',
+            Referer: 'https://yazangupta.online/',
           },
           body: JSON.stringify({
             Name: name,

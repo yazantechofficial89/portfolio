@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://yazangupta.com/sitemap.xml
+Sitemap: https://yazangupta.online/sitemap.xml
