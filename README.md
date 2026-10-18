@@ -20,7 +20,7 @@ An ultra-modern, responsive, multi-page portfolio website built with **React 19*
 ## 📞 Contact Information Configured
 
 - **Phone**: `+91 7011906923`
-- **Email**: `yazantechofficial89@gmail.com`
+- **Email**: `yazangupta39@gmail.com`
 
 ---
 

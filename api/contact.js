@@ -51,7 +51,7 @@ export default async function handler(req, res) {
 
         // Also asynchronously notify FormSubmit so email is sent too
         try {
-          fetch(`https://formsubmit.co/ajax/yazantechofficial89@gmail.com`, {
+          fetch(`https://formsubmit.co/ajax/yazangupta39@gmail.com`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ export default async function handler(req, res) {
         });
       } else {
         // Fallback: If MONGODB_URI is not set yet in Vercel, dispatch via Formsubmit so no lead is lost
-        const fallbackRes = await fetch(`https://formsubmit.co/ajax/yazantechofficial89@gmail.com`, {
+        const fallbackRes = await fetch(`https://formsubmit.co/ajax/yazangupta39@gmail.com`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

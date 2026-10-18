@@ -4,7 +4,7 @@ export const personalData = {
   tagline: "Architecting scalable web applications, sleek user interfaces, and robust backend ecosystems.",
   status: "Available for new opportunities",
   location: "India / Remote Worldwide",
-  email: "yazantechofficial89@gmail.com",
+  email: "yazangupta39@gmail.com",
   phone: "+91 7011906923",
   resumeUrl: "#resume",
   bio: `I am a passionate Full-Stack Developer with deep expertise in modern JavaScript/TypeScript ecosystems. I bridge the gap between intuitive, responsive frontend design and robust, high-performance backend architecture. From concept to deployment, I build web solutions that solve real-world problems.`,
@@ -22,7 +22,7 @@ I take pride in writing readable, maintainable, and type-safe code that scales g
     linkedin: "https://www.linkedin.com/in/yazan-gupta-939b46281?utm_source=share_via&utm_content=profile&utm_medium=member_android",
     instagram: "https://www.instagram.com/yazan2006.tech?psln=YWtkcTM2amVtZnVr",
     whatsapp: "https://wa.me/917011906923",
-    email: "mailto:yazantechofficial89@gmail.com",
+    email: "mailto:yazangupta39@gmail.com",
   },
 };
 
