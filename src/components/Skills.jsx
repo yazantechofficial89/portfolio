@@ -16,7 +16,9 @@ import {
   Terminal,
   Container,
   Palette,
-  ArrowRight
+  ArrowRight,
+  Atom,
+  HardDrive
 } from 'lucide-react';
 import { skillsData } from '../data/portfolioData';
 
@@ -87,49 +89,63 @@ export default function Skills() {
         {/* Skills Grid */}
         <motion.div
           layout
-          className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+          className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
         >
-          {filteredSkills.map((skill, idx) => (
-            <motion.div
-              layout
-              key={skill.name}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, delay: idx * 0.03 }}
-              className="p-5 rounded-2xl bg-slate-900/50 border border-slate-800/80 hover:border-purple-500/40 backdrop-blur-sm transition-all group"
-            >
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-purple-950/60 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-110 group-hover:text-purple-300 transition-all">
-                    <Zap className="w-5 h-5" />
+          {filteredSkills.map((skill, idx) => {
+            const techIconMap = {
+              Atom: Atom,
+              Globe: Globe,
+              Server: Server,
+              Layers: Layers,
+              HardDrive: HardDrive,
+              Database: Database,
+              GitBranch: GitBranch,
+              Cloud: Cloud,
+            };
+            const SkillIcon = techIconMap[skill.icon] || Zap;
+
+            return (
+              <motion.div
+                layout
+                key={skill.name}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, delay: idx * 0.03 }}
+                className="p-5 rounded-2xl bg-slate-900/50 border border-slate-800/80 hover:border-purple-500/40 backdrop-blur-sm transition-all group"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-purple-950/60 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-110 group-hover:text-purple-300 transition-all">
+                      <SkillIcon className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-bold text-white group-hover:text-purple-300 transition-colors">
+                        {skill.name}
+                      </h4>
+                      <span className="text-[11px] font-mono text-slate-400">
+                        {skill.category}
+                      </span>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-white group-hover:text-purple-300 transition-colors">
-                      {skill.name}
-                    </h4>
-                    <span className="text-[11px] font-mono text-slate-400">
-                      {skill.category}
-                    </span>
-                  </div>
+
+                  <span className="text-xs font-mono font-bold text-purple-400 bg-purple-950/50 px-2.5 py-1 rounded-md border border-purple-500/20">
+                    {skill.level}%
+                  </span>
                 </div>
 
-                <span className="text-xs font-mono font-bold text-purple-400 bg-purple-950/50 px-2.5 py-1 rounded-md border border-purple-500/20">
-                  {skill.level}%
-                </span>
-              </div>
-
-              {/* Progress Bar */}
-              <div className="w-full bg-slate-800/80 rounded-full h-2 overflow-hidden">
-                <motion.div
-                  initial={{ width: 0 }}
-                  whileInView={{ width: `${skill.level}%` }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: 0.1 }}
-                  className="bg-gradient-to-r from-purple-500 via-indigo-500 to-cyan-400 h-2 rounded-full"
-                />
-              </div>
-            </motion.div>
-          ))}
+                {/* Progress Bar */}
+                <div className="w-full bg-slate-800/80 rounded-full h-2 overflow-hidden">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    whileInView={{ width: `${skill.level}%` }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: 0.1 }}
+                    className="bg-gradient-to-r from-purple-500 via-indigo-500 to-cyan-400 h-2 rounded-full"
+                  />
+                </div>
+              </motion.div>
+            );
+          })}
         </motion.div>
 
         {/* CTA Link to Full Skills Page */}

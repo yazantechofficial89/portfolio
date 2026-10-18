@@ -30,31 +30,17 @@ export const skillsData = {
   frontend: [
     { name: "React.js", level: 90, icon: "Atom" },
     { name: "Next.js", level: 85, icon: "Globe" },
-    { name: "TypeScript", level: 85, icon: "FileCode2" },
-    { name: "Tailwind CSS", level: 95, icon: "Palette" },
-    { name: "Redux / Zustand", level: 80, icon: "Cpu" },
-    { name: "HTML5 / CSS3 / JS", level: 95, icon: "Code" },
   ],
   backend: [
     { name: "Node.js", level: 90, icon: "Server" },
     { name: "Express.js", level: 88, icon: "Layers" },
-    { name: "RESTful APIs", level: 92, icon: "Network" },
-    { name: "GraphQL", level: 75, icon: "Boxes" },
-    { name: "JWT & Auth", level: 85, icon: "ShieldCheck" },
-    { name: "WebSockets", level: 78, icon: "Radio" },
   ],
   database: [
-    { name: "PostgreSQL", level: 85, icon: "Database" },
     { name: "MongoDB", level: 90, icon: "HardDrive" },
-    { name: "Prisma ORM", level: 82, icon: "Binary" },
-    { name: "Redis", level: 75, icon: "Zap" },
-    { name: "Firebase / Supabase", level: 85, icon: "Flame" },
+    { name: "PostgreSQL", level: 85, icon: "Database" },
   ],
   tools: [
     { name: "Git & GitHub", level: 92, icon: "GitBranch" },
-    { name: "Docker", level: 78, icon: "Container" },
-    { name: "Postman", level: 90, icon: "Send" },
-    { name: "Linux / Bash", level: 80, icon: "Terminal" },
     { name: "Vercel / Netlify / AWS", level: 85, icon: "Cloud" },
   ],
 };
