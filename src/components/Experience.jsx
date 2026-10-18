@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Briefcase, Calendar, CheckCircle, GraduationCap } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Briefcase, Calendar, CheckCircle, GraduationCap, Award, ArrowRight } from 'lucide-react';
 import { experienceData } from '../data/portfolioData';
 
 export default function Experience() {
@@ -33,8 +34,10 @@ export default function Experience() {
             >
               {/* Timeline Marker */}
               <div className="absolute -left-[31px] sm:-left-[47px] top-1.5 w-8 h-8 rounded-full bg-slate-950 border-2 border-purple-500 flex items-center justify-center text-purple-400 shadow-md shadow-purple-500/30 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white transition-all">
-                {exp.role.includes('Bachelor') ? (
+                {exp.role.toLowerCase().includes('b.tech') || exp.role.toLowerCase().includes('bachelor') ? (
                   <GraduationCap className="w-4 h-4" />
+                ) : exp.role.toLowerCase().includes('hackathon') || exp.role.toLowerCase().includes('youth') ? (
+                  <Award className="w-4 h-4" />
                 ) : (
                   <Briefcase className="w-4 h-4" />
                 )}
@@ -74,6 +77,17 @@ export default function Experience() {
               </div>
             </motion.div>
           ))}
+        </div>
+
+        {/* View Full Timeline Link */}
+        <div className="mt-14 text-center">
+          <Link
+            to="/experience"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-900 border border-slate-800 hover:border-purple-500/50 text-slate-300 hover:text-white text-sm font-semibold transition-all shadow-lg hover:shadow-purple-950/40 group"
+          >
+            <span>Explore Complete Experience & Academic Timeline</span>
+            <ArrowRight className="w-4 h-4 text-purple-400 group-hover:translate-x-1 transition-transform" />
+          </Link>
         </div>
       </div>
     </section>
