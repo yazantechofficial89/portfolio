@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import {
   Code,
   Server,
@@ -14,7 +15,8 @@ import {
   Cloud,
   Terminal,
   Container,
-  Palette
+  Palette,
+  ArrowRight
 } from 'lucide-react';
 import { skillsData } from '../data/portfolioData';
 
@@ -129,6 +131,17 @@ export default function Skills() {
             </motion.div>
           ))}
         </motion.div>
+
+        {/* CTA Link to Full Skills Page */}
+        <div className="mt-14 text-center">
+          <Link
+            to="/skills"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-900 border border-slate-800 hover:border-purple-500/50 text-slate-300 hover:text-white text-sm font-semibold transition-all shadow-lg hover:shadow-purple-950/40 group"
+          >
+            <span>Explore Complete MERN Stack & Engineering Philosophy</span>
+            <ArrowRight className="w-4 h-4 text-purple-400 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </div>
       </div>
     </section>
   );

@@ -59,6 +59,90 @@ export const skillsData = {
   ],
 };
 
+export const mernStackData = {
+  title: "MERN Stack Development",
+  description:
+    "I build full-stack web applications using MongoDB, Express.js, React, and Node.js. I enjoy creating responsive user interfaces, developing server-side functionality, and connecting applications to databases.",
+  components: [
+    {
+      name: "MongoDB",
+      role: "Database & Storage",
+      desc: "Storing and managing application data",
+      detail: "Designing flexible, schema-validated NoSQL documents and optimized indexes for fast data queries.",
+      icon: "Database",
+      accent: "emerald",
+    },
+    {
+      name: "Express.js & Node.js",
+      role: "Server Logic & APIs",
+      desc: "Building server-side logic and APIs",
+      detail: "Developing robust RESTful endpoints, custom middleware, authentication pipelines, and asynchronous request handling.",
+      icon: "Server",
+      accent: "green",
+    },
+    {
+      name: "React",
+      role: "Frontend & UI/UX",
+      desc: "Creating interactive, reusable user interfaces",
+      detail: "Building responsive component architectures, managing state with hooks, and crafting seamless user interactions.",
+      icon: "Code",
+      accent: "cyan",
+    },
+    {
+      name: "Full-Stack Development",
+      role: "End-to-End Integration",
+      desc: "Connecting frontend, backend, and database components",
+      detail: "Bridging client interfaces, server APIs, and database transactions into unified, scalable web products.",
+      icon: "Layers",
+      accent: "purple",
+    },
+  ],
+};
+
+export const coreValuesData = [
+  {
+    title: "Problem Solving",
+    tagline: "Curiosity & Step-by-Step Mindset",
+    desc: "I approach challenges with curiosity and a step-by-step mindset. I break problems into smaller parts, explore possible solutions, and work toward clear, practical results.",
+    icon: "BrainCircuit",
+    gradient: "from-blue-500/10 via-indigo-500/5 to-transparent",
+    border: "border-blue-500/30",
+    badge: "Engineering Mindset",
+    badgeColor: "text-blue-400 bg-blue-950/50 border-blue-500/30",
+  },
+  {
+    title: "Communication",
+    tagline: "Clear, Respectful & Transparent",
+    desc: "I value clear and respectful communication. I listen carefully, share ideas in an understandable way, and keep others informed while working on a task.",
+    icon: "MessageSquare",
+    gradient: "from-emerald-500/10 via-teal-500/5 to-transparent",
+    border: "border-emerald-500/30",
+    badge: "Interpersonal",
+    badgeColor: "text-emerald-400 bg-emerald-950/50 border-emerald-500/30",
+  },
+  {
+    title: "Teamwork",
+    tagline: "Collaborative & Growth-Focused",
+    desc: "I enjoy collaborating with others, sharing ideas, and contributing toward common goals. I’m open to feedback and appreciate learning from teammates.",
+    icon: "Users",
+    gradient: "from-purple-500/10 via-pink-500/5 to-transparent",
+    border: "border-purple-500/30",
+    badge: "Collaboration",
+    badgeColor: "text-purple-400 bg-purple-950/50 border-purple-500/30",
+  },
+  {
+    title: "My Approach",
+    tagline: "Organized Code & Continuous Learning",
+    desc: "I’m committed to learning, improving my skills, and building useful projects. I aim to write organized code, stay adaptable, and bring a thoughtful approach to every project.",
+    icon: "Target",
+    gradient: "from-amber-500/10 via-orange-500/5 to-transparent",
+    border: "border-amber-500/30",
+    badge: "Work Philosophy",
+    badgeColor: "text-amber-400 bg-amber-950/50 border-amber-500/30",
+  },
+];
+
+
 export const projectsData = [
   {
     id: 1,
