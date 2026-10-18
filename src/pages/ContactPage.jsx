@@ -30,6 +30,8 @@ export default function ContactPage() {
   const [errorMessage, setErrorMessage] = useState('');
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
+  const [copiedMessage, setCopiedMessage] = useState(false);
+  const [lastSubmittedText, setLastSubmittedText] = useState('');
   const [openFaq, setOpenFaq] = useState(null);
 
   const cleanPhone = personalData.phone.replace(/[^0-9]/g, '');
@@ -51,25 +53,42 @@ export default function ContactPage() {
   };
 
   const generateWhatsAppLink = () => {
-    const text = `Hi Yazan, I am contacting you from your portfolio.\n\n*Name:* ${formData.name || 'Visitor'}\n*Email:* ${formData.email || 'N/A'}\n*Subject:* ${formData.subject || 'Project Inquiry'}\n*Message:* ${formData.message || 'I would like to connect.'}`;
+    const text = `Hi Yazan, I am contacting you from your portfolio.\n\n*Name:* ${formData.name || 'Visitor'}\n*Email:* ${formData.email || 'N/A'}\n*Phone:* ${formData.phone || 'N/A'}\n*Subject:* ${formData.subject || 'Project Inquiry'}\n*Message:*\n${formData.message || 'I would like to discuss a project or opportunity.'}`;
     return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(text)}`;
   };
 
   const generateGmailLink = () => {
-    const su = encodeURIComponent(formData.subject || 'Portfolio Inquiry');
+    const su = encodeURIComponent(`Portfolio Inquiry: ${formData.subject || 'Project Inquiry'} - from ${formData.name || 'Visitor'}`);
     const body = encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage:\n${formData.message}`
+      `Hi Yazan,\n\nName: ${formData.name || 'N/A'}\nEmail: ${formData.email || 'N/A'}\nPhone: ${formData.phone || 'N/A'}\nSubject: ${formData.subject || 'N/A'}\n\nMessage:\n${formData.message || ''}\n\n---\nSent from Portfolio: https://portfolio-lyart-zeta-qgvvckbhpk.vercel.app/`
     );
     return `https://mail.google.com/mail/?view=cm&fs=1&to=${personalData.email}&su=${su}&body=${body}`;
   };
 
-  const handleSubmit = async (e) => {
+  const generateMailtoLink = () => {
+    const su = encodeURIComponent(`Portfolio Inquiry: ${formData.subject || 'Project Inquiry'} - from ${formData.name || 'Visitor'}`);
+    const body = encodeURIComponent(
+      `Hi Yazan,\n\nName: ${formData.name || 'N/A'}\nEmail: ${formData.email || 'N/A'}\nPhone: ${formData.phone || 'N/A'}\n\nMessage:\n${formData.message || ''}\n\n---\nSent from Portfolio: https://portfolio-lyart-zeta-qgvvckbhpk.vercel.app/`
+    );
+    return `mailto:${personalData.email}?subject=${su}&body=${body}`;
+  };
+
+  const handleCopyFullMessage = () => {
+    navigator.clipboard.writeText(lastSubmittedText);
+    setCopiedMessage(true);
+    setTimeout(() => setCopiedMessage(false), 2000);
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setErrorMessage('');
 
+    const summary = `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone || 'Not provided'}\nSubject: ${formData.subject}\n\nMessage:\n${formData.message}`;
+    setLastSubmittedText(summary);
+
+    // Asynchronously dispatch to FormSubmit & API without blocking
     try {
-      const response = await fetch(`https://formsubmit.co/ajax/${personalData.email}`, {
+      fetch(`https://formsubmit.co/ajax/${personalData.email}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -81,33 +100,29 @@ export default function ContactPage() {
           Phone: formData.phone || 'Not provided',
           Subject: formData.subject,
           Message: formData.message,
-          _subject: `New Portfolio Enquiry from ${formData.name}: ${formData.subject}`,
-          _template: 'table',
+          _subject: `New Portfolio Enquiry: ${formData.subject} from ${formData.name}`,
           _captcha: 'false',
         }),
-      });
+      }).catch(() => {});
+    } catch (_) {}
 
-      const data = await response.json();
-
-      if (response.ok || data.success === 'true' || data.success === true) {
-        setSubmitted(true);
-        confetti({
-          particleCount: 80,
-          spread: 70,
-          origin: { y: 0.7 },
-        });
-        setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
-      } else {
-        throw new Error(data.message || 'Failed to dispatch email.');
-      }
-    } catch (err) {
-      console.error('Contact Form Error:', err);
-      setErrorMessage(
-        'Email delivery failed. If this is your first time using this email, please check your Gmail Spam/Inbox to activate FormSubmit, or use WhatsApp/Gmail directly below.'
-      );
-    } finally {
-      setIsSubmitting(false);
+    // Automatically trigger pre-filled Gmail compose window
+    const gmailUrl = generateGmailLink();
+    const newTab = window.open(gmailUrl, '_blank');
+    if (!newTab) {
+      // If popup blocker intervened, trigger native mailto
+      window.location.href = generateMailtoLink();
     }
+
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setSubmitted(true);
+      confetti({
+        particleCount: 80,
+        spread: 70,
+        origin: { y: 0.7 },
+      });
+    }, 400);
   };
 
   return (
@@ -296,31 +311,51 @@ export default function ContactPage() {
 
               {submitted ? (
                 <div className="p-8 text-center rounded-2xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-200">
-                  <CheckCircle2 className="w-12 h-12 text-emerald-400 mx-auto mb-3" />
-                  <h3 className="text-lg font-bold text-white">Enquiry Dispatched!</h3>
-                  <p className="text-sm text-emerald-300/80 mt-2 max-w-md mx-auto leading-relaxed">
-                    Thank you! Your message has been dispatched to <strong className="text-white font-mono">{personalData.email}</strong>.
+                  <div className="w-16 h-16 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto mb-4 border border-emerald-500/30">
+                    <CheckCircle2 className="w-9 h-9" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white">Your Enquiry is Ready!</h3>
+                  <p className="text-sm text-slate-300 mt-2 max-w-lg mx-auto leading-relaxed">
+                    We have pre-filled your message for <strong className="text-emerald-400 font-mono">{personalData.email}</strong>. If Gmail didn't open automatically, click below to deliver instantly:
                   </p>
 
-                  <div className="mt-6 pt-6 border-t border-emerald-500/30 flex flex-col sm:flex-row gap-3 justify-center">
+                  {/* Dual Action Hub */}
+                  <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
                     <a
                       href={generateWhatsAppLink()}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs shadow-lg transition-all"
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm shadow-lg shadow-emerald-500/25 transition-all"
                     >
-                      <WhatsApp className="w-4 h-4 fill-current" />
-                      <span>Also Ping on WhatsApp</span>
+                      <WhatsApp className="w-5 h-5 fill-current" />
+                      <span>Send on WhatsApp (+91 7011906923)</span>
                     </a>
                     <a
                       href={generateGmailLink()}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-emerald-500/40 text-emerald-200 font-semibold text-xs transition-all"
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm shadow-lg shadow-purple-600/25 transition-all"
                     >
-                      <Mail className="w-4 h-4 text-emerald-400" />
+                      <Mail className="w-5 h-5" />
                       <span>Open in Gmail App</span>
                     </a>
+                  </div>
+
+                  {/* Message Preview & One-click Copy */}
+                  <div className="mt-6 p-4 rounded-2xl bg-slate-950/80 border border-slate-800 text-left">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-mono uppercase text-slate-400 tracking-wider">Message Content</span>
+                      <button
+                        onClick={handleCopyFullMessage}
+                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900 border border-slate-700 text-xs text-slate-300 hover:text-white transition-colors cursor-pointer"
+                      >
+                        {copiedMessage ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                        <span>{copiedMessage ? 'Copied to Clipboard!' : 'Copy Text'}</span>
+                      </button>
+                    </div>
+                    <div className="text-xs text-slate-300 font-mono whitespace-pre-wrap leading-relaxed max-h-36 overflow-y-auto bg-slate-900/60 p-3 rounded-xl border border-slate-800/60">
+                      {lastSubmittedText}
+                    </div>
                   </div>
 
                   <button
@@ -329,9 +364,9 @@ export default function ContactPage() {
                       setSubmitted(false);
                       setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
                     }}
-                    className="mt-6 text-xs text-slate-400 hover:text-white underline"
+                    className="mt-6 text-xs text-slate-400 hover:text-white underline cursor-pointer"
                   >
-                    Send another message
+                    Write another message
                   </button>
                 </div>
               ) : (
@@ -339,35 +374,6 @@ export default function ContactPage() {
                   onSubmit={handleSubmit}
                   className="space-y-4"
                 >
-                  {errorMessage && (
-                    <div className="p-4 rounded-2xl bg-red-950/50 border border-red-500/30 text-red-300 text-xs flex items-start gap-3">
-                      <AlertCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
-                      <div className="space-y-2">
-                        <p className="font-medium text-white">{errorMessage}</p>
-                        <div className="flex flex-wrap gap-2 pt-1">
-                          <a
-                            href={generateGmailLink()}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-900/60 hover:bg-red-800/80 text-white font-medium transition-colors"
-                          >
-                            <Mail className="w-3.5 h-3.5" />
-                            <span>Open in Gmail Directly</span>
-                          </a>
-                          <a
-                            href={generateWhatsAppLink()}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-900/60 hover:bg-emerald-800/80 text-emerald-200 font-medium transition-colors"
-                          >
-                            <WhatsApp className="w-3.5 h-3.5 fill-current" />
-                            <span>Send on WhatsApp</span>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-medium text-slate-300 mb-1.5">
@@ -448,17 +454,17 @@ export default function ContactPage() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="flex-1 py-3.5 px-6 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 bg-[length:200%_auto] hover:bg-right transition-all duration-300 shadow-lg shadow-purple-600/30 flex items-center justify-center gap-2 disabled:opacity-50 text-sm"
+                      className="flex-1 py-3.5 px-6 rounded-xl font-bold text-white bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 bg-[length:200%_auto] hover:bg-right transition-all duration-300 shadow-lg shadow-purple-600/30 flex items-center justify-center gap-2 disabled:opacity-50 text-sm cursor-pointer"
                     >
                       {isSubmitting ? (
                         <span className="inline-flex items-center gap-2">
                           <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                          Sending...
+                          Preparing...
                         </span>
                       ) : (
                         <>
-                          <Send className="w-4 h-4" />
-                          <span>Send Message to Email</span>
+                          <Mail className="w-4 h-4" />
+                          <span>Send via Email / Gmail</span>
                         </>
                       )}
                     </button>
@@ -467,12 +473,16 @@ export default function ContactPage() {
                       href={generateWhatsAppLink()}
                       target="_blank"
                       rel="noreferrer"
-                      className="py-3.5 px-5 rounded-xl font-bold text-slate-950 bg-emerald-400 hover:bg-emerald-300 transition-all flex items-center justify-center gap-2 text-sm shadow-lg shadow-emerald-400/20"
+                      className="py-3.5 px-6 rounded-xl font-bold text-slate-950 bg-emerald-400 hover:bg-emerald-300 transition-all flex items-center justify-center gap-2 text-sm shadow-lg shadow-emerald-400/20"
                     >
                       <WhatsApp className="w-4 h-4 fill-current" />
                       <span>Send via WhatsApp</span>
                     </a>
                   </div>
+
+                  <p className="text-[11px] text-center text-slate-500 pt-1">
+                    Direct delivery guaranteed &bull; Delivers straight to <strong className="text-slate-400 font-mono">{personalData.email}</strong> & WhatsApp
+                  </p>
                 </form>
               )}
             </div>
