@@ -1,11 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Award,
   Search,
-  Plus,
-  UploadCloud,
-  X,
   ExternalLink,
   Calendar,
   Building2,
@@ -14,163 +11,37 @@ import {
   Eye,
   ShieldCheck,
   FileText,
-  Image as ImageIcon,
   Tag,
   Download,
-  Star
+  Star,
+  X
 } from 'lucide-react';
 import { certificationsData } from '../data/portfolioData';
 
 const STORAGE_KEY = 'yazan_custom_certificates';
 
 export default function CertificationsPage() {
-  const [customCerts, setCustomCerts] = useState([]);
   const [allCertificates, setAllCertificates] = useState(certificationsData);
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
-
-  // Modals
-  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [previewCert, setPreviewCert] = useState(null);
 
-  // Form states for Upload
-  const [formTitle, setFormTitle] = useState('');
-  const [formIssuer, setFormIssuer] = useState('');
-  const [formDate, setFormDate] = useState(new Date().getFullYear().toString());
-  const [formCategory, setFormCategory] = useState('Hackathons & Competitions');
-  const [formSkills, setFormSkills] = useState('');
-  const [formCredentialId, setFormCredentialId] = useState('');
-  const [formCredentialUrl, setFormCredentialUrl] = useState('');
-  const [formDescription, setFormDescription] = useState('');
-  const [formImagePreview, setFormImagePreview] = useState('');
-  const [formFileType, setFormFileType] = useState('image');
-  const [formFileName, setFormFileName] = useState('');
-  const [formImageUrl, setFormImageUrl] = useState('');
-  const [uploadError, setUploadError] = useState('');
-  const [uploadSuccess, setUploadSuccess] = useState(false);
-
-  const fileInputRef = useRef(null);
-
-  // Load custom certificates from localStorage on mount
+  // Load any existing saved certificates from localStorage on mount
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed)) {
-          setCustomCerts(parsed);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setAllCertificates([...parsed, ...certificationsData]);
+          return;
         }
       }
     } catch (e) {
-      console.error('Error loading custom certificates:', e);
+      console.warn('LocalStorage error reading certificates:', e);
     }
+    setAllCertificates(certificationsData);
   }, []);
-
-  // Merge default portfolio certificates with custom ones
-  useEffect(() => {
-    const combined = [...customCerts, ...certificationsData];
-    setAllCertificates(combined);
-  }, [customCerts]);
-
-  // Handle local file selection
-  const handleFileChange = (e) => {
-    const file = e.target.files?.[0];
-    setUploadError('');
-    if (!file) return;
-
-    const isPdf = file.type === 'application/pdf';
-    const isImage = file.type.startsWith('image/');
-
-    if (!isPdf && !isImage) {
-      setUploadError('Please select a valid image file (JPG, PNG, WEBP) or PDF.');
-      return;
-    }
-
-    if (file.size > 15 * 1024 * 1024) {
-      setUploadError('File size exceeds 15MB limit.');
-      return;
-    }
-
-    setFormFileType(isPdf ? 'pdf' : 'image');
-    setFormFileName(file.name);
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      setFormImagePreview(reader.result);
-    };
-    reader.onerror = () => {
-      setUploadError('Failed to read file.');
-    };
-    reader.readAsDataURL(file);
-  };
-
-  // Submit new certificate
-  const handleUploadSubmit = (e) => {
-    e.preventDefault();
-    setUploadError('');
-
-    if (!formTitle.trim()) {
-      setUploadError('Certificate Title is required.');
-      return;
-    }
-    if (!formIssuer.trim()) {
-      setUploadError('Issuing Organization is required.');
-      return;
-    }
-
-    const finalImage =
-      formImagePreview ||
-      formImageUrl.trim() ||
-      'https://images.unsplash.com/photo-1589330694653-dad6d3240a2b?auto=format&fit=crop&w=1200&q=80';
-
-    const parsedSkills = formSkills
-      ? formSkills.split(',').map((s) => s.trim()).filter(Boolean)
-      : ['Web Development', 'Full-Stack'];
-
-    const newCert = {
-      id: `cert-${Date.now()}`,
-      title: formTitle.trim(),
-      issuer: formIssuer.trim(),
-      issueDate: formDate.trim() || new Date().getFullYear().toString(),
-      category: formCategory,
-      credentialId: formCredentialId.trim() || `VERIFIED-${Date.now().toString().slice(-6)}`,
-      credentialUrl: formCredentialUrl.trim() || '',
-      description:
-        formDescription.trim() ||
-        `Verified certification awarded to Yazan Gupta by ${formIssuer.trim()}.`,
-      image: finalImage,
-      type: formFileType,
-      fileName: formFileName || 'certificate.jpg',
-      skills: parsedSkills,
-      featured: true,
-      isVerified: true,
-      isCustom: true,
-    };
-
-    const updated = [newCert, ...customCerts];
-    setCustomCerts(updated);
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-    } catch (err) {
-      console.warn('LocalStorage error:', err);
-    }
-
-    setUploadSuccess(true);
-    setTimeout(() => {
-      setFormTitle('');
-      setFormIssuer('');
-      setFormDate(new Date().getFullYear().toString());
-      setFormSkills('');
-      setFormCredentialId('');
-      setFormCredentialUrl('');
-      setFormDescription('');
-      setFormImagePreview('');
-      setFormFileName('');
-      setFormImageUrl('');
-      setUploadSuccess(false);
-      setIsUploadModalOpen(false);
-    }, 900);
-  };
 
   // Categories list
   const availableCategories = [
@@ -197,6 +68,7 @@ export default function CertificationsPage() {
   return (
     <div className="pt-28 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="max-w-3xl">
@@ -212,15 +84,12 @@ export default function CertificationsPage() {
             </p>
           </div>
 
-          {/* Action Header Button */}
+          {/* Verification Badge */}
           <div className="flex items-center gap-3 self-start md:self-auto">
-            <button
-              onClick={() => setIsUploadModalOpen(true)}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-xs text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:shadow-lg hover:shadow-purple-600/30 transition-all shadow-md"
-            >
-              <Plus className="w-4 h-4" />
-              <span>Add Certificate</span>
-            </button>
+            <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900/90 border border-slate-800 text-xs font-semibold text-emerald-400 shadow-md">
+              <ShieldCheck className="w-4 h-4 text-emerald-400" />
+              <span>100% Authentic &amp; Verified</span>
+            </div>
           </div>
         </div>
 
@@ -348,55 +217,73 @@ export default function CertificationsPage() {
                 </div>
 
                 {/* Hover overlay hint */}
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                  <span className="px-4 py-2 rounded-xl bg-purple-600/90 text-white text-xs font-semibold backdrop-blur-md flex items-center gap-1.5 shadow-lg">
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 backdrop-blur-[2px]">
+                  <span className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-600/90 text-white text-xs font-semibold shadow-lg">
                     <Eye className="w-4 h-4" />
-                    <span>View Certificate</span>
+                    View Certificate
                   </span>
                 </div>
               </div>
 
-              {/* Certificate Details */}
+              {/* Card Body */}
               <div className="p-6 flex-1 flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center gap-2 text-xs text-purple-400 font-medium mb-1.5">
-                    <Building2 className="w-3.5 h-3.5" />
-                    <span className="truncate">{cert.issuer}</span>
+                  <div className="flex items-center gap-2 text-xs font-mono text-purple-400 mb-2">
+                    <Calendar className="w-3.5 h-3.5" />
+                    <span>Issued {cert.issueDate}</span>
+                    <span className="text-slate-600">&bull;</span>
+                    <span className="truncate">{cert.category}</span>
                   </div>
 
-                  <h3 className="text-lg font-bold text-white group-hover:text-purple-300 transition-colors line-clamp-2">
+                  <h3
+                    onClick={() => setPreviewCert(cert)}
+                    className="text-lg font-bold text-white group-hover:text-purple-300 transition-colors cursor-pointer line-clamp-2"
+                  >
                     {cert.title}
                   </h3>
 
-                  <p className="mt-2 text-xs sm:text-sm text-slate-400 leading-relaxed line-clamp-2">
+                  <div className="mt-2 flex items-center gap-2 text-xs text-slate-300">
+                    <Building2 className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                    <span className="font-medium text-slate-300">{cert.issuer}</span>
+                  </div>
+
+                  <p className="mt-3 text-xs text-slate-400 line-clamp-2 leading-relaxed">
                     {cert.description}
                   </p>
 
-                  {/* Skills tags */}
+                  {/* Skills pills */}
                   {cert.skills && cert.skills.length > 0 && (
                     <div className="mt-4 flex flex-wrap gap-1.5">
-                      {cert.skills.map((skill) => (
+                      {cert.skills.slice(0, 4).map((skill) => (
                         <span
                           key={skill}
-                          className="px-2.5 py-1 rounded-md text-[10px] font-mono font-medium bg-slate-800/80 text-purple-200 border border-slate-700/60"
+                          className="px-2.5 py-1 rounded-md text-[11px] font-medium bg-slate-800/80 text-slate-300 border border-slate-700/50"
                         >
                           {skill}
                         </span>
                       ))}
+                      {cert.skills.length > 4 && (
+                        <span className="px-2 py-1 rounded-md text-[10px] font-mono text-slate-400 bg-slate-800/50">
+                          +{cert.skills.length - 4}
+                        </span>
+                      )}
                     </div>
                   )}
                 </div>
 
-                {/* Footer details & Action */}
-                <div className="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between">
-                  <div className="flex items-center gap-1 text-[11px] font-mono text-slate-400">
-                    <Calendar className="w-3 h-3 text-slate-500" />
-                    <span>{cert.issueDate}</span>
-                  </div>
+                {/* Footer Actions */}
+                <div className="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between gap-3">
+                  <button
+                    onClick={() => setPreviewCert(cert)}
+                    className="text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors inline-flex items-center gap-1.5"
+                  >
+                    <Eye className="w-3.5 h-3.5" />
+                    <span>View Full</span>
+                  </button>
 
                   <button
                     onClick={() => setPreviewCert(cert)}
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors"
+                    className="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium border border-slate-700 hover:border-purple-500/40 transition-all inline-flex items-center gap-1.5"
                   >
                     <span>Inspect</span>
                     <ExternalLink className="w-3.5 h-3.5" />
@@ -418,211 +305,6 @@ export default function CertificationsPage() {
           </div>
         )}
       </div>
-
-      {/* Add Certificate Modal */}
-      <AnimatePresence>
-        {isUploadModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsUploadModalOpen(false)}
-              className="fixed inset-0 bg-black/80 backdrop-blur-md"
-            />
-
-            {/* Modal Body */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="relative w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 z-10 shadow-2xl max-h-[90vh] overflow-y-auto my-auto"
-            >
-              <button
-                onClick={() => setIsUploadModalOpen(false)}
-                className="absolute top-5 right-5 p-2 rounded-xl bg-slate-800/80 text-slate-400 hover:text-white transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
-
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-2xl bg-purple-600/20 border border-purple-500/30 text-purple-400 flex items-center justify-center">
-                  <Award className="w-6 h-6" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white">Add New Certificate</h3>
-                  <p className="text-xs text-slate-400">
-                    Upload image or PDF of your original credential.
-                  </p>
-                </div>
-              </div>
-
-              {uploadError && (
-                <div className="mb-4 p-3 rounded-xl bg-rose-950/60 border border-rose-500/40 text-rose-300 text-xs">
-                  {uploadError}
-                </div>
-              )}
-              {uploadSuccess && (
-                <div className="mb-4 p-3 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-xs font-semibold flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  <span>Certificate added successfully!</span>
-                </div>
-              )}
-
-              <form onSubmit={handleUploadSubmit} className="space-y-4">
-                {/* File Upload Zone */}
-                <div>
-                  <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-                    Certificate Document (Image or PDF)
-                  </label>
-                  <div
-                    onClick={() => fileInputRef.current?.click()}
-                    className="border-2 border-dashed border-slate-700 hover:border-purple-500 rounded-2xl p-6 text-center cursor-pointer transition-colors bg-slate-950/50"
-                  >
-                    <input
-                      type="file"
-                      ref={fileInputRef}
-                      onChange={handleFileChange}
-                      accept="image/*,application/pdf"
-                      className="hidden"
-                    />
-                    <UploadCloud className="w-10 h-10 text-purple-400 mx-auto mb-2" />
-                    <p className="text-sm font-medium text-white">
-                      Click to browse or drag &amp; drop
-                    </p>
-                    <p className="text-xs text-slate-400 mt-1">
-                      PNG, JPG, WEBP, or PDF (Max 15MB)
-                    </p>
-                    {formFileName && (
-                      <div className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-purple-950/80 border border-purple-500/30 text-purple-300 text-xs font-mono">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                        <span>{formFileName}</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-medium text-slate-300 mb-1">
-                      Certificate Title *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formTitle}
-                      onChange={(e) => setFormTitle(e.target.value)}
-                      placeholder="e.g. All India Hackathon Winner"
-                      className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-medium text-slate-300 mb-1">
-                      Issuing Organization *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formIssuer}
-                      onChange={(e) => setFormIssuer(e.target.value)}
-                      placeholder="e.g. Ministry of Youth Affairs / IEEE"
-                      className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div>
-                    <label className="block text-xs font-medium text-slate-300 mb-1">
-                      Category
-                    </label>
-                    <select
-                      value={formCategory}
-                      onChange={(e) => setFormCategory(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
-                    >
-                      <option value="Hackathons & Competitions">Hackathons &amp; Competitions</option>
-                      <option value="Government of India / National Recognitions">Govt &amp; National</option>
-                      <option value="Full-Stack & Cloud Architecture">Full-Stack &amp; Cloud</option>
-                      <option value="Artificial Intelligence & ML">AI &amp; Machine Learning</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-medium text-slate-300 mb-1">
-                      Issue Date / Year
-                    </label>
-                    <input
-                      type="text"
-                      value={formDate}
-                      onChange={(e) => setFormDate(e.target.value)}
-                      placeholder="e.g. 2026"
-                      className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-medium text-slate-300 mb-1">
-                      Credential ID (Optional)
-                    </label>
-                    <input
-                      type="text"
-                      value={formCredentialId}
-                      onChange={(e) => setFormCredentialId(e.target.value)}
-                      placeholder="e.g. MYB-2026-CERT"
-                      className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1">
-                    Skills / Tech Covered (Comma separated)
-                  </label>
-                  <input
-                    type="text"
-                    value={formSkills}
-                    onChange={(e) => setFormSkills(e.target.value)}
-                    placeholder="e.g. React, Node.js, AI Innovation, Problem Solving"
-                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1">
-                    Description / Key Highlights
-                  </label>
-                  <textarea
-                    rows={2}
-                    value={formDescription}
-                    onChange={(e) => setFormDescription(e.target.value)}
-                    placeholder="Brief description of the certificate honor..."
-                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-purple-500 resize-none"
-                  />
-                </div>
-
-                <div className="pt-2 flex items-center justify-end gap-3 border-t border-slate-800">
-                  <button
-                    type="button"
-                    onClick={() => setIsUploadModalOpen(false)}
-                    className="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-6 py-2.5 rounded-xl text-xs font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:shadow-lg hover:shadow-purple-600/30 transition-all shadow-md"
-                  >
-                    Save Certificate
-                  </button>
-                </div>
-              </form>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
 
       {/* Full Certificate Preview Modal */}
       <AnimatePresence>
