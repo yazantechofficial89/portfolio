@@ -1,21 +1,29 @@
 export const personalData = {
   name: "Yazan Gupta",
   title: "Full-Stack Web Developer",
-  tagline: "Architecting scalable web applications, sleek user interfaces, and robust backend ecosystems.",
+  tagline: "Computer Science student at Echelon Institute of Technology (2024–2028) & Full-Stack MERN Developer.",
   status: "Available for new opportunities",
   location: "India / Remote Worldwide",
   email: "yazangupta39@gmail.com",
   phone: "+91 7011906923",
   resumeUrl: "#resume",
-  bio: `I am a passionate Full-Stack Developer with deep expertise in modern JavaScript/TypeScript ecosystems. I bridge the gap between intuitive, responsive frontend design and robust, high-performance backend architecture. From concept to deployment, I build web solutions that solve real-world problems.`,
-  detailedStory: `My engineering journey started with curiosity about how complex web applications handle millions of requests without breaking. Over the years, I've immersed myself in the React ecosystem, Node.js runtime, relational & non-relational database design, and cloud architecture. 
+  bio: `I’m a Computer Science student at Echelon Institute of Technology, pursuing a B.Tech in Computer Science from 2024 to 2028. I’m passionate about technology and full-stack web development, and I enjoy creating applications that are useful, responsive, and easy to use.`,
+  detailedStory: `My interest in development has led me to learn the MERN stack: MongoDB, Express.js, React, and Node.js. I have one year of hands-on experience building and improving web applications. Through this experience, I’ve developed my understanding of frontend development, backend APIs, and database integration.
 
-I take pride in writing readable, maintainable, and type-safe code that scales gracefully. Whether designing distributed microservices, building pixel-perfect mobile-first interfaces, or configuring CI/CD deployment pipelines, I approach every challenge with high craftsmanship and relentless attention to detail.`,
+I enjoy learning by building projects, exploring new technologies, and solving challenges along the way. Each project helps me strengthen my skills and understand how the different parts of a web application work together.`,
+  goals: `I’m focused on strengthening my computer science fundamentals and growing as a full-stack developer. I look forward to taking on new challenges, collaborating with others, and creating projects that reflect my skills and continued progress.`,
+  connect: `I’m happy to connect with fellow students, developers, and people working on interesting ideas. Feel free to reach out to discuss technology, web development, or potential collaborations.`,
+  education: {
+    degree: "B.Tech in Computer Science",
+    institute: "Echelon Institute of Technology",
+    duration: "2024–2028",
+    experience: "1 year of hands-on MERN stack development",
+  },
   stats: [
-    { label: "Projects Completed", value: "20+" },
-    { label: "Years Experience", value: "2+" },
-    { label: "Technologies Mastered", value: "15+" },
-    { label: "Code Commits", value: "1,200+" },
+    { label: "Hands-on Experience", value: "1 Year" },
+    { label: "Degree Program", value: "B.Tech CSE" },
+    { label: "Graduation Batch", value: "2024–2028" },
+    { label: "Primary Stack", value: "MERN Stack" },
   ],
   socials: {
     github: "https://github.com/yazantechofficial89",
@@ -161,25 +169,26 @@ export const projectsData = [
 
 export const experienceData = [
   {
-    period: "2023 - Present",
-    role: "Full-Stack Web Developer",
-    company: "Tech Innovations & Freelance",
-    description: "Developing scalable full-stack applications with React, Node.js, and cloud databases. Leading frontend architecture, optimizing API endpoints for 40% latency reduction, and shipping client solutions.",
-    highlights: ["Built 15+ production-grade web applications", "Integrated microservices & payment gateways", "Implemented CI/CD pipelines with GitHub Actions"],
+    period: "2024 - Present",
+    role: "Full-Stack MERN Developer",
+    company: "Hands-on Project Development",
+    description: "One year of hands-on experience building and improving web applications using MongoDB, Express.js, React, and Node.js. Deepening understanding of frontend development, backend APIs, and database integration.",
+    highlights: [
+      "1 year of hands-on MERN stack development experience",
+      "Architected and deployed SevaSetu full-stack care bridge portal",
+      "Building responsive interfaces, RESTful APIs, and database schemas",
+    ],
   },
   {
-    period: "2022 - 2023",
-    role: "Frontend Developer",
-    company: "Digital Solutions Studio",
-    description: "Collaborated with UI/UX designers to translate Figma prototypes into accessible, responsive, pixel-perfect web interfaces. Engineered reusable component libraries.",
-    highlights: ["Created 30+ reusable React UI components", "Boosted Lighthouse performance score to 98+", "Adopted Tailwind CSS across multiple client portals"],
-  },
-  {
-    period: "2020 - 2024",
-    role: "Bachelor of Technology in Computer Science",
-    company: "University / Institute",
-    description: "Relevant Coursework: Data Structures & Algorithms, Object-Oriented Programming, Database Management Systems, Computer Networks, Software Engineering.",
-    highlights: ["Graduated with Honors", "Active lead at Campus Developer Club", "Winner of Annual Hackathon"],
+    period: "2024 - 2028",
+    role: "B.Tech in Computer Science",
+    company: "Echelon Institute of Technology",
+    description: "Pursuing Bachelor of Technology in Computer Science and Engineering. Strengthening computer science fundamentals, algorithms, and full-stack software development.",
+    highlights: [
+      "B.Tech in Computer Science (2024–2028)",
+      "Focusing on CS fundamentals & software architecture",
+      "Active participant in hackathons (AIH 2026) and hands-on projects",
+    ],
   },
 ];
 
