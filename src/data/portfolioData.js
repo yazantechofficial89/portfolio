@@ -143,7 +143,7 @@ export const projectsData = [
     title: "SevaSetu - A Bridge Between Care and Need",
     category: "Full-Stack",
     description: "SevaSetu connects donors directly with orphanages and old-age homes, ensuring transparency, trust, and timely help. Built with full-stack architecture featuring real-time Live Ashram Chat, donation management for clothes & essentials, and community welfare support.",
-    image: "/sevasetu.png",
+    image: "/sevasetu.webp",
     tags: [
       "React",
       "Node.js",

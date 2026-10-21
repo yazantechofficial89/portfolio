@@ -1,19 +1,29 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
 
-// Pages
+// Eager load Home for instant First Contentful Paint
 import Home from './pages/Home';
-import AboutPage from './pages/AboutPage';
-import SkillsPage from './pages/SkillsPage';
-import ProjectsPage from './pages/ProjectsPage';
-import ExperiencePage from './pages/ExperiencePage';
-import CertificationsPage from './pages/CertificationsPage';
-import ContactPage from './pages/ContactPage';
-import NotFoundPage from './pages/NotFoundPage';
+
+// Lazy load secondary routes for optimal performance and minimal initial bundle
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const SkillsPage = lazy(() => import('./pages/SkillsPage'));
+const ProjectsPage = lazy(() => import('./pages/ProjectsPage'));
+const ExperiencePage = lazy(() => import('./pages/ExperiencePage'));
+const CertificationsPage = lazy(() => import('./pages/CertificationsPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
+
+function RouteLoader() {
+  return (
+    <div className="min-h-[60vh] flex items-center justify-center" aria-label="Loading page content">
+      <div className="w-8 h-8 border-2 border-purple-500 border-t-transparent rounded-full animate-spin" />
+    </div>
+  );
+}
 
 export default function App() {
   return (
@@ -22,16 +32,18 @@ export default function App() {
       <div className="min-h-screen bg-slate-950 text-slate-100 selection:bg-purple-600/30 selection:text-purple-200 flex flex-col justify-between">
         <Navbar />
         <main className="flex-1">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/skills" element={<SkillsPage />} />
-            <Route path="/projects" element={<ProjectsPage />} />
-            <Route path="/certifications" element={<CertificationsPage />} />
-            <Route path="/experience" element={<ExperiencePage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
+          <Suspense fallback={<RouteLoader />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/skills" element={<SkillsPage />} />
+              <Route path="/projects" element={<ProjectsPage />} />
+              <Route path="/certifications" element={<CertificationsPage />} />
+              <Route path="/experience" element={<ExperiencePage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </Suspense>
         </main>
         <Footer />
         <FloatingWhatsApp />
