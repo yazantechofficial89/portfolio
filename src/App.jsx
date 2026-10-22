@@ -29,7 +29,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <div className="min-h-screen bg-black text-zinc-100 selection:bg-white/20 selection:text-white flex flex-col justify-between">
+      <div className="min-h-screen bg-[#050308] text-zinc-100 selection:bg-purple-600/30 selection:text-purple-200 flex flex-col justify-between">
         <Navbar />
         <main className="flex-1">
           <Suspense fallback={<RouteLoader />}>

@@ -18,20 +18,21 @@ export default function Home() {
   const featuredProjects = projectsData.filter((p) => p.featured).slice(0, 3);
 
   return (
-    <div className="bg-black text-zinc-100">
+    <div className="bg-[#050308] text-zinc-100">
       {/* Hero Section */}
       <Hero />
 
-      {/* About Preview Section - Liquid Glass */}
-      <section className="py-20 relative border-t border-white/[0.08] bg-[#050507]">
+      {/* About Preview Section - Dark Purple Glass */}
+      <section className="py-20 relative border-t border-purple-500/15 bg-[#07050d]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-zinc-300 text-xs font-mono tracking-wider uppercase mb-3">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full liquid-pill text-purple-200 text-xs font-mono tracking-wider uppercase mb-3">
+                <Sparkles className="w-3.5 h-3.5 text-purple-400" />
                 Meet The Developer
               </div>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-                Crafting robust applications with <span className="text-silver-gradient">modern engineering</span>
+                Crafting robust applications with <span className="text-gradient">modern engineering</span>
               </h2>
               <p className="mt-4 text-base text-zinc-400 leading-relaxed font-normal">
                 {personalData.bio}
@@ -39,14 +40,14 @@ export default function Home() {
               <div className="mt-6 flex flex-wrap gap-4">
                 <Link
                   to="/about"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-black bg-white hover:bg-zinc-200 shadow-[0_0_20px_rgba(255,255,255,0.15)] transition-all"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-[0_0_20px_rgba(147,51,234,0.35)] transition-all"
                 >
                   <span>Read Full Story &amp; Philosophy</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
                 <Link
                   to="/experience"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium text-zinc-400 hover:text-white transition-colors"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium text-zinc-400 hover:text-purple-300 transition-colors"
                 >
                   <span>View Career Timeline</span>
                   <ChevronRight className="w-4 h-4" />
@@ -56,8 +57,8 @@ export default function Home() {
 
             <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="p-6 rounded-2xl liquid-glass-interactive">
-                <div className="w-10 h-10 rounded-xl bg-white/[0.04] text-white border border-white/10 flex items-center justify-center mb-4 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
-                  <Code2 className="w-5 h-5 text-zinc-200" />
+                <div className="w-10 h-10 rounded-xl bg-[#0c0915] text-purple-400 border border-purple-500/25 flex items-center justify-center mb-4 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
+                  <Code2 className="w-5 h-5 text-purple-300" />
                 </div>
                 <h3 className="text-lg font-bold text-white">Frontend Mastery</h3>
                 <p className="text-xs text-zinc-400 mt-2 leading-relaxed">
@@ -66,8 +67,8 @@ export default function Home() {
               </div>
 
               <div className="p-6 rounded-2xl liquid-glass-interactive">
-                <div className="w-10 h-10 rounded-xl bg-white/[0.04] text-white border border-white/10 flex items-center justify-center mb-4 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
-                  <Layers className="w-5 h-5 text-zinc-200" />
+                <div className="w-10 h-10 rounded-xl bg-[#0c0915] text-purple-400 border border-purple-500/25 flex items-center justify-center mb-4 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
+                  <Layers className="w-5 h-5 text-purple-300" />
                 </div>
                 <h3 className="text-lg font-bold text-white">Scalable APIs</h3>
                 <p className="text-xs text-zinc-400 mt-2 leading-relaxed">
@@ -79,16 +80,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Projects Section - Liquid Glass */}
-      <section className="py-24 relative bg-black border-t border-white/[0.08]">
+      {/* Featured Projects Section - Dark Purple Glass */}
+      <section className="py-24 relative bg-[#050308] border-t border-purple-500/15">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-zinc-300 text-xs font-mono tracking-wider uppercase mb-3">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full liquid-pill text-purple-200 text-xs font-mono tracking-wider uppercase mb-3">
                 Selected Work
               </div>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-                Featured <span className="text-silver-gradient">Projects</span>
+                Featured <span className="text-gradient">Projects</span>
               </h2>
               <p className="mt-3 text-base text-zinc-400 max-w-xl font-normal">
                 A glimpse of full-stack products engineered for real-world impact and reliability.
@@ -96,7 +97,7 @@ export default function Home() {
             </div>
             <Link
               to="/projects"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-black bg-white hover:bg-zinc-200 shadow-[0_0_20px_rgba(255,255,255,0.15)] transition-all self-start md:self-auto"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-[0_0_20px_rgba(147,51,234,0.35)] transition-all self-start md:self-auto"
             >
               <span>Explore All Projects</span>
               <ArrowRight className="w-4 h-4" />
@@ -109,7 +110,7 @@ export default function Home() {
                 key={project.id}
                 className="group flex flex-col rounded-3xl liquid-glass-interactive overflow-hidden shadow-2xl"
               >
-                <div className={`relative ${featuredProjects.length === 1 ? 'h-56 sm:h-64' : 'h-48'} w-full overflow-hidden bg-[#09090b]`}>
+                <div className={`relative ${featuredProjects.length === 1 ? 'h-56 sm:h-64' : 'h-48'} w-full overflow-hidden bg-[#0a0712]`}>
                   <img
                     src={project.image}
                     alt={project.title}
@@ -117,12 +118,12 @@ export default function Home() {
                     decoding="async"
                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#09090c] via-black/30 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0714] via-black/30 to-transparent" />
                   <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
-                    <span className="px-3 py-1 rounded-full text-xs font-mono font-medium liquid-pill text-zinc-200">
+                    <span className="px-3 py-1 rounded-full text-xs font-mono font-medium liquid-pill text-purple-200">
                       {project.category}
                     </span>
-                    <span className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium liquid-pill text-zinc-200">
+                    <span className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium liquid-pill text-purple-200">
                       <Star className="w-3 h-3 text-amber-300 fill-amber-300" />
                       Featured
                     </span>
@@ -131,7 +132,7 @@ export default function Home() {
 
                 <div className="p-6 flex-1 flex flex-col justify-between">
                   <div>
-                    <h3 className="text-lg font-bold text-white group-hover:text-zinc-200 transition-colors line-clamp-1">
+                    <h3 className="text-lg font-bold text-white group-hover:text-purple-200 transition-colors line-clamp-1">
                       {project.title}
                     </h3>
                     <p className="mt-2 text-xs sm:text-sm text-zinc-400 line-clamp-2 leading-relaxed font-normal">
@@ -141,7 +142,7 @@ export default function Home() {
                       {project.tags.slice(0, 4).map((tag) => (
                         <span
                           key={tag}
-                          className="px-2.5 py-1 rounded-md text-[11px] font-mono font-medium bg-white/[0.04] text-zinc-300 border border-white/[0.08]"
+                          className="px-2.5 py-1 rounded-md text-[11px] font-mono font-medium bg-purple-950/40 text-purple-200 border border-purple-500/20"
                         >
                           {tag}
                         </span>
@@ -149,12 +150,12 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-white/[0.08] flex items-center justify-between">
+                  <div className="mt-6 pt-4 border-t border-purple-500/20 flex items-center justify-between">
                     <a
                       href={project.demoUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-white hover:text-zinc-300 transition-colors"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors"
                     >
                       <span>Live Demo</span>
                       <ArrowUpRight className="w-3.5 h-3.5" />
@@ -176,14 +177,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Skills & Architecture Teaser Banner - Liquid Glass */}
-      <section className="py-20 relative border-t border-white/[0.08] bg-[#050507]">
+      {/* Skills & Architecture Teaser Banner */}
+      <section className="py-20 relative border-t border-purple-500/15 bg-[#07050d]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="rounded-3xl liquid-glass p-8 sm:p-12 relative overflow-hidden">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               <div className="lg:col-span-8">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-zinc-300 text-xs font-mono font-medium uppercase mb-3">
-                  <Sparkles className="w-3.5 h-3.5 text-zinc-300" />
+                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full liquid-pill text-purple-200 text-xs font-mono font-medium uppercase mb-3">
+                  <Sparkles className="w-3.5 h-3.5 text-purple-400" />
                   Full-Stack Architecture
                 </div>
                 <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
@@ -196,16 +197,16 @@ export default function Home() {
               <div className="lg:col-span-4 flex flex-wrap gap-3 lg:justify-end">
                 <Link
                   to="/skills"
-                  className="px-6 py-3 rounded-xl font-semibold text-black bg-white hover:bg-zinc-200 shadow-[0_0_20px_rgba(255,255,255,0.18)] transition-all text-sm inline-flex items-center gap-2"
+                  className="px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-[0_0_20px_rgba(147,51,234,0.35)] transition-all text-sm inline-flex items-center gap-2"
                 >
                   <span>Explore Skills Matrix</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
                 <Link
                   to="/certifications"
-                  className="px-5 py-3 rounded-xl font-medium text-zinc-200 liquid-pill hover:bg-white/[0.08] transition-all text-sm inline-flex items-center gap-2"
+                  className="px-5 py-3 rounded-xl font-medium text-purple-200 liquid-pill hover:bg-purple-950/40 transition-all text-sm inline-flex items-center gap-2"
                 >
-                  <Award className="w-4 h-4 text-zinc-400" />
+                  <Award className="w-4 h-4 text-purple-400" />
                   <span>Certifications</span>
                 </Link>
               </div>
@@ -215,10 +216,10 @@ export default function Home() {
       </section>
 
       {/* Final Hire Me Call To Action */}
-      <section className="py-24 relative overflow-hidden text-center bg-black border-t border-white/[0.08]">
+      <section className="py-24 relative overflow-hidden text-center bg-[#050308] border-t border-purple-500/15">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-pill text-zinc-300 text-xs font-mono font-medium mb-4">
-            <Sparkles className="w-4 h-4 text-zinc-300" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-pill text-purple-200 text-xs font-mono font-medium mb-4">
+            <Sparkles className="w-4 h-4 text-purple-400" />
             Let's Collaborate
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
@@ -230,13 +231,13 @@ export default function Home() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <Link
               to="/contact"
-              className="px-8 py-3.5 rounded-xl font-semibold text-black bg-white hover:bg-zinc-200 transition-all duration-300 shadow-[0_0_25px_rgba(255,255,255,0.2)] text-sm sm:text-base"
+              className="px-8 py-3.5 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 hover:from-purple-500 hover:to-indigo-500 transition-all duration-300 shadow-[0_0_25px_rgba(147,51,234,0.4)] text-sm sm:text-base border border-purple-400/30"
             >
               Get In Touch With Me
             </Link>
             <Link
               to="/projects"
-              className="px-8 py-3.5 rounded-xl font-medium text-zinc-300 liquid-pill hover:bg-white/[0.08] hover:text-white transition-all text-sm sm:text-base"
+              className="px-8 py-3.5 rounded-xl font-medium text-purple-200 liquid-pill hover:bg-purple-950/40 hover:text-white transition-all text-sm sm:text-base"
             >
               Browse Portfolio
             </Link>

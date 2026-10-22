@@ -69,7 +69,7 @@ export default async function handler(req, res) {
               _captcha: 'false',
             }),
           }).catch(() => {});
-        } catch (_) {}
+        } catch {}
 
         return res.status(201).json({
           success: true,
@@ -82,7 +82,7 @@ export default async function handler(req, res) {
         });
       } else {
         // Fallback: If MONGODB_URI is not set yet in Vercel, dispatch via Formsubmit so no lead is lost
-        const fallbackRes = await fetch(`https://formsubmit.co/ajax/yazangupta39@gmail.com`, {
+        await fetch(`https://formsubmit.co/ajax/yazangupta39@gmail.com`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

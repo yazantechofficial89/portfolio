@@ -63,20 +63,21 @@ export default function SkillsPage() {
   const filteredSkills = getFilteredSkills();
 
   return (
-    <div className="pt-28 pb-24 relative overflow-hidden bg-black text-zinc-100">
+    <div className="pt-28 pb-24 relative overflow-hidden bg-[#050308] text-zinc-100">
       {/* Subtle ambient lighting */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-white/[0.02] blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-purple-900/15 blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-10 right-10 w-96 h-96 bg-indigo-950/20 blur-3xl pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-zinc-300 text-xs font-mono tracking-wider uppercase mb-3">
-            <Sparkles className="w-3.5 h-3.5 text-zinc-400" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-purple-300 border-purple-500/20 bg-purple-950/40 text-xs font-mono tracking-wider uppercase mb-3">
+            <Sparkles className="w-3.5 h-3.5 text-purple-400" />
             Technical Stack &amp; Architecture
           </div>
           <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight">
-            Skills, Architecture &amp; <span className="text-silver-gradient">MERN Expertise</span>
+            Skills, Architecture &amp; <span className="text-gradient">MERN Expertise</span>
           </h1>
           <p className="mt-4 text-base sm:text-lg text-zinc-400 leading-relaxed font-normal">
             A comprehensive breakdown of how I engineer scalable full-stack web applications, solve complex problems, and foster collaborative teamwork.
@@ -85,10 +86,10 @@ export default function SkillsPage() {
 
         {/* 🌟 FEATURED SPOTLIGHT: MERN STACK DEVELOPMENT */}
         <section className="relative p-6 sm:p-10 lg:p-12 rounded-3xl liquid-glass shadow-2xl">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-8 border-b border-white/[0.08]">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-8 border-b border-purple-500/10">
             <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-zinc-300 text-xs font-mono font-medium uppercase tracking-wider mb-3">
-                <Workflow className="w-3.5 h-3.5 text-zinc-400" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-purple-300 border-purple-500/20 bg-purple-950/40 text-xs font-mono font-medium uppercase tracking-wider mb-3">
+                <Workflow className="w-3.5 h-3.5 text-purple-400" />
                 Core Specialization
               </div>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
@@ -105,11 +106,11 @@ export default function SkillsPage() {
                 href="https://sevasetu-3h83.onrender.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl liquid-pill hover:bg-white/[0.08] text-xs font-mono text-zinc-300 hover:text-white transition-all shadow-md group"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl liquid-pill text-xs font-mono text-purple-200 hover:text-white transition-all shadow-md group"
               >
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 <span>See Production MERN: <strong className="text-white">SevaSetu</strong></span>
-                <ExternalLink className="w-3.5 h-3.5 text-zinc-400 group-hover:text-white transition-colors" />
+                <ExternalLink className="w-3.5 h-3.5 text-purple-400 group-hover:text-white transition-colors" />
               </a>
             </div>
           </div>
@@ -130,19 +131,19 @@ export default function SkillsPage() {
                   key={idx}
                   className="p-5 rounded-2xl liquid-glass-interactive group"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-white group-hover:scale-105 transition-all mb-4 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
-                    <IconComp className="w-5 h-5 text-zinc-200" />
+                  <div className="w-10 h-10 rounded-xl bg-purple-950/50 border border-purple-500/25 flex items-center justify-center text-purple-300 group-hover:scale-105 transition-all mb-4 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
+                    <IconComp className="w-5 h-5 text-purple-300" />
                   </div>
-                  <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-500 font-semibold block mb-1">
+                  <span className="text-[11px] font-mono uppercase tracking-wider text-purple-400 font-semibold block mb-1">
                     {item.role}
                   </span>
-                  <h3 className="text-base font-bold text-white group-hover:text-zinc-200 transition-colors">
+                  <h3 className="text-base font-bold text-white group-hover:text-purple-300 transition-colors">
                     {item.name}
                   </h3>
                   <p className="mt-2 text-xs font-medium text-zinc-300 leading-snug">
                     {item.desc}
                   </p>
-                  <p className="mt-2 text-[11px] text-zinc-500 leading-relaxed border-t border-white/[0.08] pt-2 font-normal">
+                  <p className="mt-2 text-[11px] text-zinc-500 leading-relaxed border-t border-purple-500/10 pt-2 font-normal">
                     {item.detail}
                   </p>
                 </div>
@@ -154,8 +155,8 @@ export default function SkillsPage() {
         {/* 🧠 WORK PHILOSOPHY & CORE STRENGTHS */}
         <section className="space-y-8">
           <div className="text-center max-w-2xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-zinc-300 text-xs font-mono tracking-wider uppercase mb-2">
-              <BrainCircuit className="w-3.5 h-3.5 text-zinc-400" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-purple-300 border-purple-500/20 bg-purple-950/40 text-xs font-mono tracking-wider uppercase mb-2">
+              <BrainCircuit className="w-3.5 h-3.5 text-purple-400" />
               Core Strengths &amp; Mindset
             </div>
             <h2 className="text-3xl font-extrabold text-white tracking-tight">
@@ -182,18 +183,18 @@ export default function SkillsPage() {
                   className="p-6 sm:p-7 rounded-2xl liquid-glass-interactive group"
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-11 h-11 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-white group-hover:scale-105 transition-transform shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
-                      <IconComp className="w-5 h-5 text-zinc-300" />
+                    <div className="w-11 h-11 rounded-xl bg-purple-950/50 border border-purple-500/25 flex items-center justify-center text-purple-300 group-hover:scale-105 transition-transform shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
+                      <IconComp className="w-5 h-5 text-purple-300" />
                     </div>
-                    <span className="text-[11px] font-mono font-medium px-2.5 py-1 rounded-full liquid-pill text-zinc-300">
+                    <span className="text-[11px] font-mono font-medium px-2.5 py-1 rounded-full liquid-pill text-purple-300 border-purple-500/20">
                       {val.badge}
                     </span>
                   </div>
 
-                  <h3 className="text-lg font-bold text-white group-hover:text-zinc-200 transition-colors">
+                  <h3 className="text-lg font-bold text-white group-hover:text-purple-300 transition-colors">
                     {val.title}
                   </h3>
-                  <p className="text-xs font-mono text-zinc-400 mt-0.5 mb-3">
+                  <p className="text-xs font-mono text-purple-400/80 mt-0.5 mb-3">
                     {val.tagline}
                   </p>
                   <p className="text-sm text-zinc-400 leading-relaxed font-normal">
@@ -208,8 +209,8 @@ export default function SkillsPage() {
         {/* ⚡ INTERACTIVE TECHNOLOGY MATRIX */}
         <section className="space-y-8 pt-4">
           <div className="text-center max-w-2xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-zinc-300 text-xs font-mono tracking-wider uppercase mb-2">
-              <Cpu className="w-3.5 h-3.5 text-zinc-400" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-purple-300 border-purple-500/20 bg-purple-950/40 text-xs font-mono tracking-wider uppercase mb-2">
+              <Cpu className="w-3.5 h-3.5 text-purple-400" />
               Proficiency Matrix
             </div>
             <h2 className="text-3xl font-extrabold text-white tracking-tight">
@@ -228,10 +229,10 @@ export default function SkillsPage() {
                 <button
                   key={tab.key}
                   onClick={() => setActiveTab(tab.key)}
-                  className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 border ${
+                  className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 border cursor-pointer ${
                     isSelected
-                      ? 'bg-white text-black font-semibold border-white shadow-[0_0_20px_rgba(255,255,255,0.18)]'
-                      : 'bg-white/[0.03] text-zinc-400 border-white/[0.08] hover:text-white hover:border-white/20 backdrop-blur-md'
+                      ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold border-purple-400/40 shadow-[0_0_20px_rgba(168,85,247,0.35)]'
+                      : 'bg-purple-950/20 text-zinc-400 border-purple-500/15 hover:text-white hover:border-purple-500/30 backdrop-blur-md'
                   }`}
                 >
                   {tab.label}
@@ -262,11 +263,11 @@ export default function SkillsPage() {
                 >
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-white group-hover:scale-105 transition-all shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
-                        <SkillIcon className="w-5 h-5 text-zinc-300" />
+                      <div className="w-10 h-10 rounded-xl bg-purple-950/50 border border-purple-500/25 flex items-center justify-center text-purple-300 group-hover:scale-105 transition-all shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
+                        <SkillIcon className="w-5 h-5 text-purple-300" />
                       </div>
                       <div>
-                        <h4 className="text-sm font-bold text-white group-hover:text-zinc-200 transition-colors">
+                        <h4 className="text-sm font-bold text-white group-hover:text-purple-300 transition-colors">
                           {skill.name}
                         </h4>
                         <span className="text-[11px] font-mono text-zinc-500">
@@ -275,16 +276,16 @@ export default function SkillsPage() {
                       </div>
                     </div>
 
-                    <span className="text-xs font-mono font-bold text-zinc-300 liquid-pill px-2.5 py-0.5 rounded-md">
+                    <span className="text-xs font-mono font-bold text-purple-300 liquid-pill px-2.5 py-0.5 rounded-md">
                       {skill.level}%
                     </span>
                   </div>
 
                   {/* Progress Bar */}
-                  <div className="w-full bg-white/[0.06] rounded-full h-1.5 overflow-hidden">
+                  <div className="w-full bg-purple-950/40 rounded-full h-1.5 overflow-hidden">
                     <div
                       style={{ width: `${skill.level}%` }}
-                      className="bg-gradient-to-r from-zinc-400 to-white h-1.5 rounded-full transition-all duration-500 shadow-[0_0_8px_rgba(255,255,255,0.3)]"
+                      className="bg-gradient-to-r from-purple-500 via-fuchsia-500 to-indigo-500 h-1.5 rounded-full transition-all duration-500 shadow-[0_0_8px_rgba(168,85,247,0.4)]"
                     />
                   </div>
                 </div>
@@ -296,7 +297,7 @@ export default function SkillsPage() {
         {/* 🏛️ ARCHITECTURAL COMPETENCIES - Liquid Glass */}
         <section className="p-8 sm:p-12 rounded-3xl liquid-glass">
           <div className="text-center max-w-2xl mx-auto mb-10">
-            <span className="text-xs uppercase font-mono tracking-wider text-zinc-500 font-semibold">
+            <span className="text-xs uppercase font-mono tracking-wider text-purple-400 font-semibold">
               Software Architecture
             </span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white mt-1">
@@ -309,7 +310,7 @@ export default function SkillsPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {architecturalCompetencies.map((item, i) => (
-              <div key={i} className="p-5 rounded-2xl bg-black/60 border border-white/[0.08] hover:border-white/20 transition-colors">
+              <div key={i} className="p-5 rounded-2xl bg-[#090611]/80 border border-purple-500/15 hover:border-purple-500/35 transition-colors">
                 <div className="flex items-center gap-2 mb-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
                   <h3 className="text-sm font-bold text-white">{item.title}</h3>
@@ -333,13 +334,13 @@ export default function SkillsPage() {
           <div className="flex flex-wrap items-center gap-3">
             <Link
               to="/projects"
-              className="px-5 py-2.5 rounded-xl liquid-pill text-zinc-300 hover:text-white text-xs font-semibold hover:bg-white/[0.08] transition-all"
+              className="px-5 py-2.5 rounded-xl liquid-pill text-zinc-300 hover:text-white text-xs font-semibold hover:bg-purple-950/40 transition-all"
             >
               Explore Projects
             </Link>
             <Link
               to="/contact"
-              className="px-5 py-2.5 rounded-xl bg-white text-black hover:bg-zinc-200 text-xs font-semibold shadow-lg shadow-white/20 transition-all flex items-center gap-1.5"
+              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-semibold shadow-lg shadow-purple-950/50 transition-all flex items-center gap-1.5"
             >
               <span>Get in Touch</span>
               <ArrowRight className="w-3.5 h-3.5" />
