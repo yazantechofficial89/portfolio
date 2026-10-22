@@ -1,19 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Home, ArrowLeft } from 'lucide-react';
+import { Home } from 'lucide-react';
 
 export default function NotFoundPage() {
   return (
-    <div className="min-h-[75vh] flex items-center justify-center pt-28 pb-20 px-4 text-center">
-      <div className="max-w-md mx-auto">
-        <span className="text-7xl font-extrabold text-gradient block mb-4">404</span>
+    <div className="min-h-[75vh] flex items-center justify-center pt-28 pb-20 px-4 text-center bg-black text-zinc-100">
+      <div className="max-w-md mx-auto p-8 rounded-3xl liquid-glass shadow-2xl">
+        <span className="text-7xl font-black text-silver-gradient block mb-4">404</span>
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Page Not Found</h1>
-        <p className="text-sm text-slate-400 mb-8">
+        <p className="text-sm text-zinc-400 mb-8 font-normal">
           The page you are looking for doesn't exist or has been moved to another URL.
         </p>
         <Link
           to="/"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white bg-purple-600 hover:bg-purple-500 shadow-lg shadow-purple-600/30 transition-all text-sm"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-black bg-white hover:bg-zinc-200 shadow-[0_0_20px_rgba(255,255,255,0.18)] transition-all text-sm"
         >
           <Home className="w-4 h-4" />
           <span>Back to Homepage</span>

@@ -19,8 +19,8 @@ const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 function RouteLoader() {
   return (
-    <div className="min-h-[60vh] flex items-center justify-center" aria-label="Loading page content">
-      <div className="w-8 h-8 border-2 border-purple-500 border-t-transparent rounded-full animate-spin" />
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="w-8 h-8 border-2 border-white/40 border-t-white rounded-full animate-spin" />
     </div>
   );
 }
@@ -29,7 +29,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <div className="min-h-screen bg-slate-950 text-slate-100 selection:bg-purple-600/30 selection:text-purple-200 flex flex-col justify-between">
+      <div className="min-h-screen bg-black text-zinc-100 selection:bg-white/20 selection:text-white flex flex-col justify-between">
         <Navbar />
         <main className="flex-1">
           <Suspense fallback={<RouteLoader />}>
