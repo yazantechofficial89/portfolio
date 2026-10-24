@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Search,
   Star,
@@ -9,20 +9,70 @@ import {
 import { projectsData } from '../data/portfolioData';
 import { Github } from '../components/Icons';
 
-const categories = ['All', ...Array.from(new Set(projectsData.map((p) => p.category)))];
-
 export default function ProjectsPage() {
+  const [allProjects, setAllProjects] = useState(projectsData);
+  const [isLoading, setIsLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredProjects = projectsData.filter((project) => {
+  // Dynamically fetch projects from MongoDB API
+  useEffect(() => {
+    let isMounted = true;
+    const fetchProjects = async () => {
+      try {
+        const res = await fetch('/api/projects');
+        const data = await res.json();
+        if (data.success && Array.isArray(data.projects)) {
+          if (isMounted) {
+            const dbProjects = data.projects;
+            if (dbProjects.length > 0) {
+              // Merge MongoDB projects with fallback projects, prioritizing MongoDB
+              const merged = [
+                ...dbProjects,
+                ...projectsData.filter(
+                  (p) =>
+                    !dbProjects.some(
+                      (db) =>
+                        db.id === p.id ||
+                        db._id === p.id ||
+                        db.title?.toLowerCase().trim() === p.title?.toLowerCase().trim()
+                    )
+                ),
+              ];
+              setAllProjects(merged);
+            } else {
+              setAllProjects(projectsData);
+            }
+            setIsLoading(false);
+            return;
+          }
+        }
+      } catch (e) {
+        console.warn('API error fetching projects from MongoDB:', e);
+      }
+
+      if (isMounted) {
+        setAllProjects(projectsData);
+        setIsLoading(false);
+      }
+    };
+
+    fetchProjects();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const categories = ['All', ...Array.from(new Set(allProjects.map((p) => p.category))).filter(Boolean)];
+
+  const filteredProjects = allProjects.filter((project) => {
     const matchesCategory =
       activeCategory === 'All' || project.category === activeCategory;
     const matchesQuery =
       !searchQuery ||
-      project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      project.tags.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase()));
+      project.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      project.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      project.tags?.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase()));
 
     return matchesCategory && matchesQuery;
   });
@@ -82,7 +132,7 @@ export default function ProjectsPage() {
         {/* Counter */}
         <div className="mt-6 flex items-center justify-between text-xs text-zinc-500 font-mono">
           <span>
-            Showing {filteredProjects.length} of {projectsData.length} projects
+            Showing {filteredProjects.length} of {allProjects.length} projects
           </span>
           {searchQuery && (
             <button
@@ -98,7 +148,7 @@ export default function ProjectsPage() {
         <div className={filteredProjects.length === 1 ? "mt-8 max-w-3xl mx-auto" : "mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"}>
           {filteredProjects.map((project) => (
             <div
-              key={project.id}
+              key={project.id || project._id}
               className="group flex flex-col rounded-3xl liquid-glass-interactive overflow-hidden shadow-2xl"
             >
               {/* Image Preview */}
@@ -109,8 +159,18 @@ export default function ProjectsPage() {
                   className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                   loading="lazy"
                   decoding="async"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    const fallback = e.currentTarget.parentElement.querySelector('.project-fallback');
+                    if (fallback) fallback.style.display = 'flex';
+                  }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050308] via-black/40 to-transparent" />
+                <div className="project-fallback hidden w-full h-full flex-col items-center justify-center p-4 bg-gradient-to-br from-[#120726] via-[#1a0c36] to-[#090611] text-center">
+                  <Code2 className="w-10 h-10 text-purple-400 mb-2 opacity-80" />
+                  <span className="text-sm font-bold text-white line-clamp-1 px-2">{project.title}</span>
+                  <span className="text-xs text-purple-300 font-mono mt-1">{project.category}</span>
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050308] via-black/40 to-transparent pointer-events-none" />
 
                 {/* Badges */}
                 <div className="absolute top-3 left-3 right-3 flex items-center justify-between">

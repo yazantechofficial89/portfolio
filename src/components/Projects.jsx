@@ -1,18 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Star, ArrowUpRight, CheckCircle2 } from 'lucide-react';
+import { Star, ArrowUpRight, CheckCircle2, Code2 } from 'lucide-react';
 import { Github } from './Icons';
 import { projectsData } from '../data/portfolioData';
 
-const categories = ['All', ...Array.from(new Set(projectsData.map((p) => p.category)))];
-
 export default function Projects() {
+  const [allProjects, setAllProjects] = useState(projectsData);
   const [activeCategory, setActiveCategory] = useState('All');
+
+  // Dynamically fetch projects from MongoDB API
+  useEffect(() => {
+    let isMounted = true;
+    const fetchProjects = async () => {
+      try {
+        const res = await fetch('/api/projects');
+        const data = await res.json();
+        if (data.success && Array.isArray(data.projects)) {
+          if (isMounted) {
+            const dbProjects = data.projects;
+            if (dbProjects.length > 0) {
+              const merged = [
+                ...dbProjects,
+                ...projectsData.filter(
+                  (p) =>
+                    !dbProjects.some(
+                      (db) =>
+                        db.id === p.id ||
+                        db._id === p.id ||
+                        db.title?.toLowerCase().trim() === p.title?.toLowerCase().trim()
+                    )
+                ),
+              ];
+              setAllProjects(merged);
+              return;
+            }
+          }
+        }
+      } catch (e) {
+        console.warn('API error fetching projects from MongoDB:', e);
+      }
+    };
+
+    fetchProjects();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const categories = ['All', ...Array.from(new Set(allProjects.map((p) => p.category))).filter(Boolean)];
 
   const filteredProjects =
     activeCategory === 'All'
-      ? projectsData
-      : projectsData.filter((p) => p.category === activeCategory);
+      ? allProjects
+      : allProjects.filter((p) => p.category === activeCategory);
 
   return (
     <section id="projects" className="py-24 relative overflow-hidden bg-[#050308]">
@@ -62,7 +102,7 @@ export default function Projects() {
             {filteredProjects.map((project) => (
               <motion.div
                 layout
-                key={project.id}
+                key={project.id || project._id}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
@@ -77,8 +117,18 @@ export default function Projects() {
                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                     decoding="async"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                      const fallback = e.currentTarget.parentElement.querySelector('.project-fallback');
+                      if (fallback) fallback.style.display = 'flex';
+                    }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0714] via-black/30 to-transparent" />
+                  <div className="project-fallback hidden w-full h-full flex-col items-center justify-center p-4 bg-gradient-to-br from-[#120726] via-[#1a0c36] to-[#090611] text-center">
+                    <Code2 className="w-10 h-10 text-purple-400 mb-2 opacity-80" />
+                    <span className="text-sm font-bold text-white line-clamp-1 px-2">{project.title}</span>
+                    <span className="text-xs text-purple-300 font-mono mt-1">{project.category}</span>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0714] via-black/30 to-transparent pointer-events-none" />
 
                   {/* Top Badges */}
                   <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
@@ -105,49 +155,57 @@ export default function Projects() {
                     </p>
 
                     {/* Key features */}
-                    <div className="mt-4 space-y-1.5">
-                      {project.features.map((feat, i) => (
-                        <div key={i} className="flex items-center gap-2 text-xs text-zinc-300">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
-                          <span className="truncate">{feat}</span>
-                        </div>
-                      ))}
-                    </div>
+                    {project.features && project.features.length > 0 && (
+                      <div className="mt-4 space-y-1.5">
+                        {project.features.map((feat, i) => (
+                          <div key={i} className="flex items-center gap-2 text-xs text-zinc-300">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                            <span className="truncate">{feat}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
 
                     {/* Tech Tags */}
-                    <div className="mt-5 flex flex-wrap gap-1.5">
-                      {project.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2.5 py-1 rounded-md text-[11px] font-mono font-medium bg-purple-950/40 text-purple-200 border border-purple-500/20"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+                    {project.tags && project.tags.length > 0 && (
+                      <div className="mt-5 flex flex-wrap gap-1.5">
+                        {project.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="px-2.5 py-1 rounded-md text-[11px] font-mono font-medium bg-purple-950/40 text-purple-200 border border-purple-500/20"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
 
                   {/* Action Links */}
                   <div className="mt-6 pt-4 border-t border-purple-500/20 flex items-center justify-between">
-                    <a
-                      href={project.demoUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors"
-                    >
-                      <span>Live Preview</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
-                    </a>
+                    {project.demoUrl && project.demoUrl !== '#' && (
+                      <a
+                        href={project.demoUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors"
+                      >
+                        <span>Live Preview</span>
+                        <ArrowUpRight className="w-3.5 h-3.5" />
+                      </a>
+                    )}
 
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-400 hover:text-white transition-colors"
-                    >
-                      <Github className="w-4 h-4" />
-                      <span>Source Code</span>
-                    </a>
+                    {project.githubUrl && (
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-400 hover:text-white transition-colors"
+                      >
+                        <Github className="w-4 h-4" />
+                        <span>Source Code</span>
+                      </a>
+                    )}
                   </div>
                 </div>
               </motion.div>
