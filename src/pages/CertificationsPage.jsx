@@ -226,12 +226,29 @@ export default function CertificationsPage() {
                     <span className="text-[10px] text-zinc-500 mt-1">Click to preview full-screen</span>
                   </div>
                 ) : (
-                  <img
-                    src={cert.image}
-                    alt={cert.title}
-                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
+                  <div className="relative w-full h-full bg-[#090611]">
+                    <img
+                      src={cert.image}
+                      alt={cert.title}
+                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        const fallback = e.currentTarget.parentElement.querySelector('.cert-fallback');
+                        if (fallback) fallback.style.display = 'flex';
+                      }}
+                    />
+                    <div
+                      className="cert-fallback hidden w-full h-full flex-col items-center justify-center p-4 bg-gradient-to-br from-[#0e0720] via-[#150a2b] to-[#090611] text-center border-b border-purple-500/20"
+                    >
+                      <Award className="w-12 h-12 text-purple-400 mb-2 opacity-80" />
+                      <span className="text-sm font-bold text-white line-clamp-1 px-2">{cert.title}</span>
+                      <span className="text-xs text-purple-300 font-mono mt-1">{cert.issuer}</span>
+                      <span className="text-[10px] text-zinc-400 mt-2 bg-purple-950/60 px-2 py-0.5 rounded-full border border-purple-500/30">
+                        Image link unavailable
+                      </span>
+                    </div>
+                  </div>
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#050308] via-black/30 to-transparent" />
 
@@ -409,11 +426,26 @@ export default function CertificationsPage() {
                     className="w-full h-[55vh] rounded-xl border border-purple-500/20"
                   />
                 ) : (
-                  <img
-                    src={previewCert.image}
-                    alt={previewCert.title}
-                    className="max-w-full max-h-[55vh] object-contain rounded-xl shadow-2xl border border-purple-500/20"
-                  />
+                  <div className="relative max-w-full max-h-[55vh] flex items-center justify-center">
+                    <img
+                      src={previewCert.image}
+                      alt={previewCert.title}
+                      className="max-w-full max-h-[55vh] object-contain rounded-xl shadow-2xl border border-purple-500/20"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        const fallback = e.currentTarget.parentElement.querySelector('.modal-fallback');
+                        if (fallback) fallback.style.display = 'flex';
+                      }}
+                    />
+                    <div className="modal-fallback hidden flex-col items-center justify-center p-8 bg-[#0e0720] rounded-2xl border border-purple-500/30 text-center max-w-md shadow-2xl">
+                      <Award className="w-16 h-16 text-purple-400 mb-3" />
+                      <h4 className="text-lg font-bold text-white mb-1">{previewCert.title}</h4>
+                      <p className="text-sm text-purple-300 mb-2">{previewCert.issuer}</p>
+                      <p className="text-xs text-zinc-400">
+                        Image link unavailable or invalid. Please check the direct image URL in MongoDB Atlas.
+                      </p>
+                    </div>
+                  </div>
                 )}
               </div>
 
