@@ -44,6 +44,7 @@ export default async function handler(req, res) {
 
     // GET /api/certificates -> Retrieve all certificates from MongoDB
     if (req.method === 'GET') {
+      res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=600');
       const certificates = await Certificate.find({}).sort({ createdAt: -1 }).lean();
       return res.status(200).json({
         success: true,

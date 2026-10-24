@@ -15,16 +15,31 @@ import {
 } from 'lucide-react';
 import { certificationsData } from '../data/portfolioData';
 
-const STORAGE_KEY = 'yazan_custom_certificates';
+const CACHE_KEY = 'yazan_live_certificates';
 
 export default function CertificationsPage() {
-  const [allCertificates, setAllCertificates] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [allCertificates, setAllCertificates] = useState(() => {
+    try {
+      const cached = localStorage.getItem(CACHE_KEY);
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch {}
+    return [];
+  });
+  const [isLoading, setIsLoading] = useState(() => {
+    try {
+      const cached = localStorage.getItem(CACHE_KEY);
+      if (cached && JSON.parse(cached).length > 0) return false;
+    } catch {}
+    return true;
+  });
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [previewCert, setPreviewCert] = useState(null);
 
-  // Load certificates dynamically from MongoDB API
+  // Load certificates dynamically from MongoDB API with instant SWR caching
   useEffect(() => {
     let isMounted = true;
     const fetchCertificates = async () => {
@@ -35,6 +50,9 @@ export default function CertificationsPage() {
           if (isMounted) {
             setAllCertificates(data.certificates);
             setIsLoading(false);
+            try {
+              localStorage.setItem(CACHE_KEY, JSON.stringify(data.certificates));
+            } catch {}
             return;
           }
         }
@@ -42,23 +60,7 @@ export default function CertificationsPage() {
         console.warn('API error fetching certificates from MongoDB:', e);
       }
 
-      // Fallback to localStorage if any custom items exist
-      try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-          const parsed = JSON.parse(saved);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            if (isMounted) {
-              setAllCertificates(parsed);
-              setIsLoading(false);
-              return;
-            }
-          }
-        }
-      } catch {}
-
       if (isMounted) {
-        setAllCertificates([]);
         setIsLoading(false);
       }
     };
@@ -227,7 +229,8 @@ export default function CertificationsPage() {
                       src={cert.image}
                       alt={cert.title}
                       className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
+                      loading="eager"
+                      decoding="async"
                       onError={(e) => {
                         e.currentTarget.style.display = 'none';
                         const fallback = e.currentTarget.parentElement.querySelector('.cert-fallback');

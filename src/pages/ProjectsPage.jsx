@@ -9,13 +9,30 @@ import {
 import { projectsData } from '../data/portfolioData';
 import { Github } from '../components/Icons';
 
+const PROJECTS_CACHE_KEY = 'yazan_live_projects';
+
 export default function ProjectsPage() {
-  const [allProjects, setAllProjects] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [allProjects, setAllProjects] = useState(() => {
+    try {
+      const cached = localStorage.getItem(PROJECTS_CACHE_KEY);
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch {}
+    return [];
+  });
+  const [isLoading, setIsLoading] = useState(() => {
+    try {
+      const cached = localStorage.getItem(PROJECTS_CACHE_KEY);
+      if (cached && JSON.parse(cached).length > 0) return false;
+    } catch {}
+    return true;
+  });
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Dynamically fetch projects from MongoDB API
+  // Dynamically fetch projects from MongoDB API with instant SWR caching
   useEffect(() => {
     let isMounted = true;
     const fetchProjects = async () => {
@@ -26,6 +43,9 @@ export default function ProjectsPage() {
           if (isMounted) {
             setAllProjects(data.projects);
             setIsLoading(false);
+            try {
+              localStorage.setItem(PROJECTS_CACHE_KEY, JSON.stringify(data.projects));
+            } catch {}
             return;
           }
         }
@@ -34,7 +54,6 @@ export default function ProjectsPage() {
       }
 
       if (isMounted) {
-        setAllProjects([]);
         setIsLoading(false);
       }
     };
@@ -139,7 +158,7 @@ export default function ProjectsPage() {
                   src={project.image}
                   alt={project.title}
                   className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
+                  loading="eager"
                   decoding="async"
                   onError={(e) => {
                     e.currentTarget.style.display = 'none';
