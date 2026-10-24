@@ -235,32 +235,6 @@ export const faqsData = [
   },
 ];
 
-export const certificationsData = [
-  {
-    id: "cert-aih-2026",
-    title: "All India Hackathon (AIH) 2026 - Certificate of Participation",
-    issuer: "Axcentra & Wolfram Research",
-    issueDate: "2026",
-    credentialId: "AIH-2026-VERIFIED",
-    credentialUrl: "https://www.wolfram.com",
-    category: "Hackathons & Competitions",
-    skills: ["Problem Solving", "Competitive Coding", "Algorithms", "Wolfram Language", "Full-Stack"],
-    image: "/certificates/aih_certificate_yazan_gupta.jpg",
-    description: "Successfully completed the intense 72-hour national-level online coding challenge at All India Hackathon (AIH) 2026 organized by Axcentra in partnership with Wolfram Research, demonstrating exceptional problem-solving and technical skills.",
-    isOriginal: true,
-  },
-  {
-    id: "cert-my-bharat",
-    title: "MY Bharat Certificate of Recognition",
-    issuer: "Ministry of Youth Affairs and Sports, Govt. of India",
-    issueDate: "2026",
-    credentialId: "MYBHARAT-GOI-2026",
-    credentialUrl: "https://mybharat.gov.in",
-    category: "Government & Honors",
-    skills: ["Youth Leadership", "Viksit Bharat", "National Initiative", "Civic Tech"],
-    image: "/certificates/registration_certificate.jpg",
-    description: "Official Certificate of Recognition presented by the Ministry of Youth Affairs and Sports, Government of India, for successful registration on Mera Yuva Bharat (MY Bharat) and taking a stride towards Viksit Bharat.",
-    isOriginal: true,
-  },
-];
+export const certificationsData = [];
+
 

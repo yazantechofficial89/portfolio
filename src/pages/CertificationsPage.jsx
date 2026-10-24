@@ -18,29 +18,23 @@ import { certificationsData } from '../data/portfolioData';
 const STORAGE_KEY = 'yazan_custom_certificates';
 
 export default function CertificationsPage() {
-  const [allCertificates, setAllCertificates] = useState(certificationsData);
+  const [allCertificates, setAllCertificates] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [previewCert, setPreviewCert] = useState(null);
 
-  // Load certificates from MongoDB API, with fallback to hardcoded + localStorage
+  // Load certificates dynamically from MongoDB API
   useEffect(() => {
     let isMounted = true;
     const fetchCertificates = async () => {
       try {
         const res = await fetch('/api/certificates');
         const data = await res.json();
-        if (data.success && Array.isArray(data.certificates) && data.certificates.length > 0) {
+        if (data.success && Array.isArray(data.certificates)) {
           if (isMounted) {
-            // Merge MongoDB certificates with default data, avoiding duplicate ids
-            const dbCerts = data.certificates;
-            const merged = [
-              ...dbCerts,
-              ...certificationsData.filter(
-                (c) => !dbCerts.some((db) => db.id === c.id || db._id === c.id || db.title === c.title)
-              ),
-            ];
-            setAllCertificates(merged);
+            setAllCertificates(data.certificates);
+            setIsLoading(false);
             return;
           }
         }
@@ -48,14 +42,15 @@ export default function CertificationsPage() {
         console.warn('API error fetching certificates from MongoDB:', e);
       }
 
-      // Fallback to localStorage if any
+      // Fallback to localStorage if any custom items exist
       try {
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) {
           const parsed = JSON.parse(saved);
           if (Array.isArray(parsed) && parsed.length > 0) {
             if (isMounted) {
-              setAllCertificates([...parsed, ...certificationsData]);
+              setAllCertificates(parsed);
+              setIsLoading(false);
               return;
             }
           }
@@ -63,7 +58,8 @@ export default function CertificationsPage() {
       } catch {}
 
       if (isMounted) {
-        setAllCertificates(certificationsData);
+        setAllCertificates([]);
+        setIsLoading(false);
       }
     };
 
@@ -143,15 +139,15 @@ export default function CertificationsPage() {
             </div>
           </div>
           <div className="p-4 sm:p-5 rounded-2xl liquid-glass-interactive">
-            <span className="text-xs font-mono text-zinc-500">Govt &amp; National</span>
+            <span className="text-xs font-mono text-zinc-500">Categories</span>
             <div className="mt-1 text-2xl sm:text-3xl font-extrabold text-white text-gradient">
-              {allCertificates.filter((c) => c.category?.includes('Government') || c.category?.includes('National')).length || 1}
+              {availableCategories.filter((cat) => cat !== 'All').length}
             </div>
           </div>
           <div className="p-4 sm:p-5 rounded-2xl liquid-glass-interactive">
-            <span className="text-xs font-mono text-zinc-500">Hackathons &amp; Awards</span>
+            <span className="text-xs font-mono text-zinc-500">Verified &amp; Original</span>
             <div className="mt-1 text-2xl sm:text-3xl font-extrabold text-white text-gradient">
-              {allCertificates.filter((c) => c.category?.includes('Hackathon')).length || 1}
+              {allCertificates.length}
             </div>
           </div>
         </div>
@@ -345,8 +341,13 @@ export default function CertificationsPage() {
           ))}
         </div>
 
-        {/* Empty State */}
-        {filteredCertificates.length === 0 && (
+        {/* Loading & Empty States */}
+        {isLoading ? (
+          <div className="py-24 text-center rounded-3xl liquid-glass mt-8 flex flex-col items-center justify-center">
+            <div className="w-10 h-10 border-2 border-purple-500/20 border-t-purple-400 rounded-full animate-spin mb-4" />
+            <p className="text-sm font-mono text-zinc-400">Loading verified credentials from MongoDB...</p>
+          </div>
+        ) : filteredCertificates.length === 0 ? (
           <div className="py-20 text-center rounded-3xl liquid-glass mt-8">
             <Award className="w-12 h-12 text-zinc-600 mx-auto mb-3" />
             <h3 className="text-lg font-bold text-white">No certificates found</h3>
@@ -354,7 +355,7 @@ export default function CertificationsPage() {
               Try adjusting your search query or selected category.
             </p>
           </div>
-        )}
+        ) : null}
       </div>
 
       {/* Full Certificate Preview Modal - Liquid Glass */}
