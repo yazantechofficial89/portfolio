@@ -137,35 +137,8 @@ export const coreValuesData = [
 ];
 
 
-export const projectsData = [
-  {
-    id: 1,
-    title: "SevaSetu - A Bridge Between Care and Need",
-    category: "Full-Stack",
-    description: "SevaSetu connects donors directly with orphanages and old-age homes, ensuring transparency, trust, and timely help. Built with full-stack architecture featuring real-time Live Ashram Chat, donation management for clothes & essentials, and community welfare support.",
-    image: "/sevasetu.webp",
-    tags: [
-      "React",
-      "Node.js",
-      "Express.js",
-      "MongoDB",
-      "Tailwind CSS",
-      "Socket.io",
-      "Live Ashram Chat",
-      "Cloudinary"
-    ],
-    features: [
-      "Direct Care & Need Bridge connecting donors with orphanages & old-age homes",
-      "Real-Time Live Ashram Chat with unread badge notifications & instant messaging",
-      "Donation Management for clothes, food essentials, and education supplies",
-      "Trust & Transparency verification system for verified ashrams & care shelters",
-      "Interactive responsive web portal with user authentication & care coordination",
-    ],
-    demoUrl: "https://sevasetu-3h83.onrender.com/",
-    githubUrl: "https://github.com/yazantechofficial89/sevasetu",
-    featured: true,
-  },
-];
+export const projectsData = [];
+
 
 export const experienceData = [
   {

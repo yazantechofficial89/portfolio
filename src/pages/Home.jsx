@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight,
@@ -11,11 +11,34 @@ import {
   ArrowUpRight
 } from 'lucide-react';
 import Hero from '../components/Hero';
-import { projectsData, personalData } from '../data/portfolioData';
+import { personalData } from '../data/portfolioData';
 import { Github } from '../components/Icons';
 
 export default function Home() {
-  const featuredProjects = projectsData.filter((p) => p.featured).slice(0, 3);
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchProjects = async () => {
+      try {
+        const res = await fetch('/api/projects');
+        const data = await res.json();
+        if (data.success && Array.isArray(data.projects)) {
+          if (isMounted) {
+            setProjects(data.projects);
+          }
+        }
+      } catch (e) {
+        console.warn('Error fetching projects on Home:', e);
+      }
+    };
+    fetchProjects();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const featuredProjects = projects.filter((p) => p.featured !== false).slice(0, 3);
 
   return (
     <div className="bg-[#050308] text-zinc-100">
@@ -104,76 +127,100 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className={featuredProjects.length === 1 ? "max-w-2xl mx-auto" : "grid grid-cols-1 md:grid-cols-3 gap-8"}>
-            {featuredProjects.map((project) => (
-              <div
-                key={project.id}
-                className="group flex flex-col rounded-3xl liquid-glass-interactive overflow-hidden shadow-2xl"
-              >
-                <div className={`relative ${featuredProjects.length === 1 ? 'h-56 sm:h-64' : 'h-48'} w-full overflow-hidden bg-[#0a0712]`}>
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0714] via-black/30 to-transparent" />
-                  <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
-                    <span className="px-3 py-1 rounded-full text-xs font-mono font-medium liquid-pill text-purple-200">
-                      {project.category}
-                    </span>
-                    <span className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium liquid-pill text-purple-200">
-                      <Star className="w-3 h-3 text-amber-300 fill-amber-300" />
-                      Featured
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-6 flex-1 flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-lg font-bold text-white group-hover:text-purple-200 transition-colors line-clamp-1">
-                      {project.title}
-                    </h3>
-                    <p className="mt-2 text-xs sm:text-sm text-zinc-400 line-clamp-2 leading-relaxed font-normal">
-                      {project.description}
-                    </p>
-                    <div className="mt-4 flex flex-wrap gap-1.5">
-                      {project.tags.slice(0, 4).map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2.5 py-1 rounded-md text-[11px] font-mono font-medium bg-purple-950/40 text-purple-200 border border-purple-500/20"
-                        >
-                          {tag}
-                        </span>
-                      ))}
+          {featuredProjects.length === 0 ? (
+            <div className="py-16 text-center rounded-3xl liquid-glass">
+              <Code2 className="w-12 h-12 text-zinc-600 mx-auto mb-3" />
+              <h3 className="text-lg font-bold text-white">No projects loaded yet</h3>
+              <p className="text-sm text-zinc-500 mt-1">
+                Upload your projects to MongoDB Atlas to showcase them here!
+              </p>
+            </div>
+          ) : (
+            <div className={featuredProjects.length === 1 ? "max-w-2xl mx-auto" : "grid grid-cols-1 md:grid-cols-3 gap-8"}>
+              {featuredProjects.map((project) => (
+                <div
+                  key={project.id || project._id}
+                  className="group flex flex-col rounded-3xl liquid-glass-interactive overflow-hidden shadow-2xl"
+                >
+                  <div className={`relative ${featuredProjects.length === 1 ? 'h-56 sm:h-64' : 'h-48'} w-full overflow-hidden bg-[#0a0712]`}>
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        const fallback = e.currentTarget.parentElement.querySelector('.home-project-fallback');
+                        if (fallback) fallback.style.display = 'flex';
+                      }}
+                    />
+                    <div className="home-project-fallback hidden w-full h-full flex-col items-center justify-center p-4 bg-gradient-to-br from-[#120726] via-[#1a0c36] to-[#090611] text-center">
+                      <Code2 className="w-10 h-10 text-purple-400 mb-2 opacity-80" />
+                      <span className="text-sm font-bold text-white line-clamp-1 px-2">{project.title}</span>
+                      <span className="text-xs text-purple-300 font-mono mt-1">{project.category}</span>
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0714] via-black/30 to-transparent pointer-events-none" />
+                    <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
+                      <span className="px-3 py-1 rounded-full text-xs font-mono font-medium liquid-pill text-purple-200">
+                        {project.category}
+                      </span>
+                      <span className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium liquid-pill text-purple-200">
+                        <Star className="w-3 h-3 text-amber-300 fill-amber-300" />
+                        Featured
+                      </span>
                     </div>
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-purple-500/20 flex items-center justify-between">
-                    <a
-                      href={project.demoUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors"
-                    >
-                      <span>Live Demo</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
-                    </a>
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-400 hover:text-white transition-colors"
-                    >
-                      <Github className="w-4 h-4" />
-                      <span>Code</span>
-                    </a>
+                  <div className="p-6 flex-1 flex flex-col justify-between">
+                    <div>
+                      <h3 className="text-lg font-bold text-white group-hover:text-purple-200 transition-colors line-clamp-1">
+                        {project.title}
+                      </h3>
+                      <p className="mt-2 text-xs sm:text-sm text-zinc-400 line-clamp-2 leading-relaxed font-normal">
+                        {project.description}
+                      </p>
+                      <div className="mt-4 flex flex-wrap gap-1.5">
+                        {(project.tags || []).slice(0, 4).map((tag) => (
+                          <span
+                            key={tag}
+                            className="px-2.5 py-1 rounded-md text-[11px] font-mono font-medium bg-purple-950/40 text-purple-200 border border-purple-500/20"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="mt-6 pt-4 border-t border-purple-500/20 flex items-center justify-between">
+                      {project.demoUrl && project.demoUrl !== '#' && (
+                        <a
+                          href={project.demoUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors"
+                        >
+                          <span>Live Demo</span>
+                          <ArrowUpRight className="w-3.5 h-3.5" />
+                        </a>
+                      )}
+                      {project.githubUrl && (
+                        <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-400 hover:text-white transition-colors"
+                        >
+                          <Github className="w-4 h-4" />
+                          <span>Code</span>
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

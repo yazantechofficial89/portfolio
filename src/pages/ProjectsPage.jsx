@@ -10,7 +10,7 @@ import { projectsData } from '../data/portfolioData';
 import { Github } from '../components/Icons';
 
 export default function ProjectsPage() {
-  const [allProjects, setAllProjects] = useState(projectsData);
+  const [allProjects, setAllProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
@@ -24,25 +24,7 @@ export default function ProjectsPage() {
         const data = await res.json();
         if (data.success && Array.isArray(data.projects)) {
           if (isMounted) {
-            const dbProjects = data.projects;
-            if (dbProjects.length > 0) {
-              // Merge MongoDB projects with fallback projects, prioritizing MongoDB
-              const merged = [
-                ...dbProjects,
-                ...projectsData.filter(
-                  (p) =>
-                    !dbProjects.some(
-                      (db) =>
-                        db.id === p.id ||
-                        db._id === p.id ||
-                        db.title?.toLowerCase().trim() === p.title?.toLowerCase().trim()
-                    )
-                ),
-              ];
-              setAllProjects(merged);
-            } else {
-              setAllProjects(projectsData);
-            }
+            setAllProjects(data.projects);
             setIsLoading(false);
             return;
           }
@@ -52,7 +34,7 @@ export default function ProjectsPage() {
       }
 
       if (isMounted) {
-        setAllProjects(projectsData);
+        setAllProjects([]);
         setIsLoading(false);
       }
     };
@@ -254,16 +236,21 @@ export default function ProjectsPage() {
           ))}
         </div>
 
-        {/* Empty State */}
-        {filteredProjects.length === 0 && (
-          <div className="py-20 text-center">
+        {/* Loading & Empty States */}
+        {isLoading ? (
+          <div className="py-24 text-center rounded-3xl liquid-glass mt-8 flex flex-col items-center justify-center">
+            <div className="w-10 h-10 border-2 border-purple-500/20 border-t-purple-400 rounded-full animate-spin mb-4" />
+            <p className="text-sm font-mono text-zinc-400">Loading projects from MongoDB...</p>
+          </div>
+        ) : filteredProjects.length === 0 ? (
+          <div className="py-20 text-center rounded-3xl liquid-glass mt-8">
             <Code2 className="w-12 h-12 text-zinc-600 mx-auto mb-3" />
             <h3 className="text-lg font-bold text-white">No projects found</h3>
             <p className="text-sm text-zinc-500 mt-1">
-              Try adjusting your search query or selected category.
+              Add projects to your "projects" collection in MongoDB Atlas to display them here!
             </p>
           </div>
-        )}
+        ) : null}
       </div>
     </div>
   );

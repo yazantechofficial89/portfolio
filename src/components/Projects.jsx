@@ -5,7 +5,7 @@ import { Github } from './Icons';
 import { projectsData } from '../data/portfolioData';
 
 export default function Projects() {
-  const [allProjects, setAllProjects] = useState(projectsData);
+  const [allProjects, setAllProjects] = useState([]);
   const [activeCategory, setActiveCategory] = useState('All');
 
   // Dynamically fetch projects from MongoDB API
@@ -17,23 +17,8 @@ export default function Projects() {
         const data = await res.json();
         if (data.success && Array.isArray(data.projects)) {
           if (isMounted) {
-            const dbProjects = data.projects;
-            if (dbProjects.length > 0) {
-              const merged = [
-                ...dbProjects,
-                ...projectsData.filter(
-                  (p) =>
-                    !dbProjects.some(
-                      (db) =>
-                        db.id === p.id ||
-                        db._id === p.id ||
-                        db.title?.toLowerCase().trim() === p.title?.toLowerCase().trim()
-                    )
-                ),
-              ];
-              setAllProjects(merged);
-              return;
-            }
+            setAllProjects(data.projects);
+            return;
           }
         }
       } catch (e) {
