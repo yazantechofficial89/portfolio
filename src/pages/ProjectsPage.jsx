@@ -10,7 +10,6 @@ import {
   ChevronLeft,
   ChevronRight
 } from 'lucide-react';
-import { projectsData } from '../data/portfolioData';
 import { Github } from '../components/Icons';
 import ProjectImageCarousel from '../components/ProjectImageCarousel';
 

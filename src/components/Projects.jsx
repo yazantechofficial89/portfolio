@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Star, ArrowUpRight, CheckCircle2, Code2 } from 'lucide-react';
+import { Star, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import { Github } from './Icons';
-import { projectsData } from '../data/portfolioData';
 import ProjectImageCarousel from './ProjectImageCarousel';
 
 export default function Projects() {

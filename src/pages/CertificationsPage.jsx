@@ -13,7 +13,6 @@ import {
   Star,
   X
 } from 'lucide-react';
-import { certificationsData } from '../data/portfolioData';
 
 const CACHE_KEY = 'yazan_live_certificates';
 
