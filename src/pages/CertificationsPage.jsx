@@ -23,21 +23,54 @@ export default function CertificationsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [previewCert, setPreviewCert] = useState(null);
 
-  // Load any existing saved certificates from localStorage on mount
+  // Load certificates from MongoDB API, with fallback to hardcoded + localStorage
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setAllCertificates([...parsed, ...certificationsData]);
-          return;
+    let isMounted = true;
+    const fetchCertificates = async () => {
+      try {
+        const res = await fetch('/api/certificates');
+        const data = await res.json();
+        if (data.success && Array.isArray(data.certificates) && data.certificates.length > 0) {
+          if (isMounted) {
+            // Merge MongoDB certificates with default data, avoiding duplicate ids
+            const dbCerts = data.certificates;
+            const merged = [
+              ...dbCerts,
+              ...certificationsData.filter(
+                (c) => !dbCerts.some((db) => db.id === c.id || db._id === c.id || db.title === c.title)
+              ),
+            ];
+            setAllCertificates(merged);
+            return;
+          }
         }
+      } catch (e) {
+        console.warn('API error fetching certificates from MongoDB:', e);
       }
-    } catch (e) {
-      console.warn('LocalStorage error reading certificates:', e);
-    }
-    setAllCertificates(certificationsData);
+
+      // Fallback to localStorage if any
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            if (isMounted) {
+              setAllCertificates([...parsed, ...certificationsData]);
+              return;
+            }
+          }
+        }
+      } catch {}
+
+      if (isMounted) {
+        setAllCertificates(certificationsData);
+      }
+    };
+
+    fetchCertificates();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   // Categories list
