@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Star, ArrowUpRight, CheckCircle2, Code2 } from 'lucide-react';
 import { Github } from './Icons';
 import { projectsData } from '../data/portfolioData';
+import ProjectImageCarousel from './ProjectImageCarousel';
 
 export default function Projects() {
   const [allProjects, setAllProjects] = useState([]);
@@ -94,29 +95,18 @@ export default function Projects() {
                 transition={{ duration: 0.35 }}
                 className="group flex flex-col rounded-3xl liquid-glass-interactive overflow-hidden shadow-2xl"
               >
-                {/* Project Image Preview */}
-                <div className={`relative ${filteredProjects.length === 1 ? 'h-56 sm:h-64' : 'h-48'} w-full overflow-hidden bg-[#0a0712]`}>
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                    decoding="async"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                      const fallback = e.currentTarget.parentElement.querySelector('.project-fallback');
-                      if (fallback) fallback.style.display = 'flex';
-                    }}
+                {/* Multi-Image Carousel Preview */}
+                <div className="relative">
+                  <ProjectImageCarousel
+                    images={project.images}
+                    fallbackImage={project.image}
+                    title={project.title}
+                    category={project.category}
+                    className={filteredProjects.length === 1 ? 'h-56 sm:h-64' : 'h-48'}
                   />
-                  <div className="project-fallback hidden w-full h-full flex-col items-center justify-center p-4 bg-gradient-to-br from-[#120726] via-[#1a0c36] to-[#090611] text-center">
-                    <Code2 className="w-10 h-10 text-purple-400 mb-2 opacity-80" />
-                    <span className="text-sm font-bold text-white line-clamp-1 px-2">{project.title}</span>
-                    <span className="text-xs text-purple-300 font-mono mt-1">{project.category}</span>
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0714] via-black/30 to-transparent pointer-events-none" />
 
                   {/* Top Badges */}
-                  <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
+                  <div className="absolute top-3 left-3 flex items-center gap-2 pointer-events-none z-10">
                     <span className="px-3 py-1 rounded-full text-xs font-mono font-medium liquid-pill text-purple-200">
                       {project.category}
                     </span>

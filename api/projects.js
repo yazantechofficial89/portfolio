@@ -60,6 +60,7 @@ export default async function handler(req, res) {
         category,
         description,
         image,
+        images,
         tags,
         features,
         demoUrl,
@@ -67,10 +68,13 @@ export default async function handler(req, res) {
         featured,
       } = req.body || {};
 
-      if (!title || !description || !image) {
+      const projectImages = Array.isArray(images) && images.length > 0 ? images : (image ? [image] : []);
+      const primaryImage = image || (projectImages.length > 0 ? projectImages[0] : '');
+
+      if (!title || !description || (!primaryImage && projectImages.length === 0)) {
         return res.status(400).json({
           success: false,
-          error: 'Title, description, and preview image are required.',
+          error: 'Title, description, and preview image(s) are required.',
         });
       }
 
@@ -78,7 +82,8 @@ export default async function handler(req, res) {
         title: title.trim(),
         category: category || 'Full-Stack',
         description: description.trim(),
-        image,
+        image: primaryImage,
+        images: projectImages,
         tags: Array.isArray(tags) ? tags : ['React', 'JavaScript'],
         features: Array.isArray(features) ? features : [],
         demoUrl: demoUrl ? demoUrl.trim() : '',

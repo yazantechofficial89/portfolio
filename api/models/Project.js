@@ -22,6 +22,10 @@ const ProjectSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Project screenshot or preview image is required'],
     },
+    images: {
+      type: [String],
+      default: [],
+    },
     tags: {
       type: [String],
       default: ['React', 'JavaScript'],
