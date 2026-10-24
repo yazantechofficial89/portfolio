@@ -62,6 +62,25 @@ export default function Contact() {
     setTimeout(() => setCopiedMessage(false), 2000);
   };
 
+  const handleWhatsAppClick = () => {
+    try {
+      fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name || 'WhatsApp Visitor',
+          email: formData.email || 'whatsapp-lead@yazangupta.online',
+          phone: formData.phone || '',
+          subject: formData.subject ? `[WhatsApp] ${formData.subject}` : 'WhatsApp Lead / Inquiry',
+          message: formData.message || 'Visitor clicked Send via WhatsApp.',
+        }),
+      }).catch(() => {});
+    } catch {}
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -255,6 +274,7 @@ export default function Contact() {
                       href={generateWhatsAppLink()}
                       target="_blank"
                       rel="noreferrer"
+                      onClick={handleWhatsAppClick}
                       className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-semibold text-xs shadow-lg shadow-emerald-500/20 transition-all"
                     >
                       <WhatsApp className="w-4 h-4 fill-current" />
@@ -395,6 +415,7 @@ export default function Contact() {
                       href={generateWhatsAppLink()}
                       target="_blank"
                       rel="noreferrer"
+                      onClick={handleWhatsAppClick}
                       className="py-3.5 px-6 rounded-xl font-semibold text-black bg-emerald-400 hover:bg-emerald-300 transition-all flex items-center justify-center gap-2 text-sm shadow-[0_0_20px_rgba(52,211,153,0.2)]"
                     >
                       <WhatsApp className="w-4 h-4 fill-current" />
