@@ -19,10 +19,11 @@ export default async function handler(req, res) {
     return res.status(405).json({ success: false, error: 'Method not allowed' });
   }
 
-  if (!process.env.MONGODB_URI) {
+  const hasDb = process.env.MONGODB_URI || process.env.MONGO_URI || process.env.DATABASE_URL;
+  if (!hasDb) {
     return res.status(200).json({
       success: false,
-      message: 'MONGODB_URI is not configured in Vercel Environment Variables.',
+      message: 'MONGODB_URI or MONGO_URI is not configured in Vercel Environment Variables.',
       messages: [],
     });
   }

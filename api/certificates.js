@@ -18,7 +18,8 @@ export default async function handler(req, res) {
 
 
   // Check if MongoDB is connected
-  if (!process.env.MONGODB_URI) {
+  const hasDb = process.env.MONGODB_URI || process.env.MONGO_URI || process.env.DATABASE_URL;
+  if (!hasDb) {
     if (req.method === 'GET') {
       return res.status(200).json({
         success: true,

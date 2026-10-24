@@ -39,7 +39,8 @@ export default async function handler(req, res) {
       }
 
       // Check if MongoDB URI is configured
-      if (process.env.MONGODB_URI) {
+      const hasDb = process.env.MONGODB_URI || process.env.MONGO_URI || process.env.DATABASE_URL;
+      if (hasDb) {
         await dbConnect();
         const newContact = await Contact.create({
           name: name.trim(),
