@@ -62,18 +62,36 @@ export default function Contact() {
     setTimeout(() => setCopiedMessage(false), 2000);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     const summary = `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone || 'Not provided'}\nSubject: ${formData.subject}\n\nMessage:\n${formData.message}`;
     setLastSubmittedText(summary);
 
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitted(true);
-      window.open(generateGmailLink(), '_blank');
-    }, 600);
+    try {
+      // Save directly to MongoDB Atlas via backend API
+      await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone || '',
+          subject: formData.subject,
+          message: formData.message,
+        }),
+      });
+    } catch (err) {
+      console.warn('API error:', err);
+    }
+
+    setIsSubmitting(false);
+    setSubmitted(true);
+    window.open(generateGmailLink(), '_blank');
   };
 
   return (

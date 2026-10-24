@@ -65,7 +65,7 @@ export default function ContactPage() {
     setTimeout(() => setCopiedMessage(false), 2000);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
@@ -73,36 +73,35 @@ export default function ContactPage() {
     setLastSubmittedText(summary);
 
     try {
-      fetch(`https://formsubmit.co/ajax/${personalData.email}`, {
+      // Save directly to MongoDB Atlas via backend API
+      await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
         body: JSON.stringify({
-          Name: formData.name,
-          Email: formData.email,
-          Phone: formData.phone || 'Not provided',
-          Subject: formData.subject,
-          Message: formData.message,
-          _subject: `New Portfolio Lead from ${formData.name}: ${formData.subject}`,
-          _template: 'table',
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone || '',
+          subject: formData.subject,
+          message: formData.message,
         }),
-      }).catch(() => {});
-    } catch {}
-
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitted(true);
-      window.open(generateGmailLink(), '_blank');
-
-      confetti({
-        particleCount: 80,
-        spread: 70,
-        origin: { y: 0.7 },
-        colors: ['#c084fc', '#a855f7', '#818cf8', '#ffffff'],
       });
-    }, 400);
+    } catch (err) {
+      console.warn('API error:', err);
+    }
+
+    setIsSubmitting(false);
+    setSubmitted(true);
+    window.open(generateGmailLink(), '_blank');
+
+    confetti({
+      particleCount: 80,
+      spread: 70,
+      origin: { y: 0.7 },
+      colors: ['#c084fc', '#a855f7', '#818cf8', '#ffffff'],
+    });
   };
 
   return (
