@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUp, Code2, Heart } from 'lucide-react';
+import { ArrowUp, Code2 } from 'lucide-react';
 import { personalData } from '../data/portfolioData';
 import { Github, Linkedin, Instagram, WhatsApp } from './Icons';
 
@@ -96,8 +96,8 @@ export default function Footer() {
           <p>
             &copy; 2026 {personalData.name}. All rights reserved.
           </p>
-          <p className="flex items-center gap-1.5">
-            Crafted with <Heart className="w-3.5 h-3.5 text-purple-400 fill-purple-400" /> &bull; Dark Purple Liquid Glass
+          <p className="text-zinc-500">
+            Full-Stack Web Developer &bull; CSE '28
           </p>
         </div>
       </div>
