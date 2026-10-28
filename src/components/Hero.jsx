@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { Github, Linkedin, Instagram, WhatsApp } from './Icons';
 import { personalData } from '../data/portfolioData';
+import { trackResumeDownload } from '../utils/trackResumeDownload';
 
 export default function Hero() {
   const [copiedEmail, setCopiedEmail] = useState(false);
@@ -22,6 +23,11 @@ export default function Hero() {
       origin: { y: 0.65 },
       colors: ['#a855f7', '#6366f1', '#38bdf8', '#c084fc'],
     });
+  };
+
+  const handleDownload = () => {
+    handleConfetti();
+    trackResumeDownload('hero');
   };
 
   const copyEmailToClipboard = () => {
@@ -106,7 +112,7 @@ export default function Hero() {
                 download="Yazan_Gupta_Resume.pdf"
                 target="_blank"
                 rel="noreferrer"
-                onClick={handleConfetti}
+                onClick={handleDownload}
                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-medium text-purple-200 bg-[#0c0915]/80 hover:bg-[#140e24] border border-purple-500/25 hover:border-purple-500/40 hover:text-white backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.08)] transition-all text-sm"
               >
                 <Download className="w-4 h-4 text-purple-400" />

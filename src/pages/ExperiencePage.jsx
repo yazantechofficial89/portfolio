@@ -16,15 +16,17 @@ import {
   Clock
 } from 'lucide-react';
 import { experienceData, personalData } from '../data/portfolioData';
+import { trackResumeDownload } from '../utils/trackResumeDownload';
 
 export default function ExperiencePage() {
-  const handleConfetti = () => {
+  const handleDownload = () => {
     confetti({
       particleCount: 80,
       spread: 70,
       origin: { y: 0.65 },
       colors: ['#c084fc', '#a855f7', '#818cf8', '#ffffff'],
     });
+    trackResumeDownload('experience');
   };
 
   const getTimelineIcon = (role = '') => {
@@ -65,7 +67,7 @@ export default function ExperiencePage() {
               download="Yazan_Gupta_Resume.pdf"
               target="_blank"
               rel="noreferrer"
-              onClick={handleConfetti}
+              onClick={handleDownload}
               className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-[0_0_20px_rgba(168,85,247,0.35)] transition-all text-sm cursor-pointer"
             >
               <Download className="w-4 h-4" />
