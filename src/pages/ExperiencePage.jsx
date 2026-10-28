@@ -63,7 +63,7 @@ export default function ExperiencePage() {
 
           <div className="mt-6 flex flex-wrap justify-center gap-4">
             <a
-              href={personalData.resumeUrl}
+              href="/api/download-resume?source=experience"
               download="Yazan_Gupta_Resume.pdf"
               target="_blank"
               rel="noreferrer"

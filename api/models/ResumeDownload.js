@@ -4,7 +4,7 @@ const ResumeDownloadSchema = new mongoose.Schema(
   {
     source: {
       type: String,
-      default: 'hero', // 'hero', 'about', 'experience', etc.
+      default: 'hero',
       trim: true,
     },
     referrer: {
@@ -23,8 +23,9 @@ const ResumeDownloadSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    collection: 'resume_downloads',
   }
 );
 
 export default mongoose.models.ResumeDownload ||
-  mongoose.model('ResumeDownload', ResumeDownloadSchema);
+  mongoose.model('ResumeDownload', ResumeDownloadSchema, 'resume_downloads');

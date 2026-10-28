@@ -108,7 +108,7 @@ export default function Hero() {
               </Link>
 
               <a
-                href={personalData.resumeUrl}
+                href="/api/download-resume?source=hero"
                 download="Yazan_Gupta_Resume.pdf"
                 target="_blank"
                 rel="noreferrer"

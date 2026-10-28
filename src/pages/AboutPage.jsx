@@ -142,7 +142,7 @@ export default function AboutPage() {
             {/* Action Buttons */}
             <div className="mt-8 pt-6 border-t border-purple-500/10 flex flex-wrap items-center gap-4">
               <a
-                href={personalData.resumeUrl}
+                href="/api/download-resume?source=about"
                 download="Yazan_Gupta_Resume.pdf"
                 target="_blank"
                 rel="noreferrer"

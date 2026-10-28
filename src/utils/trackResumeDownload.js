@@ -1,7 +1,6 @@
 /**
  * Asynchronously tracks resume download events to MongoDB
- * Uses navigator.sendBeacon with keepalive fallback to ensure
- * the tracking request completes even if the user navigates or opens the file.
+ * Uses fetch with keepalive to ensure the tracking request completes.
  *
  * @param {string} source - 'hero' | 'about' | 'experience' | 'direct'
  */
@@ -13,18 +12,22 @@ export function trackResumeDownload(source = 'hero') {
       timestamp: new Date().toISOString(),
     });
 
-    if (typeof navigator !== 'undefined' && typeof navigator.sendBeacon === 'function') {
-      const blob = new Blob([payload], { type: 'application/json' });
-      navigator.sendBeacon('/api/resume-download', blob);
-    } else if (typeof fetch === 'function') {
+    if (typeof fetch === 'function') {
       fetch('/api/resume-download', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: payload,
         keepalive: true,
-      }).catch(() => {
-        // Fail silently so the user's download is never interrupted
-      });
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data && data.success) {
+            console.log(`[ResumeDownload] Logged successfully. Total: ${data.totalDownloads}`);
+          }
+        })
+        .catch(() => {
+          // Fail silently
+        });
     }
   } catch (e) {
     // Fail silently
