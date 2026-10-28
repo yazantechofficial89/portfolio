@@ -46,41 +46,11 @@ export default function Home() {
       {/* Hero Section */}
       <Hero />
 
-      {/* About Preview Section - Dark Purple Glass with Portrait */}
-      <section className="py-20 relative border-t border-purple-500/15 bg-[#07050d]">
+      {/* About Preview Section - Space Theme */}
+      <section className="py-20 relative border-t border-purple-500/15 bg-[#07050d]/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Developer Portrait */}
-            <div className="lg:col-span-5 flex justify-center">
-              <div className="relative group w-full max-w-[280px] sm:max-w-[310px]">
-                {/* Backing Ambient Glow */}
-                <div className="absolute -inset-1 rounded-3xl bg-gradient-to-tr from-purple-600/40 via-indigo-600/30 to-purple-400/20 blur-xl opacity-75 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                
-                {/* Photo Frame */}
-                <div className="relative rounded-3xl overflow-hidden liquid-glass border border-purple-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.85)] bg-[#090611]">
-                  <img
-                    src="/yazan.jpg"
-                    alt="Yazan Gupta - Full-Stack Developer"
-                    className="w-full h-80 sm:h-96 object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#050308]/90 via-transparent to-transparent pointer-events-none" />
-                  <div className="absolute bottom-3.5 left-3 right-3 flex items-center justify-between pointer-events-none">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium liquid-pill text-emerald-400 bg-[#090611]/85 backdrop-blur-md border border-purple-500/20">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                      Yazan Gupta
-                    </span>
-                    <span className="px-3 py-1 rounded-full text-xs font-mono font-medium liquid-pill text-purple-200 bg-[#090611]/85 backdrop-blur-md border border-purple-500/20">
-                      Full-Stack Dev
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Developer Bio & Details */}
-            <div className="lg:col-span-7">
+            <div className="lg:col-span-6">
               <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full liquid-pill text-purple-200 text-xs font-mono tracking-wider uppercase mb-3">
                 <Sparkles className="w-3.5 h-3.5 text-purple-400" />
                 Meet The Developer
@@ -107,28 +77,27 @@ export default function Home() {
                   <ChevronRight className="w-4 h-4" />
                 </Link>
               </div>
+            </div>
 
-              {/* 2 Quick Highlights */}
-              <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="p-5 rounded-2xl liquid-glass-interactive">
-                  <div className="w-9 h-9 rounded-xl bg-[#0c0915] text-purple-400 border border-purple-500/25 flex items-center justify-center mb-3 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
-                    <Code2 className="w-4.5 h-4.5 text-purple-300" />
-                  </div>
-                  <h3 className="text-base font-bold text-white">Frontend Mastery</h3>
-                  <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
-                    Fast, accessible, and responsive client applications with React 19, Next.js, and Tailwind CSS.
-                  </p>
+            <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="p-6 rounded-2xl liquid-glass-interactive">
+                <div className="w-10 h-10 rounded-xl bg-[#0c0915] text-purple-400 border border-purple-500/25 flex items-center justify-center mb-4 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
+                  <Code2 className="w-5 h-5 text-purple-300" />
                 </div>
+                <h3 className="text-lg font-bold text-white">Frontend Mastery</h3>
+                <p className="text-xs text-zinc-400 mt-2 leading-relaxed">
+                  Fast, accessible, and responsive client applications with React 19, Next.js, and Tailwind CSS.
+                </p>
+              </div>
 
-                <div className="p-5 rounded-2xl liquid-glass-interactive">
-                  <div className="w-9 h-9 rounded-xl bg-[#0c0915] text-purple-400 border border-purple-500/25 flex items-center justify-center mb-3 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
-                    <Layers className="w-4.5 h-4.5 text-purple-300" />
-                  </div>
-                  <h3 className="text-base font-bold text-white">Scalable APIs</h3>
-                  <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
-                    High-throughput REST backends &amp; WebSockets powered by Node.js, Express, and MongoDB.
-                  </p>
+              <div className="p-6 rounded-2xl liquid-glass-interactive">
+                <div className="w-10 h-10 rounded-xl bg-[#0c0915] text-purple-400 border border-purple-500/25 flex items-center justify-center mb-4 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
+                  <Layers className="w-5 h-5 text-purple-300" />
                 </div>
+                <h3 className="text-lg font-bold text-white">Scalable APIs</h3>
+                <p className="text-xs text-zinc-400 mt-2 leading-relaxed">
+                  High-throughput REST backends &amp; WebSockets powered by Node.js, Express, and modern cloud databases.
+                </p>
               </div>
             </div>
           </div>

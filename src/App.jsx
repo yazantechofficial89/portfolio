@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
+import Starfield from './components/Starfield';
 
 // Eager load Home for instant First Contentful Paint
 import Home from './pages/Home';
@@ -29,7 +30,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <div className="min-h-screen bg-[#050308] text-zinc-100 selection:bg-purple-600/30 selection:text-purple-200 flex flex-col justify-between">
+      <div className="min-h-screen bg-[#050308] text-zinc-100 selection:bg-purple-600/30 selection:text-purple-200 flex flex-col justify-between relative overflow-hidden">
+        {/* Living Cosmic Starfield & Meteors */}
+        <Starfield />
         <Navbar />
         <main className="flex-1">
           <Suspense fallback={<RouteLoader />}>
