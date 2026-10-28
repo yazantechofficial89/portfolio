@@ -41,11 +41,15 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        {/* Brand Logo - Dark Purple Obsidian Glass Emblem */}
+        {/* Brand Logo - YG 3D Emblem */}
         <Link to="/" className="flex items-center gap-2.5 group">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 via-indigo-600 to-purple-800 p-[1px] shadow-[0_0_20px_rgba(168,85,247,0.25)] group-hover:shadow-[0_0_28px_rgba(168,85,247,0.4)] transition-all">
-            <div className="w-full h-full bg-[#0a0712] rounded-[11px] flex items-center justify-center group-hover:bg-[#120d20] transition-colors border border-purple-500/20">
-              <Code2 className="w-5 h-5 text-purple-400 group-hover:text-purple-300 group-hover:scale-105 transition-all" />
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 via-indigo-600 to-purple-800 p-[1px] shadow-[0_0_20px_rgba(168,85,247,0.3)] group-hover:shadow-[0_0_28px_rgba(168,85,247,0.5)] transition-all">
+            <div className="w-full h-full bg-[#0a0712] rounded-[11px] flex items-center justify-center group-hover:bg-[#120d20] transition-colors border border-purple-500/20 p-1">
+              <img
+                src="/yg-logo.png"
+                alt="YG Logo"
+                className="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(168,85,247,0.6)] group-hover:scale-110 transition-transform"
+              />
             </div>
           </div>
           <div className="flex flex-col">

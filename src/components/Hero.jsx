@@ -190,72 +190,63 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* Right Column: Interactive Code Terminal Card - Dark Purple Glass */}
+          {/* Right Column: 3D YG Brand Emblem Showcase */}
           <div className="lg:col-span-5 w-full">
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.92 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative mx-auto max-w-lg lg:max-w-none"
+              className="relative mx-auto max-w-md lg:max-w-none"
             >
-              {/* Subtle ambient backdrop glow */}
-              <div className="absolute -inset-1 rounded-3xl bg-purple-600/20 blur-2xl pointer-events-none"></div>
+              {/* Vibrant Ambient Space Nebula Glow */}
+              <div className="absolute -inset-3 rounded-3xl bg-gradient-to-tr from-purple-600/40 via-indigo-600/30 to-purple-400/20 blur-3xl opacity-80 pointer-events-none animate-pulse-slow"></div>
 
-              <div className="relative rounded-2xl bg-[#0a0714]/90 border border-purple-500/25 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.85),inset_0_1px_1px_0_rgba(255,255,255,0.12)] overflow-hidden">
-                {/* Window header */}
-                <div className="flex items-center justify-between px-4 py-3 bg-[#06040a]/80 border-b border-purple-500/20">
-                  <div className="flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-full bg-rose-500/80 inline-block border border-rose-400/20" />
-                    <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block border border-amber-400/20" />
-                    <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block border border-emerald-400/20" />
-                    <span className="ml-2 text-xs font-mono text-purple-300/70">developer.ts</span>
+              {/* Obsidian Liquid Glass Showcase Card */}
+              <div className="relative rounded-3xl liquid-glass border border-purple-500/30 p-8 sm:p-10 shadow-[0_25px_60px_rgba(0,0,0,0.85)] flex flex-col items-center text-center overflow-hidden group">
+                {/* Specular Top Sheen */}
+                <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-300/40 to-transparent pointer-events-none" />
+
+                {/* Top Header Bar */}
+                <div className="w-full flex items-center justify-between mb-5 pb-3 border-b border-purple-500/15 text-xs font-mono">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-purple-200">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>Official Brand Emblem</span>
                   </div>
-                  <div className="flex items-center gap-1.5 text-xs font-mono text-purple-400">
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span>fullstack</span>
-                  </div>
+                  <span className="text-purple-300/70 font-semibold tracking-wider">YG &bull; 2026</span>
                 </div>
 
-                {/* Code Body */}
-                <div className="p-5 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto text-zinc-300">
-                  <p className="text-purple-400">
-                    <span className="text-indigo-400 font-bold">const</span> developer = &#123;
-                  </p>
-                  <p className="pl-4">
-                    name: <span className="text-emerald-300">'{personalData.name}'</span>,
-                  </p>
-                  <p className="pl-4">
-                    role: <span className="text-emerald-300">'Full-Stack Engineer'</span>,
-                  </p>
-                  <p className="pl-4">
-                    coreStack: [
-                    <span className="text-amber-300">'React'</span>,{' '}
-                    <span className="text-amber-300">'Node.js'</span>,{' '}
-                    <span className="text-amber-300">'MongoDB'</span>,{' '}
-                    <span className="text-amber-300">'Tailwind'</span>
-                    ],
-                  </p>
-                  <p className="pl-4">
-                    architecture: <span className="text-cyan-300">['REST APIs', 'WebSockets', 'MERN']</span>,
-                  </p>
-                  <p className="pl-4">
-                    hardWorker: <span className="text-rose-400 font-semibold">true</span>,
-                  </p>
-                  <p className="pl-4">
-                    hireable: <span className="text-emerald-400 font-semibold">true</span>,
-                  </p>
-                  <p className="pl-4">
-                    motto: <span className="text-amber-300">'Turning ideas into fast, scalable code.'</span>,
-                  </p>
-                  <p className="text-purple-400">&#125;;</p>
+                {/* Center 3D YG Logo Display */}
+                <div className="relative my-4 flex items-center justify-center">
+                  {/* Radial Starlight Ambient Glow */}
+                  <div className="absolute w-52 h-52 rounded-full bg-purple-600/25 blur-2xl pointer-events-none" />
+                  <img
+                    src="/yg-logo.png"
+                    alt="Yazan Gupta (YG) Emblem"
+                    className="relative z-10 w-56 h-56 sm:w-64 sm:h-64 object-contain drop-shadow-[0_20px_45px_rgba(168,85,247,0.55)] group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
 
-                  <div className="mt-4 pt-4 border-t border-purple-500/20 flex items-center justify-between text-xs text-zinc-400">
-                    <span className="text-emerald-400 flex items-center gap-1.5 font-mono">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                      Compiled successfully
-                    </span>
-                    <span className="text-purple-300/60 font-mono">0 errors, 0 warnings</span>
-                  </div>
+                {/* Name & Identity */}
+                <div className="mt-2">
+                  <h3 className="text-2xl font-black text-white tracking-tight">
+                    Yazan <span className="text-gradient">Gupta</span>
+                  </h3>
+                  <p className="text-xs text-purple-300/80 font-mono mt-1">
+                    Full-Stack Engineer &bull; B.Tech CSE (Data Science)
+                  </p>
+                </div>
+
+                {/* Bottom Tech Pills */}
+                <div className="mt-6 pt-4 border-t border-purple-500/15 w-full flex flex-wrap items-center justify-center gap-2 text-[11px] font-mono">
+                  <span className="px-3 py-1 rounded-full liquid-pill text-purple-200">
+                    React &bull; Next.js
+                  </span>
+                  <span className="px-3 py-1 rounded-full liquid-pill text-purple-200">
+                    Node.js &bull; Express
+                  </span>
+                  <span className="px-3 py-1 rounded-full liquid-pill text-purple-200">
+                    MongoDB &bull; Java
+                  </span>
                 </div>
               </div>
             </motion.div>

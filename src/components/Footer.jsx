@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUp, Code2 } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 import { personalData } from '../data/portfolioData';
 import { Github, Linkedin, Instagram, WhatsApp } from './Icons';
 
@@ -15,8 +15,12 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-purple-500/15">
           {/* Logo & Tagline */}
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-xl bg-purple-950/60 border border-purple-500/30 flex items-center justify-center group-hover:border-purple-400/50 transition-colors shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]">
-              <Code2 className="w-5 h-5 text-purple-400" />
+            <div className="w-10 h-10 rounded-xl bg-purple-950/60 border border-purple-500/30 flex items-center justify-center group-hover:border-purple-400/50 transition-colors shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] p-1">
+              <img
+                src="/yg-logo.png"
+                alt="YG Logo"
+                className="w-full h-full object-contain drop-shadow-[0_0_8px_rgba(168,85,247,0.5)] group-hover:scale-110 transition-transform"
+              />
             </div>
             <div>
               <span className="font-bold text-white text-base group-hover:text-purple-200 transition-colors">
