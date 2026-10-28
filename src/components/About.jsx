@@ -47,8 +47,16 @@ export default function About() {
   return (
     <section id="about" className="py-24 relative overflow-hidden bg-[#050308]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto">
+        {/* Section Header with Avatar */}
+        <div className="text-center max-w-3xl mx-auto flex flex-col items-center">
+          <div className="relative mb-6 group">
+            <div className="absolute -inset-1.5 rounded-full bg-gradient-to-tr from-purple-600/50 via-indigo-600/40 to-purple-400/30 blur-lg opacity-75 group-hover:opacity-100 transition-opacity pointer-events-none" />
+            <img
+              src="/yazan.jpg"
+              alt="Yazan Gupta"
+              className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full object-cover object-top border-2 border-purple-500/40 shadow-2xl"
+            />
+          </div>
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full liquid-pill text-purple-200 text-xs font-mono tracking-wider uppercase mb-3">
             <Sparkles className="w-3.5 h-3.5 text-purple-400" />
             About Me

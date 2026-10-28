@@ -69,18 +69,48 @@ export default function AboutPage() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
-        {/* 1. HERO INTRODUCTION */}
-        <div className="max-w-4xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-purple-300 border-purple-500/20 bg-purple-950/40 text-xs font-mono tracking-wider uppercase mb-3">
-            <Sparkles className="w-3.5 h-3.5 text-purple-400" />
-            B.Tech CSE Student • Full-Stack Developer
+        {/* 1. HERO INTRODUCTION WITH PROFILE PHOTO */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div className="lg:col-span-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-purple-300 border-purple-500/20 bg-purple-950/40 text-xs font-mono tracking-wider uppercase mb-3">
+              <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+              B.Tech CSE Student &bull; Full-Stack Developer
+            </div>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
+              Hello, I’m <span className="text-gradient">Yazan Gupta</span>
+            </h1>
+            <p className="mt-5 text-lg sm:text-xl text-zinc-400 leading-relaxed font-normal">
+              I’m a Computer Science student at <strong className="text-white font-semibold">Echelon Institute of Technology</strong>, pursuing a B.Tech in Computer Science from <strong className="text-purple-300 font-semibold font-mono">2024 to 2028</strong>. I’m passionate about technology and full-stack web development, and I enjoy creating applications that are useful, responsive, and easy to use.
+            </p>
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
-            Hello, I’m <span className="text-gradient">Yazan Gupta</span>
-          </h1>
-          <p className="mt-5 text-lg sm:text-xl text-zinc-400 leading-relaxed font-normal">
-            I’m a Computer Science student at <strong className="text-white font-semibold">Echelon Institute of Technology</strong>, pursuing a B.Tech in Computer Science from <strong className="text-purple-300 font-semibold font-mono">2024 to 2028</strong>. I’m passionate about technology and full-stack web development, and I enjoy creating applications that are useful, responsive, and easy to use.
-          </p>
+
+          <div className="lg:col-span-4 flex justify-center lg:justify-end">
+            <div className="relative group w-full max-w-[270px] sm:max-w-[290px]">
+              {/* Backing Ambient Glow */}
+              <div className="absolute -inset-1 rounded-3xl bg-gradient-to-tr from-purple-600/40 via-indigo-600/30 to-purple-400/20 blur-xl opacity-75 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              
+              {/* Photo Frame */}
+              <div className="relative rounded-3xl overflow-hidden liquid-glass border border-purple-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.85)] bg-[#090611]">
+                <img
+                  src="/yazan.jpg"
+                  alt="Yazan Gupta"
+                  className="w-full h-80 sm:h-96 object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                  loading="eager"
+                  decoding="async"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050308]/90 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute bottom-3.5 left-3 right-3 flex items-center justify-between pointer-events-none">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium liquid-pill text-emerald-400 bg-[#090611]/85 backdrop-blur-md border border-purple-500/20">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    Available
+                  </span>
+                  <span className="px-3 py-1 rounded-full text-xs font-mono font-medium liquid-pill text-purple-200 bg-[#090611]/85 backdrop-blur-md border border-purple-500/20">
+                    B.Tech CSE '28
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* 2. MY JOURNEY & QUICK FACTS SIDEBAR */}
