@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { Github } from '../components/Icons';
 import ProjectImageCarousel from '../components/ProjectImageCarousel';
+import { projectsData } from '../data/portfolioData';
 
 const PROJECTS_CACHE_KEY = 'yazan_live_projects';
 
@@ -24,14 +25,14 @@ export default function ProjectsPage() {
         if (Array.isArray(parsed) && parsed.length > 0) return parsed;
       }
     } catch {}
-    return [];
+    return Array.isArray(projectsData) && projectsData.length > 0 ? projectsData : [];
   });
   const [isLoading, setIsLoading] = useState(() => {
     try {
       const cached = localStorage.getItem(PROJECTS_CACHE_KEY);
       if (cached && JSON.parse(cached).length > 0) return false;
     } catch {}
-    return true;
+    return !(Array.isArray(projectsData) && projectsData.length > 0);
   });
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');

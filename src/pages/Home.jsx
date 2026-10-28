@@ -11,12 +11,14 @@ import {
   ArrowUpRight
 } from 'lucide-react';
 import Hero from '../components/Hero';
-import { personalData } from '../data/portfolioData';
+import { personalData, projectsData } from '../data/portfolioData';
 import { Github } from '../components/Icons';
 import ProjectImageCarousel from '../components/ProjectImageCarousel';
 
 export default function Home() {
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState(() => {
+    return Array.isArray(projectsData) && projectsData.length > 0 ? projectsData : [];
+  });
 
   useEffect(() => {
     let isMounted = true;
@@ -24,7 +26,7 @@ export default function Home() {
       try {
         const res = await fetch('/api/projects');
         const data = await res.json();
-        if (data.success && Array.isArray(data.projects)) {
+        if (data.success && Array.isArray(data.projects) && data.projects.length > 0) {
           if (isMounted) {
             setProjects(data.projects);
           }

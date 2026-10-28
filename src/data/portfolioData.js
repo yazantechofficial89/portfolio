@@ -1,29 +1,29 @@
 export const personalData = {
   name: "Yazan Gupta",
   title: "Full-Stack Web Developer",
-  tagline: "Computer Science student at Echelon Institute of Technology (2024–2028) & Full-Stack MERN Developer.",
+  tagline: "Computer Science & Data Science student at Echelon Institute of Technology (2024–2028) & Full-Stack MERN Developer.",
   status: "Available for new opportunities",
-  location: "India / Remote Worldwide",
+  location: "Faridabad, Haryana | Remote Worldwide",
   email: "yazangupta39@gmail.com",
   phone: "+91 7011906923",
-  resumeUrl: "#resume",
-  bio: `I’m a Computer Science student at Echelon Institute of Technology, pursuing a B.Tech in Computer Science from 2024 to 2028. I’m passionate about technology and full-stack web development, and I enjoy creating applications that are useful, responsive, and easy to use.`,
-  detailedStory: `My interest in development has led me to learn the MERN stack: MongoDB, Express.js, React, and Node.js. I have one year of hands-on experience building and improving web applications. Through this experience, I’ve developed my understanding of frontend development, backend APIs, and database integration.
+  resumeUrl: "/Yazan_Gupta_Resume.pdf",
+  bio: `I’m a Computer Science & Data Science student at Echelon Institute of Technology, pursuing a B.Tech from 2024 to 2028. I’m passionate about full-stack web development and data science, building responsive, user-friendly applications with practical impact.`,
+  detailedStory: `My interest in development has led me to master the MERN stack: MongoDB, Express.js, React, and Node.js along with core programming in Java. I have one year of hands-on experience building and improving web applications. Through this experience, I’ve developed my understanding of frontend development, backend APIs, and database integration.
 
 I enjoy learning by building projects, exploring new technologies, and solving challenges along the way. Each project helps me strengthen my skills and understand how the different parts of a web application work together.`,
-  goals: `I’m focused on strengthening my computer science fundamentals and growing as a full-stack developer. I look forward to taking on new challenges, collaborating with others, and creating projects that reflect my skills and continued progress.`,
+  goals: `I’m focused on strengthening my computer science fundamentals, data science, and growing as a full-stack engineer. I look forward to taking on new challenges, collaborating with others, and creating projects that reflect my skills and continued progress.`,
   connect: `I’m happy to connect with fellow students, developers, and people working on interesting ideas. Feel free to reach out to discuss technology, web development, or potential collaborations.`,
   education: {
-    degree: "B.Tech in Computer Science",
-    institute: "Echelon Institute of Technology",
+    degree: "B.Tech in Computer Science & Data Science",
+    institute: "Echelon Institute of Technology, Faridabad",
     duration: "2024–2028",
     experience: "1 year of hands-on MERN stack development",
   },
   stats: [
     { label: "Hands-on Experience", value: "1 Year" },
-    { label: "Degree Program", value: "B.Tech CSE" },
+    { label: "Degree Program", value: "B.Tech CSE (Data Science)" },
     { label: "Graduation Batch", value: "2024–2028" },
-    { label: "Primary Stack", value: "MERN Stack" },
+    { label: "Primary Stack", value: "MERN & Java" },
   ],
   socials: {
     github: "https://github.com/yazantechofficial89",
@@ -137,7 +137,26 @@ export const coreValuesData = [
 ];
 
 
-export const projectsData = [];
+export const projectsData = [
+  {
+    id: "sevasetu",
+    title: "SevaSetu — Where Technology Meets Humanity",
+    category: "Full-Stack",
+    description: "Full-stack web application connecting donors with orphanages and old-age care homes. Focuses on donation coordination, communication, transparency, and trust-based verification for essential supplies.",
+    image: "/sevasetu.png",
+    images: ["/sevasetu.png", "/sevasetu.webp"],
+    tags: ["React.js", "Node.js", "Express.js", "MongoDB", "Socket.io", "Tailwind CSS"],
+    features: [
+      "Real-time Live Ashram Chat with unread notification badge via WebSockets",
+      "Essential donation request & fulfillment management",
+      "Interactive donor directory and verified orphanage profiles",
+      "Responsive Dark/Light mode and fluid mobile experience",
+    ],
+    demoUrl: "https://sevasetu-liard.vercel.app",
+    githubUrl: "https://github.com/yazantechofficial89",
+    featured: true,
+  },
+];
 
 
 export const experienceData = [
@@ -155,35 +174,36 @@ export const experienceData = [
       "Designed mobile-first responsive interfaces using React, Tailwind CSS, and Framer Motion",
     ],
     skills: ["MongoDB", "Express.js", "React.js", "Node.js", "Tailwind CSS", "Socket.io", "REST APIs"],
-    link: "https://sevasetu-3h83.onrender.com/",
+    link: "https://sevasetu-liard.vercel.app",
     linkText: "View Live Project (SevaSetu)",
   },
   {
     period: "2024 - 2028",
-    role: "B.Tech in Computer Science & Engineering",
-    company: "Echelon Institute of Technology",
+    role: "B.Tech in Computer Science (Data Science)",
+    company: "Echelon Institute of Technology, Faridabad",
     type: "Education & Degree",
-    description: "Pursuing Bachelor of Technology in Computer Science and Engineering. Strengthening computer science fundamentals, data structures, algorithms, and practical software engineering.",
+    description: "Pursuing Bachelor of Technology in Computer Science & Data Science. Strengthening computer science fundamentals, data structures, algorithms, Java, and practical software engineering.",
     highlights: [
-      "B.Tech in Computer Science (Graduation Batch 2024–2028)",
-      "Focusing on computer science fundamentals, logic building, and scalable software design",
+      "B.Tech in Computer Science & Data Science (Expected Graduation: 2028)",
+      "Focusing on computer science fundamentals, logic building, Java, and scalable software design",
       "Practical project-based learning and continuous hands-on development",
       "Active participant in campus tech events and collaborative team challenges",
     ],
-    skills: ["Computer Science", "Data Structures", "Algorithms", "Database Systems", "Software Engineering"],
+    skills: ["Java", "Computer Science", "Data Structures", "Algorithms", "Database Systems", "Software Engineering"],
   },
   {
     period: "2026",
-    role: "National Hackathon & Youth Contributor",
-    company: "All India Hackathon (AIH) & MY Bharat",
-    type: "Competitions & Civic Tech",
-    description: "Participated in nationwide tech competitions and recognized by national youth initiatives for proactive technology exploration and civic contributions.",
+    role: "National Hackathons & Academic Achievements",
+    company: "ISRO IIRS, TECHELON & CODEFUSION",
+    type: "Competitions & Accreditations",
+    description: "Recognized for high achievement in state/national tech competitions and specialized space technology training.",
     highlights: [
-      "Certificate of Participation — All India Hackathon (AIH) 2026 organized by Axcentra & Wolfram Research",
+      "AI/ML for Geodata Analytics — Indian Institute of Remote Sensing (IIRS), ISRO (August 2026)",
+      "TECHELON-2026 — Secured 3rd Position at Echelon Institute of Technology; Bronze Medal & Certificate",
+      "CODEFUSION 2K26 — Semi-Finalist under Team InnovX organized by Codeverse at Echelon Institute",
       "Certificate of Recognition — Ministry of Youth Affairs and Sports, Government of India (Mera Yuva Bharat)",
-      "Collaborated in fast-paced problem solving, agile prototyping, and team coordination",
     ],
-    skills: ["Rapid Prototyping", "Problem Solving", "Team Collaboration", "Hackathon Delivery"],
+    skills: ["AI/ML Geodata", "Rapid Prototyping", "Problem Solving", "Team Collaboration"],
     link: "/certifications",
     linkText: "View Verified Certificates",
   },

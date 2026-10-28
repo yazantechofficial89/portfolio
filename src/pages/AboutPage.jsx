@@ -139,13 +139,17 @@ export default function AboutPage() {
 
             {/* Action Buttons */}
             <div className="mt-8 pt-6 border-t border-purple-500/10 flex flex-wrap items-center gap-4">
-              <button
+              <a
+                href={personalData.resumeUrl}
+                download="Yazan_Gupta_Resume.pdf"
+                target="_blank"
+                rel="noreferrer"
                 onClick={handleConfetti}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-[0_0_25px_rgba(168,85,247,0.35)] transition-all text-sm cursor-pointer"
               >
                 <Download className="w-4 h-4" />
                 <span>Download Resume</span>
-              </button>
+              </a>
 
               <Link
                 to="/projects"

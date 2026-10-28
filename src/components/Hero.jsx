@@ -102,7 +102,10 @@ export default function Hero() {
               </Link>
 
               <a
-                href="#contact"
+                href={personalData.resumeUrl}
+                download="Yazan_Gupta_Resume.pdf"
+                target="_blank"
+                rel="noreferrer"
                 onClick={handleConfetti}
                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-medium text-purple-200 bg-[#0c0915]/80 hover:bg-[#140e24] border border-purple-500/25 hover:border-purple-500/40 hover:text-white backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.08)] transition-all text-sm"
               >

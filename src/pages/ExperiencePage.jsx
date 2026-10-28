@@ -15,7 +15,7 @@ import {
   Building2,
   Clock
 } from 'lucide-react';
-import { experienceData } from '../data/portfolioData';
+import { experienceData, personalData } from '../data/portfolioData';
 
 export default function ExperiencePage() {
   const handleConfetti = () => {
@@ -60,13 +60,17 @@ export default function ExperiencePage() {
           </p>
 
           <div className="mt-6 flex flex-wrap justify-center gap-4">
-            <button
+            <a
+              href={personalData.resumeUrl}
+              download="Yazan_Gupta_Resume.pdf"
+              target="_blank"
+              rel="noreferrer"
               onClick={handleConfetti}
               className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-[0_0_20px_rgba(168,85,247,0.35)] transition-all text-sm cursor-pointer"
             >
               <Download className="w-4 h-4" />
               <span>Download Complete Resume</span>
-            </button>
+            </a>
 
             <Link
               to="/projects"
