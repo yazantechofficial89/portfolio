@@ -17,6 +17,13 @@ import ProjectImageCarousel from '../components/ProjectImageCarousel';
 
 export default function Home() {
   const [projects, setProjects] = useState(() => {
+    try {
+      const cached = localStorage.getItem('yazan_live_projects');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch {}
     return Array.isArray(projectsData) && projectsData.length > 0 ? projectsData : [];
   });
 
@@ -29,6 +36,9 @@ export default function Home() {
         if (data.success && Array.isArray(data.projects) && data.projects.length > 0) {
           if (isMounted) {
             setProjects(data.projects);
+            try {
+              localStorage.setItem('yazan_live_projects', JSON.stringify(data.projects));
+            } catch {}
           }
         }
       } catch (e) {

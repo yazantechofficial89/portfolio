@@ -45,7 +45,7 @@ export default function ProjectsPage() {
       try {
         const res = await fetch('/api/projects');
         const data = await res.json();
-        if (data.success && Array.isArray(data.projects)) {
+        if (data.success && Array.isArray(data.projects) && data.projects.length > 0) {
           if (isMounted) {
             setAllProjects(data.projects);
             setIsLoading(false);

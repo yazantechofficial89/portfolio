@@ -1,6 +1,42 @@
 import dbConnect from './lib/dbConnect.js';
 import Project from './models/Project.js';
 
+const DEFAULT_PROJECTS = [
+  {
+    _id: 'sevasetu-prod',
+    title: 'SevaSetu — Direct Orphanage & Old Age Home Care Bridge',
+    category: 'Full-Stack Web Application',
+    description:
+      'Production full-stack MERN platform connecting compassionate donors with verified orphanages and old-age care homes across India. Features real-time Live Ashram Chat with unread notification badges, trust-backed transparency verification, and donation coordination for food essentials, clothes, and supplies.',
+    image: 'https://i.ibb.co/HD326Z8v/Screenshot-2026-10-16-234949.png',
+    images: [
+      'https://i.ibb.co/HD326Z8v/Screenshot-2026-10-16-234949.png',
+      '/sevasetu.png',
+      '/sevasetu.webp',
+    ],
+    tags: [
+      'React.js',
+      'Node.js',
+      'Express.js',
+      'MongoDB',
+      'Tailwind CSS',
+      'Socket.io',
+      'Live Ashram Chat',
+      'Cloudinary',
+    ],
+    features: [
+      'Direct Care & Need Bridge connecting donors with orphanages & old-age homes',
+      'Real-Time Live Ashram Chat with unread badge notifications & instant messaging',
+      'Donation Management for clothes, food essentials, and education supplies',
+      'Trust & Transparency verification system for verified ashrams & care shelters',
+      'Interactive responsive web portal with user authentication & care coordination',
+    ],
+    demoUrl: 'https://sevasetu-liard.vercel.app',
+    githubUrl: 'https://github.com/yazantechofficial89/sevasetu',
+    featured: true,
+  },
+];
+
 export default async function handler(req, res) {
   // CORS configuration
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -23,8 +59,8 @@ export default async function handler(req, res) {
     if (req.method === 'GET') {
       return res.status(200).json({
         success: true,
-        projects: [],
-        warning: 'MONGODB_URI is not set in environment. Storing locally in browser.',
+        count: DEFAULT_PROJECTS.length,
+        projects: DEFAULT_PROJECTS,
       });
     }
 
@@ -45,7 +81,17 @@ export default async function handler(req, res) {
     // GET /api/projects -> Retrieve all custom projects from MongoDB
     if (req.method === 'GET') {
       res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=600');
-      const projects = await Project.find({}).sort({ createdAt: -1 }).lean();
+      let projects = await Project.find({}).sort({ createdAt: -1 }).lean();
+
+      if (!projects || projects.length === 0) {
+        projects = DEFAULT_PROJECTS;
+      } else {
+        projects = projects.map((p) => ({
+          ...p,
+          images: Array.isArray(p.images) && p.images.length > 0 ? p.images : (p.image ? [p.image] : []),
+        }));
+      }
+
       return res.status(200).json({
         success: true,
         count: projects.length,
@@ -121,6 +167,14 @@ export default async function handler(req, res) {
     return res.status(405).json({ success: false, error: 'Method not allowed' });
   } catch (error) {
     console.error('Projects API Error:', error);
+    if (req.method === 'GET') {
+      return res.status(200).json({
+        success: true,
+        count: DEFAULT_PROJECTS.length,
+        fallback: true,
+        projects: DEFAULT_PROJECTS,
+      });
+    }
     return res.status(500).json({
       success: false,
       error: error.message || 'Server error occurred while handling projects',
