@@ -34,7 +34,7 @@ export default function App() {
         {/* Living Cosmic Starfield & Meteors */}
         <Starfield />
         <Navbar />
-        <main className="flex-1">
+        <main className="flex-1 relative z-10">
           <Suspense fallback={<RouteLoader />}>
             <Routes>
               <Route path="/" element={<Home />} />

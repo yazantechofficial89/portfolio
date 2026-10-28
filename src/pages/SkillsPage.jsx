@@ -63,7 +63,7 @@ export default function SkillsPage() {
   const filteredSkills = getFilteredSkills();
 
   return (
-    <div className="pt-28 pb-24 relative overflow-hidden bg-[#050308] text-zinc-100">
+    <div className="pt-28 pb-24 relative overflow-hidden bg-transparent text-zinc-100">
       {/* Subtle ambient lighting */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-purple-900/15 blur-3xl pointer-events-none -z-10" />
       <div className="absolute top-10 right-10 w-96 h-96 bg-indigo-950/20 blur-3xl pointer-events-none -z-10" />

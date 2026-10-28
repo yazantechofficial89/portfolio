@@ -10,7 +10,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative bg-[#050308] border-t border-purple-500/15 pt-12 pb-8">
+    <footer className="relative bg-[#050308]/60 backdrop-blur-md border-t border-purple-500/15 pt-12 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-purple-500/15">
           {/* Logo & Tagline */}

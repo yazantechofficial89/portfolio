@@ -62,7 +62,7 @@ export default function AboutPage() {
   };
 
   return (
-    <div className="pt-28 pb-24 relative overflow-hidden bg-[#050308] text-zinc-100">
+    <div className="pt-28 pb-24 relative overflow-hidden bg-transparent text-zinc-100">
       {/* Subtle Ambient Lighting */}
       <div className="absolute top-20 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-purple-900/15 blur-3xl pointer-events-none -z-10" />
       <div className="absolute -top-40 right-10 w-96 h-96 bg-indigo-950/20 blur-3xl pointer-events-none -z-10" />

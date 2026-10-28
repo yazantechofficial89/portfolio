@@ -31,7 +31,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative min-h-[92vh] flex items-center justify-center pt-28 pb-16 overflow-hidden bg-[#050308]">
+    <section className="relative min-h-[92vh] flex items-center justify-center pt-28 pb-16 overflow-hidden bg-transparent">
       {/* Deep Space Cosmic Nebulae */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] cosmic-nebula blur-[130px] animate-pulse-slow pointer-events-none" />
       <div className="absolute top-1/3 left-1/4 w-[420px] h-[420px] bg-indigo-950/25 rounded-full blur-[140px] pointer-events-none" />

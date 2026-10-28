@@ -4,7 +4,7 @@ import { Home } from 'lucide-react';
 
 export default function NotFoundPage() {
   return (
-    <div className="min-h-[75vh] flex items-center justify-center pt-28 pb-20 px-4 text-center bg-[#050308] text-zinc-100 relative overflow-hidden">
+    <div className="min-h-[75vh] flex items-center justify-center pt-28 pb-20 px-4 text-center bg-transparent text-zinc-100 relative overflow-hidden">
       {/* Ambient Lighting */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-900/20 blur-3xl pointer-events-none -z-10" />
 

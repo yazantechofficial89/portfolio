@@ -42,12 +42,12 @@ export default function Home() {
   const featuredProjects = projects.filter((p) => p.featured !== false).slice(0, 3);
 
   return (
-    <div className="bg-[#050308] text-zinc-100">
+    <div className="bg-transparent text-zinc-100">
       {/* Hero Section */}
       <Hero />
 
       {/* About Preview Section - Space Theme */}
-      <section className="py-20 relative border-t border-purple-500/15 bg-[#07050d]/80 backdrop-blur-sm">
+      <section className="py-20 relative border-t border-purple-500/15 bg-[#050308]/40 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-6">
@@ -105,7 +105,7 @@ export default function Home() {
       </section>
 
       {/* Featured Projects Section - Dark Purple Glass */}
-      <section className="py-24 relative bg-[#050308] border-t border-purple-500/15">
+      <section className="py-24 relative bg-transparent border-t border-purple-500/15">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
             <div>
@@ -216,7 +216,7 @@ export default function Home() {
       </section>
 
       {/* Skills & Architecture Teaser Banner */}
-      <section className="py-20 relative border-t border-purple-500/15 bg-[#07050d]">
+      <section className="py-20 relative border-t border-purple-500/15 bg-[#050308]/40 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="rounded-3xl liquid-glass p-8 sm:p-12 relative overflow-hidden">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -254,7 +254,7 @@ export default function Home() {
       </section>
 
       {/* Final Hire Me Call To Action */}
-      <section className="py-24 relative overflow-hidden text-center bg-[#050308] border-t border-purple-500/15">
+      <section className="py-24 relative overflow-hidden text-center bg-transparent border-t border-purple-500/15">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-pill text-purple-200 text-xs font-mono font-medium mb-4">
             <Sparkles className="w-4 h-4 text-purple-400" />

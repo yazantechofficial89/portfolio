@@ -45,7 +45,7 @@ const principles = [
 
 export default function About() {
   return (
-    <section id="about" className="py-24 relative overflow-hidden bg-[#050308]">
+    <section id="about" className="py-24 relative overflow-hidden bg-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto">
