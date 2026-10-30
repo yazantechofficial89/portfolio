@@ -38,9 +38,6 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-[92vh] flex items-center justify-center pt-28 pb-16 overflow-hidden bg-transparent">
-      {/* Precision Check Grid Blueprint Accent */}
-      <div className="absolute inset-0 bg-check-grid opacity-70 pointer-events-none" />
-
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           {/* Left Column: Hero Content */}
@@ -193,11 +190,8 @@ export default function Hero() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="relative mx-auto max-w-md lg:max-w-none"
             >
-              {/* Obsidian Liquid Glass Showcase Card with Check Pattern Texture */}
+              {/* Obsidian Liquid Glass Showcase Card */}
               <div className="relative rounded-3xl liquid-glass border border-white/10 p-8 sm:p-10 shadow-2xl flex flex-col items-center text-center overflow-hidden group">
-                {/* Checkered pattern background inside card */}
-                <div className="absolute inset-0 bg-check-grid opacity-30 pointer-events-none" />
-
                 {/* Specular Top Sheen */}
                 <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none" />
 

@@ -34,10 +34,6 @@ export default function App() {
         {/* Living Cosmic Starfield & Meteors */}
         <Starfield />
 
-        {/* Architectural Check Design (Precision Checkered Grid) */}
-        <div className="fixed inset-0 pointer-events-none z-0 bg-check-grid" aria-hidden="true" />
-        <div className="fixed inset-0 pointer-events-none z-0 bg-check-dots opacity-40" aria-hidden="true" />
-
         <Navbar />
         <main className="flex-1 relative z-10">
           <Suspense fallback={<RouteLoader />}>
