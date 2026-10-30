@@ -33,6 +33,11 @@ export default function App() {
       <div className="min-h-screen bg-[#050308] text-zinc-100 selection:bg-purple-600/30 selection:text-purple-200 flex flex-col justify-between relative overflow-hidden">
         {/* Living Cosmic Starfield & Meteors */}
         <Starfield />
+
+        {/* Architectural Check Design (Precision Checkered Grid) */}
+        <div className="fixed inset-0 pointer-events-none z-0 bg-check-grid" aria-hidden="true" />
+        <div className="fixed inset-0 pointer-events-none z-0 bg-check-dots opacity-40" aria-hidden="true" />
+
         <Navbar />
         <main className="flex-1 relative z-10">
           <Suspense fallback={<RouteLoader />}>

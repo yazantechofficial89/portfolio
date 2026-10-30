@@ -117,31 +117,23 @@ export default function Starfield() {
         spikeLength: Math.random() * 6 + 5,
       }));
 
-      // Floating nebulae gas clouds
+      // Floating nebulae gas clouds (Subtle, low glow)
       nebulae = [
         {
           x: width * 0.25,
           y: height * 0.3,
-          radius: Math.min(width, height) * 0.45,
-          color: 'rgba(147, 51, 234, 0.06)', // deep violet
-          driftX: 0.025,
-          driftY: 0.015,
+          radius: Math.min(width, height) * 0.35,
+          color: 'rgba(147, 51, 234, 0.018)',
+          driftX: 0.015,
+          driftY: 0.01,
         },
         {
           x: width * 0.78,
           y: height * 0.6,
-          radius: Math.min(width, height) * 0.42,
-          color: 'rgba(99, 102, 241, 0.045)', // celestial indigo
-          driftX: -0.02,
-          driftY: 0.02,
-        },
-        {
-          x: width * 0.5,
-          y: height * 0.88,
-          radius: Math.min(width, height) * 0.38,
-          color: 'rgba(56, 189, 248, 0.03)', // starlight cyan
-          driftX: 0.015,
-          driftY: -0.018,
+          radius: Math.min(width, height) * 0.32,
+          color: 'rgba(99, 102, 241, 0.015)',
+          driftX: -0.01,
+          driftY: 0.01,
         },
       ];
     };
@@ -289,21 +281,21 @@ export default function Starfield() {
         ctx.globalAlpha = currentAlpha;
         ctx.fill();
 
-        // Atmospheric halo
-        const haloGrad = ctx.createRadialGradient(sx, sy, 0, sx, sy, currentRadius * 3.8);
+        // Atmospheric halo (Subtle starlight)
+        const haloGrad = ctx.createRadialGradient(sx, sy, 0, sx, sy, currentRadius * 1.8);
         haloGrad.addColorStop(0, star.color);
         haloGrad.addColorStop(1, 'transparent');
         ctx.fillStyle = haloGrad;
-        ctx.globalAlpha = currentAlpha * 0.45;
+        ctx.globalAlpha = currentAlpha * 0.15;
         ctx.beginPath();
-        ctx.arc(sx, sy, currentRadius * 3.8, 0, Math.PI * 2);
+        ctx.arc(sx, sy, currentRadius * 1.8, 0, Math.PI * 2);
         ctx.fill();
 
         // 4-point telescope diffraction cross
-        const spike = star.spikeLength * (1 + sinVal * 0.22);
+        const spike = star.spikeLength * (1 + sinVal * 0.15);
         ctx.strokeStyle = star.color;
-        ctx.lineWidth = 0.85;
-        ctx.globalAlpha = currentAlpha * 0.65;
+        ctx.lineWidth = 0.75;
+        ctx.globalAlpha = currentAlpha * 0.45;
         ctx.beginPath();
         // Horizontal spike
         ctx.moveTo(sx - spike, sy);
@@ -372,7 +364,7 @@ export default function Starfield() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0 opacity-95"
+      className="fixed inset-0 pointer-events-none z-0 opacity-70"
       aria-hidden="true"
     />
   );

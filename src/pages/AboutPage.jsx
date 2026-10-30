@@ -65,10 +65,6 @@ export default function AboutPage() {
 
   return (
     <div className="pt-28 pb-24 relative overflow-hidden bg-transparent text-zinc-100">
-      {/* Subtle Ambient Lighting */}
-      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-purple-900/15 blur-3xl pointer-events-none -z-10" />
-      <div className="absolute -top-40 right-10 w-96 h-96 bg-indigo-950/20 blur-3xl pointer-events-none -z-10" />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
         {/* 1. HERO INTRODUCTION WITH PROFILE PHOTO */}
@@ -88,11 +84,8 @@ export default function AboutPage() {
 
           <div className="lg:col-span-4 flex justify-center lg:justify-end">
             <div className="relative group w-full max-w-[270px] sm:max-w-[290px]">
-              {/* Backing Ambient Glow */}
-              <div className="absolute -inset-1 rounded-3xl bg-gradient-to-tr from-purple-600/40 via-indigo-600/30 to-purple-400/20 blur-xl opacity-75 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-              
-              {/* Photo Frame */}
-              <div className="relative rounded-3xl overflow-hidden liquid-glass border border-purple-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.85)] bg-[#090611]">
+              {/* Photo Frame (Clean obsidian border) */}
+              <div className="relative rounded-3xl overflow-hidden liquid-glass border border-white/10 shadow-2xl bg-[#090611]">
                 <img
                   src="/yazan.jpg"
                   alt="Yazan Gupta"

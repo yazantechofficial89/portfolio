@@ -86,10 +86,6 @@ export default function ProjectsPage() {
 
   return (
     <div className="pt-28 pb-20 bg-transparent text-zinc-100 min-h-screen relative overflow-hidden">
-      {/* Ambient Lighting */}
-      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-purple-900/15 blur-3xl pointer-events-none -z-10" />
-      <div className="absolute top-1/2 right-10 w-96 h-96 bg-indigo-950/20 blur-3xl pointer-events-none -z-10" />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="max-w-3xl">

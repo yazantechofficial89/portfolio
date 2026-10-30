@@ -76,7 +76,7 @@ export default function Home() {
               <div className="mt-6 flex flex-wrap gap-4">
                 <Link
                   to="/about"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-[0_0_20px_rgba(147,51,234,0.35)] transition-all"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-md shadow-black/50 hover:shadow-lg transition-all"
                 >
                   <span>Read Full Story &amp; Philosophy</span>
                   <ArrowRight className="w-4 h-4" />
@@ -133,7 +133,7 @@ export default function Home() {
             </div>
             <Link
               to="/projects"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-[0_0_20px_rgba(147,51,234,0.35)] transition-all self-start md:self-auto"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-md shadow-black/50 hover:shadow-lg transition-all self-start md:self-auto"
             >
               <span>Explore All Projects</span>
               <ArrowRight className="w-4 h-4" />
@@ -247,7 +247,7 @@ export default function Home() {
               <div className="lg:col-span-4 flex flex-wrap gap-3 lg:justify-end">
                 <Link
                   to="/skills"
-                  className="px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-[0_0_20px_rgba(147,51,234,0.35)] transition-all text-sm inline-flex items-center gap-2"
+                  className="px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-md shadow-black/50 hover:shadow-lg transition-all text-sm inline-flex items-center gap-2"
                 >
                   <span>Explore Skills Matrix</span>
                   <ArrowRight className="w-4 h-4" />
@@ -281,7 +281,7 @@ export default function Home() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <Link
               to="/contact"
-              className="px-8 py-3.5 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 hover:from-purple-500 hover:to-indigo-500 transition-all duration-300 shadow-[0_0_25px_rgba(147,51,234,0.4)] text-sm sm:text-base border border-purple-400/30"
+              className="px-8 py-3.5 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 hover:from-purple-500 hover:to-indigo-500 transition-all duration-300 shadow-lg shadow-black/60 text-sm sm:text-base border border-purple-400/30"
             >
               Get In Touch With Me
             </Link>

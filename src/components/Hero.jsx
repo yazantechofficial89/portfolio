@@ -38,15 +38,10 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-[92vh] flex items-center justify-center pt-28 pb-16 overflow-hidden bg-transparent">
-      {/* Deep Space Cosmic Nebulae */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] cosmic-nebula blur-[130px] animate-pulse-slow pointer-events-none" />
-      <div className="absolute top-1/3 left-1/4 w-[420px] h-[420px] bg-indigo-950/25 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-[350px] h-[350px] bg-cyan-950/15 rounded-full blur-[120px] pointer-events-none" />
+      {/* Precision Check Grid Blueprint Accent */}
+      <div className="absolute inset-0 bg-check-grid opacity-70 pointer-events-none" />
 
-      {/* Modern Precision Grid Overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#a855f70a_1px,transparent_1px),linear-gradient(to_bottom,#a855f70a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           {/* Left Column: Hero Content */}
           <div className="lg:col-span-7 flex flex-col items-start text-left">
@@ -101,7 +96,7 @@ export default function Hero() {
             >
               <Link
                 to="/projects"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 hover:from-purple-500 hover:to-indigo-500 border border-purple-400/30 shadow-[0_0_25px_rgba(147,51,234,0.35)] hover:shadow-[0_0_35px_rgba(147,51,234,0.5)] hover:-translate-y-0.5 active:translate-y-0 transition-all text-sm"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 border border-purple-400/20 shadow-lg shadow-black/50 hover:-translate-y-0.5 active:translate-y-0 transition-all text-sm"
               >
                 <span>View Projects</span>
                 <ArrowRight className="w-4 h-4" />
@@ -190,61 +185,59 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* Right Column: 3D YG Brand Emblem Showcase */}
+          {/* Right Column: 3D YG Brand Emblem Showcase (Crisp & High-Contrast) */}
           <div className="lg:col-span-5 w-full">
             <motion.div
-              initial={{ opacity: 0, scale: 0.92 }}
+              initial={{ opacity: 0, scale: 0.94 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
               className="relative mx-auto max-w-md lg:max-w-none"
             >
-              {/* Vibrant Ambient Space Nebula Glow */}
-              <div className="absolute -inset-3 rounded-3xl bg-gradient-to-tr from-purple-600/40 via-indigo-600/30 to-purple-400/20 blur-3xl opacity-80 pointer-events-none animate-pulse-slow"></div>
+              {/* Obsidian Liquid Glass Showcase Card with Check Pattern Texture */}
+              <div className="relative rounded-3xl liquid-glass border border-white/10 p-8 sm:p-10 shadow-2xl flex flex-col items-center text-center overflow-hidden group">
+                {/* Checkered pattern background inside card */}
+                <div className="absolute inset-0 bg-check-grid opacity-30 pointer-events-none" />
 
-              {/* Obsidian Liquid Glass Showcase Card */}
-              <div className="relative rounded-3xl liquid-glass border border-purple-500/30 p-8 sm:p-10 shadow-[0_25px_60px_rgba(0,0,0,0.85)] flex flex-col items-center text-center overflow-hidden group">
                 {/* Specular Top Sheen */}
-                <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-300/40 to-transparent pointer-events-none" />
+                <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none" />
 
                 {/* Top Header Bar */}
-                <div className="w-full flex items-center justify-between mb-5 pb-3 border-b border-purple-500/15 text-xs font-mono">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-purple-200">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <div className="w-full flex items-center justify-between mb-5 pb-3 border-b border-white/10 text-xs font-mono relative z-10">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-zinc-300">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400" />
                     <span>Official Brand Emblem</span>
                   </div>
-                  <span className="text-purple-300/70 font-semibold tracking-wider">YG &bull; 2026</span>
+                  <span className="text-zinc-400 font-semibold tracking-wider">YG &bull; 2026</span>
                 </div>
 
                 {/* Center 3D YG Logo Display */}
-                <div className="relative my-4 flex items-center justify-center">
-                  {/* Radial Starlight Ambient Glow */}
-                  <div className="absolute w-52 h-52 rounded-full bg-purple-600/25 blur-2xl pointer-events-none" />
+                <div className="relative my-4 flex items-center justify-center z-10">
                   <img
                     src="/yg-logo.png"
                     alt="Yazan Gupta (YG) Emblem"
-                    className="relative z-10 w-56 h-56 sm:w-64 sm:h-64 object-contain drop-shadow-[0_20px_45px_rgba(168,85,247,0.55)] group-hover:scale-105 transition-transform duration-500"
+                    className="relative z-10 w-52 h-52 sm:w-60 sm:h-60 object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.85)] group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
 
                 {/* Name & Identity */}
-                <div className="mt-2">
+                <div className="mt-2 relative z-10">
                   <h3 className="text-2xl font-black text-white tracking-tight">
                     Yazan <span className="text-gradient">Gupta</span>
                   </h3>
-                  <p className="text-xs text-purple-300/80 font-mono mt-1">
+                  <p className="text-xs text-zinc-400 font-mono mt-1">
                     Full-Stack Engineer &bull; B.Tech CSE (Data Science)
                   </p>
                 </div>
 
                 {/* Bottom Tech Pills */}
-                <div className="mt-6 pt-4 border-t border-purple-500/15 w-full flex flex-wrap items-center justify-center gap-2 text-[11px] font-mono">
-                  <span className="px-3 py-1 rounded-full liquid-pill text-purple-200">
+                <div className="mt-6 pt-4 border-t border-white/10 w-full flex flex-wrap items-center justify-center gap-2 text-[11px] font-mono relative z-10">
+                  <span className="px-3 py-1 rounded-full liquid-pill text-zinc-300">
                     React &bull; Next.js
                   </span>
-                  <span className="px-3 py-1 rounded-full liquid-pill text-purple-200">
+                  <span className="px-3 py-1 rounded-full liquid-pill text-zinc-300">
                     Node.js &bull; Express
                   </span>
-                  <span className="px-3 py-1 rounded-full liquid-pill text-purple-200">
+                  <span className="px-3 py-1 rounded-full liquid-pill text-zinc-300">
                     MongoDB &bull; Java
                   </span>
                 </div>
