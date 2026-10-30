@@ -24,6 +24,24 @@ I enjoy learning by building projects, exploring new technologies, and solving c
     { label: "Degree Program", value: "B.Tech CSE (Data Science)" },
     { label: "Graduation Batch", value: "2024–2028" },
     { label: "Primary Stack", value: "MERN & Java" },
+    { label: "Key Interest", value: "Stock Market Trading" },
+  ],
+  hobbies: [
+    {
+      title: "Stock Market Trading",
+      desc: "Analyzing price action, chart patterns, risk management, and equity market trading.",
+      category: "Financial Markets",
+    },
+    {
+      title: "Tech Innovation & AI",
+      desc: "Testing emerging open-source web technologies and modern developer frameworks.",
+      category: "Technology",
+    },
+    {
+      title: "Strategy & Logic Puzzles",
+      desc: "Engaging in chess and algorithmic thinking exercises to sharpen mental focus.",
+      category: "Analytical",
+    },
   ],
   socials: {
     github: "https://github.com/yazantechofficial89",

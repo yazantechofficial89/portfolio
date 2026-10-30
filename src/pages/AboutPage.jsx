@@ -13,7 +13,11 @@ import {
   ArrowRight,
   Layers,
   BookOpen,
-  Send
+  Send,
+  TrendingUp,
+  Activity,
+  Heart,
+  Cpu
 } from 'lucide-react';
 import { Github, Linkedin, WhatsApp } from '../components/Icons';
 import { personalData } from '../data/portfolioData';
@@ -194,6 +198,13 @@ export default function AboutPage() {
                   <span className="font-semibold text-white">MongoDB, Express, React, Node</span>
                 </li>
                 <li className="flex justify-between items-center pb-2.5 border-b border-purple-500/10">
+                  <span className="text-zinc-500">Key Hobby:</span>
+                  <span className="font-semibold text-emerald-400 font-mono flex items-center gap-1.5">
+                    <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
+                    Stock Market Trading
+                  </span>
+                </li>
+                <li className="flex justify-between items-center pb-2.5 border-b border-purple-500/10">
                   <span className="text-zinc-500">Location:</span>
                   <span className="font-medium text-zinc-200">{personalData.location}</span>
                 </li>
@@ -251,7 +262,132 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* 4. MY GOALS - Liquid Glass */}
+        {/* 4. HOBBIES & PERSONAL INTERESTS - Liquid Glass */}
+        <section className="space-y-8 pt-4">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-purple-300 border-purple-500/20 bg-purple-950/40 text-xs font-mono tracking-wider uppercase mb-2">
+              <Heart className="w-3.5 h-3.5 text-pink-400" />
+              Beyond The Code
+            </div>
+            <h2 className="text-3xl font-extrabold text-white tracking-tight">
+              Hobbies &amp; Personal Interests
+            </h2>
+            <p className="mt-2 text-sm sm:text-base text-zinc-400 font-normal">
+              Passions and pursuits that nurture my discipline, analytical thinking, and mental focus.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+            {/* Primary Spotlight Card: Stock Market Trading */}
+            <div className="lg:col-span-7 p-7 sm:p-8 rounded-3xl liquid-glass-interactive border border-emerald-500/20 bg-gradient-to-br from-[#0b0914] via-[#090b14] to-[#07130e] shadow-2xl relative overflow-hidden group flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-5">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-2xl bg-emerald-950/50 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
+                      <TrendingUp className="w-6 h-6 text-emerald-400" />
+                    </div>
+                    <div>
+                      <span className="text-[11px] font-mono font-medium text-emerald-400/90 uppercase tracking-wider block">
+                        Financial Markets &amp; Technicals
+                      </span>
+                      <h3 className="text-xl sm:text-2xl font-bold text-white group-hover:text-emerald-300 transition-colors">
+                        Stock Market Trading
+                      </h3>
+                    </div>
+                  </div>
+                  <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full liquid-pill border-emerald-500/30 text-emerald-300 text-xs font-mono">
+                    <Activity className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
+                    <span>Active Trader</span>
+                  </div>
+                </div>
+
+                <p className="text-sm sm:text-base text-zinc-300 leading-relaxed font-normal">
+                  Passionate about active stock market trading, technical chart patterns, and price action analysis. I enjoy studying market structure, analyzing volume trends, and practicing systematic risk-to-reward management. The discipline, emotional control, and pattern recognition demanded by trading directly complement my algorithmic problem-solving in software engineering.
+                </p>
+              </div>
+
+              {/* Trading Highlights Pills */}
+              <div className="mt-6 pt-5 border-t border-emerald-500/15 flex flex-wrap gap-2">
+                <span className="px-3 py-1 rounded-lg text-xs font-mono font-medium bg-emerald-950/40 text-emerald-300 border border-emerald-500/25">
+                  📈 Technical Analysis
+                </span>
+                <span className="px-3 py-1 rounded-lg text-xs font-mono font-medium bg-emerald-950/40 text-emerald-300 border border-emerald-500/25">
+                  📊 Price Action &amp; Volume
+                </span>
+                <span className="px-3 py-1 rounded-lg text-xs font-mono font-medium bg-emerald-950/40 text-emerald-300 border border-emerald-500/25">
+                  ⚖️ Risk Management
+                </span>
+                <span className="px-3 py-1 rounded-lg text-xs font-mono font-medium bg-emerald-950/40 text-emerald-300 border border-emerald-500/25">
+                  🧠 Market Psychology
+                </span>
+                <span className="px-3 py-1 rounded-lg text-xs font-mono font-medium bg-emerald-950/40 text-emerald-300 border border-emerald-500/25">
+                  💼 Equity Trading
+                </span>
+              </div>
+            </div>
+
+            {/* Secondary Hobbies Stack */}
+            <div className="lg:col-span-5 flex flex-col gap-6">
+              {/* Card 2: Tech Innovation */}
+              <div className="p-6 sm:p-7 rounded-3xl liquid-glass-interactive flex-1 group flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-3.5 mb-3">
+                    <div className="w-10 h-10 rounded-xl bg-purple-950/50 border border-purple-500/25 flex items-center justify-center text-purple-300 group-hover:scale-105 transition-transform">
+                      <Cpu className="w-5 h-5 text-purple-300" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-mono text-purple-400 uppercase tracking-wider block">Technology</span>
+                      <h4 className="text-lg font-bold text-white group-hover:text-purple-300 transition-colors">
+                        Tech Innovation &amp; AI
+                      </h4>
+                    </div>
+                  </div>
+                  <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed font-normal">
+                    Exploring cutting-edge open-source web frameworks, modern tooling, developer workflow automations, and experimentation with AI capabilities.
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-purple-500/15 flex flex-wrap gap-1.5">
+                  <span className="px-2.5 py-0.5 rounded-md text-[11px] font-mono bg-purple-950/30 text-purple-300 border border-purple-500/20">
+                    Open Source
+                  </span>
+                  <span className="px-2.5 py-0.5 rounded-md text-[11px] font-mono bg-purple-950/30 text-purple-300 border border-purple-500/20">
+                    AI Tools
+                  </span>
+                </div>
+              </div>
+
+              {/* Card 3: Strategic Logic Puzzles */}
+              <div className="p-6 sm:p-7 rounded-3xl liquid-glass-interactive flex-1 group flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-3.5 mb-3">
+                    <div className="w-10 h-10 rounded-xl bg-indigo-950/50 border border-indigo-500/25 flex items-center justify-center text-indigo-300 group-hover:scale-105 transition-transform">
+                      <BrainCircuit className="w-5 h-5 text-indigo-300" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-mono text-indigo-400 uppercase tracking-wider block">Analytical Mind</span>
+                      <h4 className="text-lg font-bold text-white group-hover:text-indigo-300 transition-colors">
+                        Strategy &amp; Logic Puzzles
+                      </h4>
+                    </div>
+                  </div>
+                  <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed font-normal">
+                    Engaging in chess, analytical puzzles, and mathematical riddles that cultivate patience, spatial reasoning, and tactical foresight.
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-indigo-500/15 flex flex-wrap gap-1.5">
+                  <span className="px-2.5 py-0.5 rounded-md text-[11px] font-mono bg-indigo-950/30 text-indigo-300 border border-indigo-500/20">
+                    Chess
+                  </span>
+                  <span className="px-2.5 py-0.5 rounded-md text-[11px] font-mono bg-indigo-950/30 text-indigo-300 border border-indigo-500/20">
+                    Problem Solving
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 5. MY GOALS - Liquid Glass */}
         <section className="p-8 sm:p-10 rounded-3xl liquid-glass shadow-2xl relative overflow-hidden">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-purple-300 border-purple-500/20 bg-purple-950/40 text-xs font-mono tracking-wider uppercase mb-3">
