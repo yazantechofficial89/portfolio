@@ -279,65 +279,66 @@ export default function AboutPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
             {/* Primary Spotlight Card: Stock Market Trading with Bull vs Bear Artwork */}
-            <div className="lg:col-span-7 p-6 sm:p-8 rounded-3xl liquid-glass-interactive border border-emerald-500/30 bg-[#090713] shadow-2xl relative overflow-hidden group flex flex-col justify-between">
+            <div className="lg:col-span-7 p-6 sm:p-8 rounded-3xl border border-emerald-500/40 bg-black/40 backdrop-blur-sm shadow-2xl relative overflow-hidden group flex flex-col justify-between">
               
-              {/* Bull vs Bear Trading Vivid Background */}
+              {/* Bull vs Bear Trading Vivid Transparent Background */}
               <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
                 <img
                   src="/bull-bear-trading.png"
                   alt="Stock Market Bull vs Bear"
-                  className="w-full h-full object-cover object-center opacity-70 group-hover:opacity-85 group-hover:scale-105 transition-all duration-700"
+                  className="w-full h-full object-cover object-center opacity-85 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                   loading="eager"
                   decoding="async"
                 />
-                {/* Smooth Gradient: Clear on artwork, darker towards bottom text */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#090713] via-[#090713]/80 via-40% to-black/25" />
-                <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-transparent" />
+                {/* Ultra-light ambient tint for maximum text contrast without hiding artwork */}
+                <div className="absolute inset-0 bg-black/35 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
               </div>
 
               <div className="relative z-10">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-2xl bg-emerald-950/80 border border-emerald-500/40 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)] backdrop-blur-md">
+                    <div className="w-12 h-12 rounded-2xl bg-black/60 border border-emerald-500/40 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] backdrop-blur-md">
                       <TrendingUp className="w-6 h-6 text-emerald-400" />
                     </div>
                     <div>
-                      <span className="text-[11px] font-mono font-semibold text-emerald-400 uppercase tracking-wider block drop-shadow">
+                      <span className="text-[11px] font-mono font-semibold text-emerald-400 uppercase tracking-wider block drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
                         Financial Markets &amp; Technicals
                       </span>
-                      <h3 className="text-xl sm:text-2xl font-black text-white group-hover:text-emerald-300 transition-colors drop-shadow">
+                      <h3 className="text-xl sm:text-2xl font-black text-white group-hover:text-emerald-300 transition-colors drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
                         Stock Market Trading
                       </h3>
                     </div>
                   </div>
-                  <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full liquid-pill border-emerald-500/40 text-emerald-300 text-xs font-mono bg-emerald-950/80 backdrop-blur-md">
+                  <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-emerald-500/40 text-emerald-300 text-xs font-mono bg-black/60 backdrop-blur-md shadow-md">
                     <Activity className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
                     <span>Active Trader</span>
                   </div>
                 </div>
 
-                <div className="p-4 sm:p-5 rounded-2xl bg-[#090713]/80 backdrop-blur-md border border-white/10 shadow-lg mt-3">
-                  <p className="text-sm sm:text-base text-zinc-100 leading-relaxed font-normal">
+                {/* Completely Transparent Text Body */}
+                <div className="mt-4 bg-transparent">
+                  <p className="text-sm sm:text-base text-zinc-100 font-medium leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
                     Passionate about active stock market trading, technical chart patterns, and price action analysis. I enjoy studying market structure, analyzing volume trends, and practicing systematic risk-to-reward management. The discipline, emotional control, and pattern recognition demanded by trading directly complement my algorithmic problem-solving in software engineering.
                   </p>
                 </div>
               </div>
 
-              {/* Trading Highlights Pills */}
-              <div className="mt-5 pt-4 border-t border-emerald-500/25 flex flex-wrap gap-2 relative z-10">
-                <span className="px-3 py-1 rounded-lg text-xs font-mono font-medium bg-[#090713]/85 text-emerald-300 border border-emerald-500/35 backdrop-blur-md shadow-sm">
+              {/* Trading Highlights Pills (Floating Glass Chips) */}
+              <div className="mt-5 pt-4 border-t border-emerald-500/30 flex flex-wrap gap-2 relative z-10">
+                <span className="px-3 py-1 rounded-lg text-xs font-mono font-medium bg-black/60 text-emerald-300 border border-emerald-500/40 backdrop-blur-md shadow-md">
                   📈 Technical Analysis
                 </span>
-                <span className="px-3 py-1 rounded-lg text-xs font-mono font-medium bg-[#090713]/85 text-emerald-300 border border-emerald-500/35 backdrop-blur-md shadow-sm">
+                <span className="px-3 py-1 rounded-lg text-xs font-mono font-medium bg-black/60 text-emerald-300 border border-emerald-500/40 backdrop-blur-md shadow-md">
                   📊 Price Action &amp; Volume
                 </span>
-                <span className="px-3 py-1 rounded-lg text-xs font-mono font-medium bg-[#090713]/85 text-emerald-300 border border-emerald-500/35 backdrop-blur-md shadow-sm">
+                <span className="px-3 py-1 rounded-lg text-xs font-mono font-medium bg-black/60 text-emerald-300 border border-emerald-500/40 backdrop-blur-md shadow-md">
                   ⚖️ Risk Management
                 </span>
-                <span className="px-3 py-1 rounded-lg text-xs font-mono font-medium bg-[#090713]/85 text-emerald-300 border border-emerald-500/35 backdrop-blur-md shadow-sm">
+                <span className="px-3 py-1 rounded-lg text-xs font-mono font-medium bg-black/60 text-emerald-300 border border-emerald-500/40 backdrop-blur-md shadow-md">
                   🧠 Market Psychology
                 </span>
-                <span className="px-3 py-1 rounded-lg text-xs font-mono font-medium bg-[#090713]/85 text-emerald-300 border border-emerald-500/35 backdrop-blur-md shadow-sm">
+                <span className="px-3 py-1 rounded-lg text-xs font-mono font-medium bg-black/60 text-emerald-300 border border-emerald-500/40 backdrop-blur-md shadow-md">
                   💼 Equity Trading
                 </span>
               </div>
