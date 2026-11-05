@@ -204,21 +204,38 @@ export default function Hero() {
                   <span className="text-zinc-400 font-semibold tracking-wider">YG &bull; 2026</span>
                 </div>
 
-                {/* Center 3D YG Logo Display with Slow Continuous Rotation */}
-                <div className="relative my-4 flex items-center justify-center z-10">
+                {/* Center 3D YG Logo Display with Slow Continuous 3D Spin */}
+                <div
+                  className="relative my-4 flex items-center justify-center z-10"
+                  style={{ perspective: 1000 }}
+                >
                   <motion.div
-                    animate={{ rotate: 360 }}
+                    animate={{ rotateY: 360 }}
                     transition={{
                       repeat: Infinity,
                       ease: 'linear',
-                      duration: 22,
+                      duration: 12,
                     }}
-                    className="relative z-10 flex items-center justify-center origin-center"
+                    style={{ transformStyle: 'preserve-3d' }}
+                    className="relative flex items-center justify-center group-hover:scale-105 transition-transform duration-300"
                   >
+                    {/* Front Face */}
                     <img
                       src="/yg-logo.png"
                       alt="Yazan Gupta (YG) Emblem"
-                      className="w-52 h-52 sm:w-60 sm:h-60 object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.85)] group-hover:scale-105 transition-transform duration-300"
+                      style={{ backfaceVisibility: 'hidden' }}
+                      className="w-52 h-52 sm:w-60 sm:h-60 object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.85)]"
+                    />
+
+                    {/* Back Face (pre-rotated so letters never appear inverted) */}
+                    <img
+                      src="/yg-logo.png"
+                      alt="Yazan Gupta (YG) Emblem Back"
+                      style={{
+                        backfaceVisibility: 'hidden',
+                        transform: 'rotateY(180deg)',
+                      }}
+                      className="absolute inset-0 w-52 h-52 sm:w-60 sm:h-60 object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.85)]"
                     />
                   </motion.div>
                 </div>
