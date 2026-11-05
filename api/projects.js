@@ -6,8 +6,9 @@ const DEFAULT_PROJECTS = [
     _id: 'sevasetu-prod',
     title: 'SevaSetu — Direct Orphanage & Old Age Home Care Bridge',
     category: 'Full-Stack Web Application',
+    role: 'Sole Creator & Lead Full-Stack Developer',
     description:
-      'Production full-stack MERN platform connecting compassionate donors with verified orphanages and old-age care homes across India. Features real-time Live Ashram Chat with unread notification badges, trust-backed transparency verification, and donation coordination for food essentials, clothes, and supplies.',
+      'Production full-stack MERN platform independently architected and engineered solely by Yazan Gupta as the sole developer. SevaSetu connects compassionate donors with verified orphanages and old-age care homes across India. Features real-time Live Ashram Chat with unread notification badges, trust-backed transparency verification, and donation coordination for food essentials, clothes, and supplies.',
     image: 'https://i.ibb.co/HD326Z8v/Screenshot-2026-10-16-234949.png',
     images: [
       'https://i.ibb.co/HD326Z8v/Screenshot-2026-10-16-234949.png',
@@ -15,6 +16,7 @@ const DEFAULT_PROJECTS = [
       '/sevasetu.webp',
     ],
     tags: [
+      'Sole Developer',
       'React.js',
       'Node.js',
       'Express.js',
@@ -25,6 +27,7 @@ const DEFAULT_PROJECTS = [
       'Cloudinary',
     ],
     features: [
+      'Independently designed, architected, and engineered solely by Yazan Gupta',
       'Direct Care & Need Bridge connecting donors with orphanages & old-age homes',
       'Real-Time Live Ashram Chat with unread badge notifications & instant messaging',
       'Donation Management for clothes, food essentials, and education supplies',

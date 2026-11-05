@@ -15,8 +15,8 @@
     <!-- Primary SEO Meta Tags -->
     <title>Yazan Gupta | Full-Stack Web Developer Portfolio</title>
     <meta name="title" content="Yazan Gupta | Full-Stack Web Developer Portfolio" />
-    <meta name="description" content="Official portfolio of Yazan Gupta, Full-Stack Web Developer. Architecting scalable web applications, React, Node.js, and modern cloud databases. Creator of SevaSetu." />
-    <meta name="keywords" content="Yazan, Yazan Gupta, Yazan Developer, Full-Stack Developer, SevaSetu, React Developer, Node.js, Web Developer Portfolio, All India Hackathon" />
+    <meta name="description" content="Official portfolio of Yazan Gupta, Full-Stack Web Developer. Sole creator and lead architect of SevaSetu. Engineering scalable MERN applications, React, Node.js, and cloud databases." />
+    <meta name="keywords" content="Yazan, Yazan Gupta, Yazan Developer, Full-Stack Developer, SevaSetu Creator, React Developer, Node.js, Web Developer Portfolio, All India Hackathon" />
     <meta name="author" content="Yazan Gupta" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://yazangupta.online/" />
@@ -28,35 +28,64 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://yazangupta.online/" />
     <meta property="og:title" content="Yazan Gupta | Full-Stack Web Developer Portfolio" />
-    <meta property="og:description" content="Explore projects, verified credentials, and technical skills of Yazan Gupta. Creator of SevaSetu." />
+    <meta property="og:description" content="Official portfolio of Yazan Gupta, Full-Stack Web Developer. Sole creator and architect of SevaSetu." />
     <meta property="og:image" content="https://yazangupta.online/sevasetu.png" />
 
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://yazangupta.online/" />
     <meta name="twitter:title" content="Yazan Gupta | Full-Stack Web Developer" />
-    <meta name="twitter:description" content="Explore projects, verified credentials, and technical skills of Yazan Gupta. Creator of SevaSetu." />
+    <meta name="twitter:description" content="Official portfolio of Yazan Gupta, Full-Stack Web Developer. Sole creator and architect of SevaSetu." />
     <meta name="twitter:image" content="https://yazangupta.online/sevasetu.png" />
 
-    <!-- Structured Data (JSON-LD) for Google Knowledge Graph -->
+    <!-- Structured Data (JSON-LD) for Google Knowledge Graph & AI Overviews -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Yazan Gupta",
-      "alternateName": "Yazan",
-      "url": "https://yazangupta.online/",
-      "image": "https://yazangupta.online/yg-logo.png",
-      "jobTitle": "Full-Stack Web Developer",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Independent Full-Stack Developer",
-        "logo": "https://yazangupta.online/yg-logo.png"
-      },
-      "sameAs": [
-        "https://www.linkedin.com/in/yazan-gupta-939b46281",
-        "https://www.instagram.com/yazan2006.tech",
-        "https://github.com/yazantechofficial89"
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://yazangupta.online/#person",
+          "name": "Yazan Gupta",
+          "alternateName": "Yazan",
+          "url": "https://yazangupta.online/",
+          "image": "https://yazangupta.online/yg-logo.png",
+          "jobTitle": "Full-Stack Web Developer",
+          "alumniOf": {
+            "@type": "EducationalOrganization",
+            "name": "Echelon Institute of Technology"
+          },
+          "knowsAbout": [
+            "Full-Stack Web Development",
+            "MERN Stack",
+            "React.js",
+            "Node.js",
+            "MongoDB",
+            "Java",
+            "Data Science",
+            "Stock Market Trading"
+          ],
+          "sameAs": [
+            "https://www.linkedin.com/in/yazan-gupta-939b46281",
+            "https://www.instagram.com/yazan2006.tech",
+            "https://github.com/yazantechofficial89"
+          ]
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://yazangupta.online/#sevasetu",
+          "name": "SevaSetu",
+          "applicationCategory": "WebApplication",
+          "operatingSystem": "All Web Browsers",
+          "url": "https://sevasetu-liard.vercel.app",
+          "author": {
+            "@id": "https://yazangupta.online/#person"
+          },
+          "creator": {
+            "@id": "https://yazangupta.online/#person"
+          },
+          "description": "SevaSetu was independently designed, architected, and engineered solely by Yazan Gupta as the sole developer."
+        }
       ]
     }
     </script>

@@ -43,10 +43,10 @@ const skillsAndStrengths = [
     badge: 'Interpersonal',
   },
   {
-    title: 'Teamwork',
-    desc: 'Collaborating with others to achieve shared goals and actively learning from teammates.',
-    icon: Users,
-    badge: 'Collaboration',
+    title: 'Ownership & Collaboration',
+    desc: 'Taking end-to-end technical ownership of projects, proactive problem-solving, and delivering scalable solutions.',
+    icon: Target,
+    badge: 'Accountability',
   },
   {
     title: 'Continuous Learning',
