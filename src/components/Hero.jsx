@@ -204,13 +204,23 @@ export default function Hero() {
                   <span className="text-zinc-400 font-semibold tracking-wider">YG &bull; 2026</span>
                 </div>
 
-                {/* Center 3D YG Logo Display */}
+                {/* Center 3D YG Logo Display with Slow Continuous Rotation */}
                 <div className="relative my-4 flex items-center justify-center z-10">
-                  <img
-                    src="/yg-logo.png"
-                    alt="Yazan Gupta (YG) Emblem"
-                    className="relative z-10 w-52 h-52 sm:w-60 sm:h-60 object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.85)] group-hover:scale-105 transition-transform duration-300"
-                  />
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{
+                      repeat: Infinity,
+                      ease: 'linear',
+                      duration: 22,
+                    }}
+                    className="relative z-10 flex items-center justify-center origin-center"
+                  >
+                    <img
+                      src="/yg-logo.png"
+                      alt="Yazan Gupta (YG) Emblem"
+                      className="w-52 h-52 sm:w-60 sm:h-60 object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.85)] group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </motion.div>
                 </div>
 
                 {/* Name & Identity */}
