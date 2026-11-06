@@ -173,7 +173,7 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* Right Column: 3D YG Brand Emblem Showcase (Festive Diwali Gold Edition) */}
+          {/* Right Column: 3D YG Brand Emblem Showcase (Crisp & High-Contrast) */}
           <div className="lg:col-span-5 w-full">
             <motion.div
               initial={{ opacity: 0, scale: 0.94 }}
@@ -181,31 +181,25 @@ export default function Hero() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="relative mx-auto max-w-md lg:max-w-none"
             >
-              {/* Obsidian Liquid Glass Showcase Card with Diwali Warm Golden Glow */}
-              <div className="relative rounded-3xl liquid-glass border border-amber-500/25 p-8 sm:p-10 shadow-[0_0_50px_rgba(245,158,11,0.18)] hover:shadow-[0_0_65px_rgba(245,158,11,0.3)] hover:border-amber-400/45 transition-all flex flex-col items-center text-center overflow-hidden group">
-                {/* Warm Golden Specular Top Sheen */}
-                <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-amber-400/40 to-transparent pointer-events-none" />
+              {/* Obsidian Liquid Glass Showcase Card */}
+              <div className="relative rounded-3xl liquid-glass border border-white/10 p-8 sm:p-10 shadow-2xl flex flex-col items-center text-center overflow-hidden group">
+                {/* Specular Top Sheen */}
+                <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none" />
 
-                {/* Top Header Bar - Diwali Edition */}
-                <div className="w-full flex items-center justify-between mb-5 pb-3 border-b border-amber-500/20 text-xs font-mono relative z-10">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-amber-200 border-amber-500/30 bg-amber-950/40 shadow-[0_0_12px_rgba(245,158,11,0.2)]">
-                    <span className="text-sm">🪔</span>
-                    <span className="font-semibold tracking-wide">Diwali Festive Edition</span>
+                {/* Top Header Bar */}
+                <div className="w-full flex items-center justify-between mb-5 pb-3 border-b border-white/10 text-xs font-mono relative z-10">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-zinc-300">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                    <span>Official Brand Emblem</span>
                   </div>
-                  <span className="text-amber-400/90 font-semibold tracking-wider">YG &bull; 2026</span>
+                  <span className="text-zinc-400 font-semibold tracking-wider">YG &bull; 2026</span>
                 </div>
 
-                {/* Center 3D YG Logo Display with Slow Continuous 3D Spin (Diwali Gold Theme) */}
+                {/* Center 3D YG Logo Display with Slow Continuous 3D Spin */}
                 <div
                   className="relative my-4 flex items-center justify-center z-10"
                   style={{ perspective: 1000 }}
                 >
-                  {/* Radiant Diwali Diya Halo behind the spinning emblem */}
-                  <div className="absolute w-56 h-56 rounded-full bg-gradient-to-tr from-amber-500/30 via-orange-500/25 to-yellow-300/30 blur-3xl pointer-events-none -z-10 animate-pulse" />
-
-                  {/* Concentric Golden Aura Ring */}
-                  <div className="absolute w-64 h-64 rounded-full border border-amber-500/20 shadow-[0_0_40px_rgba(245,158,11,0.25)] pointer-events-none -z-10" />
-
                   <motion.div
                     animate={{ rotateY: 360 }}
                     transition={{
@@ -214,27 +208,25 @@ export default function Hero() {
                       duration: 12,
                     }}
                     style={{ transformStyle: 'preserve-3d' }}
-                    onClick={() => launchDiwaliRocket({ originX: 0.72 })}
-                    title="Diwali Festive Edition • Click to launch rocket!"
-                    className="relative flex items-center justify-center group-hover:scale-105 transition-transform duration-300 cursor-pointer"
+                    className="relative flex items-center justify-center group-hover:scale-105 transition-transform duration-300"
                   >
-                    {/* Front Face (Golden Diwali Logo) */}
+                    {/* Front Face */}
                     <img
-                      src="/yg-logo-diwali.png"
-                      alt="Yazan Gupta (YG) Diwali Gold Emblem"
+                      src="/yg-logo.png"
+                      alt="Yazan Gupta (YG) Emblem"
                       style={{ backfaceVisibility: 'hidden' }}
-                      className="w-52 h-52 sm:w-60 sm:h-60 object-contain drop-shadow-[0_12px_28px_rgba(245,158,11,0.55)]"
+                      className="w-52 h-52 sm:w-60 sm:h-60 object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.85)]"
                     />
 
                     {/* Back Face (pre-rotated so letters never appear inverted) */}
                     <img
-                      src="/yg-logo-diwali.png"
-                      alt="Yazan Gupta (YG) Diwali Gold Emblem Back"
+                      src="/yg-logo.png"
+                      alt="Yazan Gupta (YG) Emblem Back"
                       style={{
                         backfaceVisibility: 'hidden',
                         transform: 'rotateY(180deg)',
                       }}
-                      className="absolute inset-0 w-52 h-52 sm:w-60 sm:h-60 object-contain drop-shadow-[0_12px_28px_rgba(245,158,11,0.55)]"
+                      className="absolute inset-0 w-52 h-52 sm:w-60 sm:h-60 object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.85)]"
                     />
                   </motion.div>
                 </div>
@@ -250,14 +242,14 @@ export default function Hero() {
                 </div>
 
                 {/* Bottom Tech Pills */}
-                <div className="mt-6 pt-4 border-t border-amber-500/15 w-full flex flex-wrap items-center justify-center gap-2 text-[11px] font-mono relative z-10">
-                  <span className="px-3 py-1 rounded-full liquid-pill text-amber-100/90 border-amber-500/20 bg-amber-950/25">
+                <div className="mt-6 pt-4 border-t border-white/10 w-full flex flex-wrap items-center justify-center gap-2 text-[11px] font-mono relative z-10">
+                  <span className="px-3 py-1 rounded-full liquid-pill text-zinc-300">
                     React &bull; Next.js
                   </span>
-                  <span className="px-3 py-1 rounded-full liquid-pill text-amber-100/90 border-amber-500/20 bg-amber-950/25">
+                  <span className="px-3 py-1 rounded-full liquid-pill text-zinc-300">
                     Node.js &bull; Express
                   </span>
-                  <span className="px-3 py-1 rounded-full liquid-pill text-amber-100/90 border-amber-500/20 bg-amber-950/25">
+                  <span className="px-3 py-1 rounded-full liquid-pill text-zinc-300">
                     MongoDB &bull; Java
                   </span>
                 </div>

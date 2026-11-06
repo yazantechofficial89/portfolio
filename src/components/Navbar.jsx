@@ -41,22 +41,22 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        {/* Brand Logo - YG 3D Emblem (Diwali Gold Edition) */}
+        {/* Brand Logo - YG 3D Emblem */}
         <Link to="/" className="flex items-center gap-2.5 group">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 via-orange-500 to-amber-600 p-[1px] shadow-[0_0_20px_rgba(245,158,11,0.35)] group-hover:shadow-[0_0_28px_rgba(245,158,11,0.6)] transition-all">
-            <div className="w-full h-full bg-[#0d0905] rounded-[11px] flex items-center justify-center group-hover:bg-[#170f07] transition-colors border border-amber-500/30 p-1">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 via-indigo-600 to-purple-800 p-[1px] shadow-[0_0_20px_rgba(168,85,247,0.3)] group-hover:shadow-[0_0_28px_rgba(168,85,247,0.5)] transition-all">
+            <div className="w-full h-full bg-[#0a0712] rounded-[11px] flex items-center justify-center group-hover:bg-[#120d20] transition-colors border border-purple-500/20 p-1">
               <img
-                src="/yg-logo-diwali.png"
+                src="/yg-logo.png"
                 alt="YG Logo"
-                className="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(245,158,11,0.7)] group-hover:scale-110 transition-transform"
+                className="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(168,85,247,0.6)] group-hover:scale-110 transition-transform"
               />
             </div>
           </div>
           <div className="flex flex-col">
-            <span className="font-extrabold text-lg tracking-tight text-white group-hover:text-amber-200 transition-colors">
-              Yazan <span className="text-amber-400">Gupta</span>
+            <span className="font-extrabold text-lg tracking-tight text-white group-hover:text-purple-200 transition-colors">
+              Yazan <span className="text-purple-400">Gupta</span>
             </span>
-            <span className="text-[10px] text-amber-300/70 tracking-widest font-mono uppercase -mt-0.5">
+            <span className="text-[10px] text-purple-300/60 tracking-widest font-mono uppercase -mt-0.5">
               FULLSTACK DEV
             </span>
           </div>
