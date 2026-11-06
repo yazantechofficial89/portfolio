@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import confetti from 'canvas-confetti';
 import {
   ArrowRight,
   Download,
@@ -12,21 +11,13 @@ import {
 import { Github, Linkedin, Instagram, WhatsApp } from './Icons';
 import { personalData } from '../data/portfolioData';
 import { trackResumeDownload } from '../utils/trackResumeDownload';
+import { launchDiwaliRocket } from '../utils/diwaliRocket';
 
 export default function Hero() {
   const [copiedEmail, setCopiedEmail] = useState(false);
 
-  const handleConfetti = () => {
-    confetti({
-      particleCount: 80,
-      spread: 70,
-      origin: { y: 0.65 },
-      colors: ['#a855f7', '#6366f1', '#38bdf8', '#c084fc'],
-    });
-  };
-
   const handleDownload = () => {
-    handleConfetti();
+    launchDiwaliRocket({ originX: 0.5 });
     trackResumeDownload('hero');
   };
 
@@ -42,21 +33,37 @@ export default function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           {/* Left Column: Hero Content */}
           <div className="lg:col-span-7 flex flex-col items-start text-left">
-            {/* Availability Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full liquid-pill mb-6 shadow-[0_0_15px_rgba(168,85,247,0.15)]"
-            >
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
-              <span className="text-xs font-medium text-purple-200 tracking-wide font-mono">
-                {personalData.status}
-              </span>
-            </motion.div>
+            {/* Availability & Festive Diwali Badges */}
+            <div className="flex flex-wrap items-center gap-2.5 mb-6">
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full liquid-pill shadow-[0_0_15px_rgba(168,85,247,0.15)]"
+              >
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span className="text-xs font-medium text-purple-200 tracking-wide font-mono">
+                  {personalData.status}
+                </span>
+              </motion.div>
+
+              <motion.button
+                type="button"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.05 }}
+                onClick={() => launchDiwaliRocket({ originX: 0.35 })}
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium text-amber-300 bg-amber-950/40 hover:bg-amber-900/60 border border-amber-500/35 hover:border-amber-400/70 shadow-[0_0_15px_rgba(245,158,11,0.25)] transition-all cursor-pointer hover:scale-105 active:scale-95"
+                title="Happy Diwali - Launch Sky-Shot Rocket!"
+              >
+                <span>🪔</span>
+                <span>Happy Diwali</span>
+                <span>🚀</span>
+              </motion.button>
+            </div>
 
             {/* Headline */}
             <motion.h1

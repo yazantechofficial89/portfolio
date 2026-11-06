@@ -50,12 +50,12 @@ export default function Starfield() {
       '#ffffff',
       '#ffffff',
       '#f5f3ff', // stellar white
+      '#ffd700', // festive diya gold
+      '#fbbf24', // golden ember spark
+      '#f59e0b', // warm amber diya
       '#e9d5ff', // pale purple
-      '#d8b4fe', // light violet
       '#c084fc', // cosmic purple
-      '#818cf8', // celestial indigo
       '#38bdf8', // cyan starlight
-      '#f472b6', // nebula pink
     ];
 
     const initScene = () => {
