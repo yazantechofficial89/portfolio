@@ -1,5 +1,5 @@
 import React from 'react';
-import { launchDiwaliRocket } from '../utils/diwaliRocket';
+import confetti from 'canvas-confetti';
 import { Link } from 'react-router-dom';
 import {
   Briefcase,
@@ -20,7 +20,12 @@ import { trackResumeDownload } from '../utils/trackResumeDownload';
 
 export default function ExperiencePage() {
   const handleDownload = () => {
-    launchDiwaliRocket({ originX: 0.5 });
+    confetti({
+      particleCount: 80,
+      spread: 70,
+      origin: { y: 0.65 },
+      colors: ['#c084fc', '#a855f7', '#818cf8', '#ffffff'],
+    });
     trackResumeDownload('experience');
   };
 

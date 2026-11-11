@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import confetti from 'canvas-confetti';
 import {
   ArrowRight,
   Download,
@@ -11,13 +12,21 @@ import {
 import { Github, Linkedin, Instagram, WhatsApp } from './Icons';
 import { personalData } from '../data/portfolioData';
 import { trackResumeDownload } from '../utils/trackResumeDownload';
-import { launchDiwaliRocket } from '../utils/diwaliRocket';
 
 export default function Hero() {
   const [copiedEmail, setCopiedEmail] = useState(false);
 
+  const handleConfetti = () => {
+    confetti({
+      particleCount: 80,
+      spread: 70,
+      origin: { y: 0.65 },
+      colors: ['#a855f7', '#6366f1', '#38bdf8', '#c084fc'],
+    });
+  };
+
   const handleDownload = () => {
-    launchDiwaliRocket({ originX: 0.5 });
+    handleConfetti();
     trackResumeDownload('hero');
   };
 
