@@ -197,10 +197,18 @@ export default function Hero() {
 
                 {/* Top Header Bar */}
                 <div className="w-full flex items-center justify-between mb-5 pb-3 border-b border-white/10 text-xs font-mono relative z-10">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-zinc-300">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                    <span>Official Brand Emblem</span>
-                  </div>
+                  <Link
+                    to="/about"
+                    className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full liquid-pill text-zinc-300 hover:text-white hover:border-purple-500/40 transition-colors group/pill"
+                    title="View Yazan Gupta Profile"
+                  >
+                    <img
+                      src="/yazan-gupta.jpg"
+                      alt="Yazan Gupta"
+                      className="w-5 h-5 rounded-full object-cover border border-purple-400/40 group-hover/pill:scale-110 transition-transform"
+                    />
+                    <span className="font-medium">Yazan Gupta</span>
+                  </Link>
                   <span className="text-zinc-400 font-semibold tracking-wider">YG &bull; 2026</span>
                 </div>
 

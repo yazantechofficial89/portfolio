@@ -25,18 +25,30 @@
     <meta name="google-site-verification" content="google2419c66be384daf5" />
 
     <!-- Open Graph / Facebook / LinkedIn / WhatsApp -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="profile" />
     <meta property="og:url" content="https://yazangupta.online/" />
     <meta property="og:title" content="Yazan Gupta | Full-Stack Web Developer Portfolio" />
     <meta property="og:description" content="Official portfolio of Yazan Gupta, Full-Stack Web Developer. Sole creator and architect of SevaSetu." />
-    <meta property="og:image" content="https://yazangupta.online/sevasetu.png" />
+    <meta property="og:image" content="https://yazangupta.online/yazan-gupta.jpg" />
+    <meta property="og:image:secure_url" content="https://yazangupta.online/yazan-gupta.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1024" />
+    <meta property="og:image:height" content="1024" />
+    <meta property="og:image:alt" content="Yazan Gupta - Full-Stack Web Developer" />
+    <meta property="profile:first_name" content="Yazan" />
+    <meta property="profile:last_name" content="Gupta" />
+    <meta property="profile:username" content="yazan2006.tech" />
 
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://yazangupta.online/" />
     <meta name="twitter:title" content="Yazan Gupta | Full-Stack Web Developer" />
     <meta name="twitter:description" content="Official portfolio of Yazan Gupta, Full-Stack Web Developer. Sole creator and architect of SevaSetu." />
-    <meta name="twitter:image" content="https://yazangupta.online/sevasetu.png" />
+    <meta name="twitter:image" content="https://yazangupta.online/yazan-gupta.jpg" />
+    <meta name="twitter:image:alt" content="Yazan Gupta - Full-Stack Web Developer" />
+
+    <!-- Primary Image link for search engine bots -->
+    <link rel="image_src" href="https://yazangupta.online/yazan-gupta.jpg" />
 
     <!-- Structured Data (JSON-LD) for Google Knowledge Graph & AI Overviews -->
     <script type="application/ld+json">
@@ -47,13 +59,35 @@
           "@type": "Person",
           "@id": "https://yazangupta.online/#person",
           "name": "Yazan Gupta",
-          "alternateName": "Yazan",
+          "alternateName": ["Yazan", "Yazan Gupta Developer"],
           "url": "https://yazangupta.online/",
-          "image": "https://yazangupta.online/yg-logo.png",
+          "image": {
+            "@type": "ImageObject",
+            "@id": "https://yazangupta.online/#profilePhoto",
+            "url": "https://yazangupta.online/yazan-gupta.jpg",
+            "contentUrl": "https://yazangupta.online/yazan-gupta.jpg",
+            "caption": "Yazan Gupta",
+            "description": "Official portrait photograph of Yazan Gupta, Full-Stack Web Developer and creator of SevaSetu",
+            "representativeOfPage": true,
+            "width": 1024,
+            "height": 1024
+          },
           "jobTitle": "Full-Stack Web Developer",
+          "gender": "https://schema.org/Male",
+          "nationality": {
+            "@type": "Country",
+            "name": "India"
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Faridabad",
+            "addressRegion": "Haryana",
+            "addressCountry": "IN"
+          },
           "alumniOf": {
             "@type": "EducationalOrganization",
-            "name": "Echelon Institute of Technology"
+            "name": "Echelon Institute of Technology",
+            "url": "https://echeloninstitute.edu.in"
           },
           "knowsAbout": [
             "Full-Stack Web Development",
@@ -69,7 +103,24 @@
             "https://www.linkedin.com/in/yazan-gupta-939b46281",
             "https://www.instagram.com/yazan2006.tech",
             "https://github.com/yazantechofficial89"
-          ]
+          ],
+          "mainEntityOfPage": {
+            "@type": "ProfilePage",
+            "@id": "https://yazangupta.online/"
+          }
+        },
+        {
+          "@type": "ProfilePage",
+          "@id": "https://yazangupta.online/#profilePage",
+          "url": "https://yazangupta.online/",
+          "name": "Yazan Gupta - Full-Stack Web Developer Official Portfolio",
+          "primaryImageOfPage": {
+            "@type": "ImageObject",
+            "@id": "https://yazangupta.online/#profilePhoto"
+          },
+          "mainEntity": {
+            "@id": "https://yazangupta.online/#person"
+          }
         },
         {
           "@type": "SoftwareApplication",

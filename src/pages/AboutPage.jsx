@@ -91,8 +91,10 @@ export default function AboutPage() {
               {/* Photo Frame (Clean obsidian border) */}
               <div className="relative rounded-3xl overflow-hidden liquid-glass border border-white/10 shadow-2xl bg-[#090611]">
                 <img
-                  src="/yazan.jpg"
-                  alt="Yazan Gupta"
+                  src="/yazan-gupta.jpg"
+                  alt="Yazan Gupta - Full-Stack Web Developer"
+                  title="Yazan Gupta"
+                  itemProp="image"
                   className="w-full h-80 sm:h-96 object-cover object-top group-hover:scale-105 transition-transform duration-500"
                   loading="eager"
                   decoding="async"
