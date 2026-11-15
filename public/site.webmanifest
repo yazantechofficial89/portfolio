@@ -1,0 +1,22 @@
+{
+  "name": "Yazan Gupta | Full-Stack Web Developer",
+  "short_name": "Yazan Gupta",
+  "description": "Official portfolio of Yazan Gupta, Full-Stack Web Developer & creator of SevaSetu.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050308",
+  "theme_color": "#050308",
+  "icons": [
+    {
+      "src": "/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
