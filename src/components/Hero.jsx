@@ -205,6 +205,7 @@ export default function Hero() {
                     <img
                       src="/yazan-gupta.jpg"
                       alt="Yazan Gupta"
+                      loading="eager"
                       className="w-5 h-5 rounded-full object-cover border border-purple-400/40 group-hover/pill:scale-110 transition-transform"
                     />
                     <span className="font-medium">Yazan Gupta</span>
@@ -231,6 +232,8 @@ export default function Hero() {
                     <img
                       src="/yg-logo.png"
                       alt="Yazan Gupta (YG) Emblem"
+                      loading="eager"
+                      fetchPriority="high"
                       style={{ backfaceVisibility: 'hidden' }}
                       className="w-52 h-52 sm:w-60 sm:h-60 object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.85)]"
                     />
@@ -239,6 +242,7 @@ export default function Hero() {
                     <img
                       src="/yg-logo.png"
                       alt="Yazan Gupta (YG) Emblem Back"
+                      loading="eager"
                       style={{
                         backfaceVisibility: 'hidden',
                         transform: 'rotateY(180deg)',
