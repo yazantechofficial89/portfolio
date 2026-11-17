@@ -100,8 +100,12 @@ export default function Footer() {
           <p>
             &copy; 2026 {personalData.name}. All rights reserved.
           </p>
-          <p className="text-zinc-500">
-            Full-Stack Web Developer &bull; CSE '28
+          <p className="text-zinc-500 flex items-center gap-2">
+            <span>Full-Stack Web Developer &bull; CSE '28</span>
+            <span>&bull;</span>
+            <Link to="/analytics" className="hover:text-purple-400 transition-colors">
+              Analytics
+            </Link>
           </p>
         </div>
       </div>

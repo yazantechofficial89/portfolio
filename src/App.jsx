@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import VisitorTracker from './components/VisitorTracker';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
 import Starfield from './components/Starfield';
 
@@ -16,6 +17,7 @@ const ProjectsPage = lazy(() => import('./pages/ProjectsPage'));
 const ExperiencePage = lazy(() => import('./pages/ExperiencePage'));
 const CertificationsPage = lazy(() => import('./pages/CertificationsPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
+const AnalyticsPage = lazy(() => import('./pages/AnalyticsPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 function RouteLoader() {
@@ -30,6 +32,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <VisitorTracker />
       <div className="min-h-screen bg-[#050308] text-zinc-100 selection:bg-purple-600/30 selection:text-purple-200 flex flex-col justify-between relative overflow-hidden">
         {/* Living Cosmic Starfield & Meteors */}
         <Starfield />
@@ -45,6 +48,7 @@ export default function App() {
               <Route path="/certifications" element={<CertificationsPage />} />
               <Route path="/experience" element={<ExperiencePage />} />
               <Route path="/contact" element={<ContactPage />} />
+              <Route path="/analytics" element={<AnalyticsPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </Suspense>
