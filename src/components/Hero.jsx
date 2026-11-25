@@ -236,7 +236,7 @@ export default function Hero() {
                       loading="eager"
                       fetchPriority="high"
                       style={{ backfaceVisibility: 'hidden' }}
-                      className="w-52 h-52 sm:w-60 sm:h-60 object-contain drop-shadow-[0_12px_28px_rgba(255,42,133,0.45)]"
+                      className="w-52 h-52 sm:w-60 sm:h-60 object-contain drop-shadow-[0_8px_30px_rgba(6,182,212,0.6)] drop-shadow-[0_0_20px_rgba(255,42,133,0.5)]"
                     />
 
                     {/* Back Face (pre-rotated so letters never appear inverted) */}
@@ -248,7 +248,7 @@ export default function Hero() {
                         backfaceVisibility: 'hidden',
                         transform: 'rotateY(180deg)',
                       }}
-                      className="absolute inset-0 w-52 h-52 sm:w-60 sm:h-60 object-contain drop-shadow-[0_12px_28px_rgba(255,42,133,0.45)]"
+                      className="absolute inset-0 w-52 h-52 sm:w-60 sm:h-60 object-contain drop-shadow-[0_8px_30px_rgba(6,182,212,0.6)] drop-shadow-[0_0_20px_rgba(255,42,133,0.5)]"
                     />
                   </motion.div>
                 </div>

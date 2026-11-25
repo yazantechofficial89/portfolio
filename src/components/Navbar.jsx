@@ -43,12 +43,12 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Brand Logo - GTA 6 Vice City Neon Emblem */}
         <Link to="/" className="flex items-center gap-2.5 group">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#ff2a85] via-[#7c3aed] to-[#f59e0b] p-[1.5px] shadow-[0_0_22px_rgba(255,42,133,0.4)] group-hover:shadow-[0_0_32px_rgba(255,42,133,0.65)] transition-all">
-            <div className="w-full h-full bg-[#0a0514] rounded-[10px] flex items-center justify-center group-hover:bg-[#140b26] transition-colors border border-[#ff2a85]/30 p-1">
+          <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#ff2a85] via-[#7c3aed] to-[#06b6d4] p-[1.5px] shadow-[0_0_24px_rgba(255,42,133,0.45)] group-hover:shadow-[0_0_32px_rgba(6,182,212,0.7)] transition-all">
+            <div className="w-full h-full bg-[#0a0514] rounded-[10px] flex items-center justify-center group-hover:bg-[#140b26] transition-colors border border-[#ff2a85]/40 p-0.5">
               <img
                 src="/yg-logo.png"
                 alt="YG Logo"
-                className="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(255,42,133,0.7)] group-hover:scale-110 transition-transform"
+                className="w-full h-full object-contain drop-shadow-[0_0_12px_rgba(6,182,212,0.85)] group-hover:scale-110 transition-transform"
               />
             </div>
           </div>
