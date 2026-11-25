@@ -89,13 +89,13 @@ export default function ProjectsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-purple-300 border-purple-500/20 bg-purple-950/40 text-xs font-mono tracking-wider uppercase mb-3">
-            Portfolio Work
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full liquid-pill text-pink-200 border-[#ff2a85]/30 text-xs font-mono tracking-wider uppercase mb-3">
+            🌴 Portfolio Work
           </div>
           <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight">
             Featured <span className="text-gradient">Projects &amp; Products</span>
           </h1>
-          <p className="mt-4 text-base sm:text-lg text-zinc-400 font-normal">
+          <p className="mt-4 text-base sm:text-lg text-zinc-300 font-normal">
             A curated showcase of production-ready web applications, full-stack platforms, and developer tooling built by Yazan Gupta.
           </p>
         </div>
@@ -104,17 +104,17 @@ export default function ProjectsPage() {
         <div className="mt-12 flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center">
           {/* Search Input - Liquid Glass */}
           <div className="relative flex-1 max-w-md">
-            <Search className="w-4 h-4 text-purple-400 absolute left-4 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-[#ff2a85] absolute left-4 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search projects by name, tag, or stack..."
-              className="w-full pl-11 pr-4 py-3 rounded-2xl bg-[#090611]/80 border border-purple-500/20 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 backdrop-blur-md transition-colors"
+              className="w-full pl-11 pr-4 py-3 rounded-2xl bg-[#0d0718]/80 border border-[#ff2a85]/20 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#ff2a85] focus:shadow-[0_0_15px_rgba(255,42,133,0.25)] backdrop-blur-md transition-all"
             />
           </div>
 
-          {/* Category Filter Buttons - Liquid Glass */}
+          {/* Category Filter Buttons - GTA 6 Sunset Glass */}
           <div className="flex flex-wrap gap-2">
             {categories.map((cat) => (
               <button
@@ -122,8 +122,8 @@ export default function ProjectsPage() {
                 onClick={() => setActiveCategory(cat)}
                 className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all cursor-pointer ${
                   activeCategory === cat
-                    ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold shadow-[0_0_20px_rgba(168,85,247,0.35)]'
-                    : 'bg-purple-950/20 border border-purple-500/15 text-zinc-400 hover:text-white hover:border-purple-500/30 backdrop-blur-md'
+                    ? 'bg-gradient-to-r from-[#ff2a85] via-[#9333ea] to-[#f59e0b] text-white font-bold shadow-[0_0_20px_rgba(255,42,133,0.45)] border border-pink-300/40'
+                    : 'bg-[#0d0718]/70 border border-[#ff2a85]/20 text-zinc-300 hover:text-white hover:border-[#ff2a85]/40 backdrop-blur-md'
                 }`}
               >
                 {cat}
@@ -147,12 +147,12 @@ export default function ProjectsPage() {
           )}
         </div>
 
-        {/* Projects Grid - Liquid Glass Edition */}
+        {/* Projects Grid - GTA 6 Liquid Glass Edition */}
         <div className={filteredProjects.length === 1 ? "mt-8 max-w-3xl mx-auto" : "mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"}>
           {filteredProjects.map((project) => (
             <div
               key={project.id || project._id}
-              className="group flex flex-col rounded-3xl liquid-glass-interactive overflow-hidden shadow-2xl"
+              className="group flex flex-col rounded-3xl liquid-glass-interactive border-[#ff2a85]/20 hover:border-[#ff2a85]/50 overflow-hidden shadow-[0_0_35px_rgba(255,42,133,0.12)]"
             >
               {/* Multi-Image Carousel Preview */}
               <div className="relative">
@@ -167,11 +167,11 @@ export default function ProjectsPage() {
 
                 {/* Top Badges */}
                 <div className="absolute top-3 left-3 flex items-center gap-2 pointer-events-none z-10">
-                  <span className="px-3 py-1 rounded-full text-xs font-mono font-medium liquid-pill text-purple-200">
+                  <span className="px-3 py-1 rounded-full text-xs font-mono font-medium liquid-pill text-pink-200 border-[#ff2a85]/30">
                     {project.category}
                   </span>
                   {project.featured && (
-                    <span className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium liquid-pill text-purple-200">
+                    <span className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium liquid-pill text-pink-200 border-[#ff2a85]/30">
                       <Star className="w-3 h-3 text-amber-300 fill-amber-300" />
                       Featured
                     </span>
@@ -182,10 +182,10 @@ export default function ProjectsPage() {
               {/* Details */}
               <div className="p-6 flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-xl font-bold text-white group-hover:text-purple-300 transition-colors line-clamp-1">
+                  <h3 className="text-xl font-bold text-white group-hover:text-pink-200 transition-colors line-clamp-1">
                     {project.title}
                   </h3>
-                  <p className="mt-2 text-xs sm:text-sm text-zinc-400 leading-relaxed line-clamp-3 font-normal">
+                  <p className="mt-2 text-xs sm:text-sm text-zinc-300 leading-relaxed line-clamp-3 font-normal">
                     {project.description}
                   </p>
 
@@ -207,7 +207,7 @@ export default function ProjectsPage() {
                       {project.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="px-2.5 py-1 rounded-md text-[11px] font-mono font-medium bg-purple-950/40 text-purple-200 border border-purple-500/20"
+                          className="px-2.5 py-1 rounded-md text-[11px] font-mono font-medium bg-[#ff2a85]/10 text-pink-200 border border-[#ff2a85]/25"
                         >
                           {tag}
                         </span>
@@ -217,13 +217,13 @@ export default function ProjectsPage() {
                 </div>
 
                 {/* Actions */}
-                <div className="mt-6 pt-4 border-t border-purple-500/10 flex items-center justify-between">
+                <div className="mt-6 pt-4 border-t border-[#ff2a85]/20 flex items-center justify-between">
                   {project.demoUrl && project.demoUrl !== '#' && (
                     <a
                       href={project.demoUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-300 hover:text-purple-200 transition-colors"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#06b6d4] hover:text-cyan-300 transition-colors"
                     >
                       <span>Live Preview</span>
                       <ArrowUpRight className="w-3.5 h-3.5" />
@@ -249,12 +249,12 @@ export default function ProjectsPage() {
 
         {/* Loading & Empty States */}
         {isLoading ? (
-          <div className="py-24 text-center rounded-3xl liquid-glass mt-8 flex flex-col items-center justify-center">
-            <div className="w-10 h-10 border-2 border-purple-500/20 border-t-purple-400 rounded-full animate-spin mb-4" />
+          <div className="py-24 text-center rounded-3xl liquid-glass border-[#ff2a85]/20 mt-8 flex flex-col items-center justify-center">
+            <div className="w-10 h-10 border-2 border-[#ff2a85]/20 border-t-[#ff2a85] rounded-full animate-spin mb-4" />
             <p className="text-sm font-mono text-zinc-400">Loading projects from MongoDB...</p>
           </div>
         ) : filteredProjects.length === 0 ? (
-          <div className="py-20 text-center rounded-3xl liquid-glass mt-8">
+          <div className="py-20 text-center rounded-3xl liquid-glass border-[#ff2a85]/20 mt-8">
             <Code2 className="w-12 h-12 text-zinc-600 mx-auto mb-3" />
             <h3 className="text-lg font-bold text-white">No projects found</h3>
             <p className="text-sm text-zinc-500 mt-1">
@@ -286,33 +286,33 @@ export default function ProjectsPage() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="relative w-full max-w-5xl bg-[#090611] border border-purple-500/25 rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.9)] overflow-hidden z-10 max-h-[92vh] flex flex-col"
+                  className="relative w-full max-w-5xl bg-[#0d0718] border border-[#ff2a85]/35 rounded-3xl shadow-[0_25px_60px_rgba(255,42,133,0.2)] overflow-hidden z-10 max-h-[92vh] flex flex-col"
                 >
                   {/* Header */}
-                  <div className="p-4 sm:p-5 border-b border-purple-500/15 flex items-center justify-between bg-[#050308]/90">
+                  <div className="p-4 sm:p-5 border-b border-[#ff2a85]/20 flex items-center justify-between bg-[#07040d]/90">
                     <div>
                       <h3 className="text-base sm:text-lg font-bold text-white line-clamp-1">
                         {project.title}
                       </h3>
-                      <p className="text-xs text-zinc-400 font-mono mt-0.5">
+                      <p className="text-xs text-pink-300/80 font-mono mt-0.5">
                         Screenshot {activeIndex + 1} of {modalImages.length} &bull; {project.category}
                       </p>
                     </div>
 
                     <button
                       onClick={() => setGalleryModal(null)}
-                      className="p-2 rounded-xl liquid-pill text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                      className="p-2 rounded-xl liquid-pill text-zinc-300 hover:text-white border-[#ff2a85]/30 transition-colors cursor-pointer"
                     >
                       <X className="w-5 h-5" />
                     </button>
                   </div>
 
                   {/* Main Large Image */}
-                  <div className="p-4 sm:p-6 bg-[#050308] flex-1 flex items-center justify-center overflow-auto max-h-[60vh] relative group">
+                  <div className="p-4 sm:p-6 bg-[#07040d] flex-1 flex items-center justify-center overflow-auto max-h-[60vh] relative group">
                     <img
                       src={currentImg}
                       alt={`${project.title} screenshot ${activeIndex + 1}`}
-                      className="max-w-full max-h-[55vh] object-contain rounded-xl shadow-2xl border border-purple-500/20"
+                      className="max-w-full max-h-[55vh] object-contain rounded-xl shadow-2xl border border-[#ff2a85]/20"
                     />
 
                     {modalImages.length > 1 && (
@@ -324,7 +324,7 @@ export default function ProjectsPage() {
                               index: activeIndex === 0 ? modalImages.length - 1 : activeIndex - 1,
                             })
                           }
-                          className="absolute left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/70 hover:bg-purple-900 border border-purple-500/30 text-white flex items-center justify-center backdrop-blur-md cursor-pointer transition-all hover:scale-110"
+                          className="absolute left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/70 hover:bg-[#ff2a85]/80 border border-[#ff2a85]/40 text-white flex items-center justify-center backdrop-blur-md cursor-pointer transition-all hover:scale-110"
                         >
                           <ChevronLeft className="w-5 h-5" />
                         </button>
@@ -335,7 +335,7 @@ export default function ProjectsPage() {
                               index: activeIndex === modalImages.length - 1 ? 0 : activeIndex + 1,
                             })
                           }
-                          className="absolute right-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/70 hover:bg-purple-900 border border-purple-500/30 text-white flex items-center justify-center backdrop-blur-md cursor-pointer transition-all hover:scale-110"
+                          className="absolute right-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/70 hover:bg-[#ff2a85]/80 border border-[#ff2a85]/40 text-white flex items-center justify-center backdrop-blur-md cursor-pointer transition-all hover:scale-110"
                         >
                           <ChevronRight className="w-5 h-5" />
                         </button>
@@ -345,15 +345,15 @@ export default function ProjectsPage() {
 
                   {/* Thumbnails Strip */}
                   {modalImages.length > 1 && (
-                    <div className="p-3 bg-[#07040f] border-t border-purple-500/15 flex items-center justify-center gap-2 overflow-x-auto">
+                    <div className="p-3 bg-[#0a0514] border-t border-[#ff2a85]/20 flex items-center justify-center gap-2 overflow-x-auto">
                       {modalImages.map((img, i) => (
                         <button
                           key={i}
                           onClick={() => setGalleryModal({ project, index: i })}
                           className={`h-14 w-20 rounded-lg overflow-hidden border-2 transition-all cursor-pointer flex-shrink-0 ${
                             activeIndex === i
-                              ? 'border-purple-400 shadow-[0_0_12px_rgba(168,85,247,0.6)] scale-105'
-                              : 'border-purple-500/20 opacity-60 hover:opacity-100'
+                              ? 'border-[#ff2a85] shadow-[0_0_12px_rgba(255,42,133,0.8)] scale-105'
+                              : 'border-[#ff2a85]/25 opacity-60 hover:opacity-100'
                           }`}
                         >
                           <img src={img} alt={`thumb ${i}`} className="w-full h-full object-cover" />
@@ -363,7 +363,7 @@ export default function ProjectsPage() {
                   )}
 
                   {/* Footer Info */}
-                  <div className="p-4 sm:p-5 border-t border-purple-500/15 bg-[#090611] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                  <div className="p-4 sm:p-5 border-t border-[#ff2a85]/20 bg-[#0d0718] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     <p className="text-xs text-zinc-300 max-w-xl line-clamp-2">{project.description}</p>
                     <div className="flex items-center gap-3">
                       {project.demoUrl && project.demoUrl !== '#' && (
@@ -371,7 +371,7 @@ export default function ProjectsPage() {
                           href={project.demoUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-[0_0_15px_rgba(168,85,247,0.35)] transition-all"
+                          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-white bg-gradient-to-r from-[#ff2a85] via-[#9333ea] to-[#f59e0b] hover:from-[#ff3d95] hover:to-[#fbbf24] shadow-[0_0_18px_rgba(255,42,133,0.4)] transition-all"
                         >
                           <span>Live Preview</span>
                           <ArrowUpRight className="w-3.5 h-3.5" />
@@ -382,7 +382,7 @@ export default function ProjectsPage() {
                           href={project.githubUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-zinc-300 liquid-pill hover:text-white transition-colors"
+                          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-zinc-300 liquid-pill border-[#ff2a85]/30 hover:text-white transition-colors"
                         >
                           <Github className="w-3.5 h-3.5" />
                           <span>Source Code</span>

@@ -8,17 +8,25 @@ export default {
   theme: {
     extend: {
       colors: {
+        gta: {
+          pink: '#ff2a85',
+          amber: '#f59e0b',
+          purple: '#7c3aed',
+          cyan: '#06b6d4',
+          dark: '#07040d',
+          surface: '#0d0718',
+        },
         primary: {
-          50: '#f5f3ff',
-          100: '#ede9fe',
-          200: '#ddd6fe',
-          300: '#c4b5fd',
-          400: '#a78bfa',
-          500: '#8b5cf6',
-          600: '#7c3aed',
-          700: '#6d28d9',
-          800: '#5b21b6',
-          900: '#4c1d95',
+          50: '#fdf2f8',
+          100: '#fce7f3',
+          200: '#fbcfe8',
+          300: '#f9a8d4',
+          400: '#f472b6',
+          500: '#ec4899',
+          600: '#db2777',
+          700: '#be185d',
+          800: '#9d174d',
+          900: '#831843',
         }
       },
       fontFamily: {
@@ -27,6 +35,7 @@ export default {
       animation: {
         'gradient': 'gradient 8s linear infinite',
         'float': 'float 3s ease-in-out infinite',
+        'neon-pulse': 'neon-pulse 2.5s ease-in-out infinite',
       },
       keyframes: {
         gradient: {
@@ -36,6 +45,10 @@ export default {
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-10px)' },
+        },
+        'neon-pulse': {
+          '0%, 100%': { filter: 'drop-shadow(0 0 16px rgba(255, 42, 133, 0.6))' },
+          '50%': { filter: 'drop-shadow(0 0 6px rgba(255, 42, 133, 0.3))' },
         }
       }
     },

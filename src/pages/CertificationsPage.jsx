@@ -99,21 +99,21 @@ export default function CertificationsPage() {
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-purple-300 border-purple-500/20 bg-purple-950/40 text-xs font-mono tracking-wider uppercase mb-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full liquid-pill text-pink-200 border-[#ff2a85]/30 text-xs font-mono tracking-wider uppercase mb-3">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              Verified Credentials &amp; Achievements
+              🌴 Verified Credentials &amp; Achievements
             </div>
             <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight">
               Certifications &amp; <span className="text-gradient">Accreditations</span>
             </h1>
-            <p className="mt-4 text-base sm:text-lg text-zinc-400 font-normal">
+            <p className="mt-4 text-base sm:text-lg text-zinc-300 font-normal">
               Verified original certificates and national achievements earned by Yazan Gupta. High-resolution document previews and official credential verifications.
             </p>
           </div>
 
           {/* Verification Badge */}
           <div className="flex items-center gap-3 self-start md:self-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl liquid-pill text-xs font-mono font-medium text-emerald-400 shadow-lg">
+            <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl liquid-pill text-xs font-mono font-medium text-emerald-400 shadow-lg border-emerald-500/30">
               <ShieldCheck className="w-4 h-4 text-emerald-400" />
               <span>100% Authentic &amp; Verified</span>
             </div>
@@ -122,27 +122,27 @@ export default function CertificationsPage() {
 
         {/* Stats Row - Liquid Glass */}
         <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <div className="p-4 sm:p-5 rounded-2xl liquid-glass-interactive">
-            <span className="text-xs font-mono text-zinc-500">Total Credentials</span>
+          <div className="p-4 sm:p-5 rounded-2xl liquid-glass-interactive border-[#ff2a85]/20">
+            <span className="text-xs font-mono text-pink-300/70">Total Credentials</span>
             <div className="mt-1 text-2xl sm:text-3xl font-extrabold text-white text-gradient">
               {allCertificates.length}
             </div>
           </div>
-          <div className="p-4 sm:p-5 rounded-2xl liquid-glass-interactive">
-            <span className="text-xs font-mono text-zinc-500">Verification Status</span>
+          <div className="p-4 sm:p-5 rounded-2xl liquid-glass-interactive border-[#ff2a85]/20">
+            <span className="text-xs font-mono text-pink-300/70">Verification Status</span>
             <div className="mt-1 text-base sm:text-lg font-bold text-emerald-400 flex items-center gap-1.5 font-mono">
               <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0" />
               100% Verified
             </div>
           </div>
-          <div className="p-4 sm:p-5 rounded-2xl liquid-glass-interactive">
-            <span className="text-xs font-mono text-zinc-500">Categories</span>
+          <div className="p-4 sm:p-5 rounded-2xl liquid-glass-interactive border-[#ff2a85]/20">
+            <span className="text-xs font-mono text-pink-300/70">Categories</span>
             <div className="mt-1 text-2xl sm:text-3xl font-extrabold text-white text-gradient">
               {availableCategories.filter((cat) => cat !== 'All').length}
             </div>
           </div>
-          <div className="p-4 sm:p-5 rounded-2xl liquid-glass-interactive">
-            <span className="text-xs font-mono text-zinc-500">Verified &amp; Original</span>
+          <div className="p-4 sm:p-5 rounded-2xl liquid-glass-interactive border-[#ff2a85]/20">
+            <span className="text-xs font-mono text-pink-300/70">Verified &amp; Original</span>
             <div className="mt-1 text-2xl sm:text-3xl font-extrabold text-white text-gradient">
               {allCertificates.length}
             </div>
@@ -153,17 +153,17 @@ export default function CertificationsPage() {
         <div className="mt-10 flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center">
           {/* Search Bar */}
           <div className="relative flex-1 max-w-md">
-            <Search className="w-4 h-4 text-purple-400 absolute left-4 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-[#ff2a85] absolute left-4 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by title, organization, or skills..."
-              className="w-full pl-11 pr-4 py-3 rounded-2xl bg-[#090611]/80 border border-purple-500/20 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 backdrop-blur-md transition-colors"
+              className="w-full pl-11 pr-4 py-3 rounded-2xl bg-[#0d0718]/80 border border-[#ff2a85]/20 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#ff2a85] focus:shadow-[0_0_15px_rgba(255,42,133,0.25)] backdrop-blur-md transition-all"
             />
           </div>
 
-          {/* Category Filter Pills */}
+          {/* Category Filter Pills - GTA 6 Sunset Glass */}
           <div className="flex flex-wrap gap-2">
             {availableCategories.map((cat) => (
               <button
@@ -171,8 +171,8 @@ export default function CertificationsPage() {
                 onClick={() => setActiveCategory(cat)}
                 className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all cursor-pointer ${
                   activeCategory === cat
-                    ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold shadow-[0_0_20px_rgba(168,85,247,0.35)]'
-                    : 'bg-purple-950/20 border border-purple-500/15 text-zinc-400 hover:text-white hover:border-purple-500/30 backdrop-blur-md'
+                    ? 'bg-gradient-to-r from-[#ff2a85] via-[#9333ea] to-[#f59e0b] text-white font-bold shadow-[0_0_20px_rgba(255,42,133,0.45)] border border-pink-300/40'
+                    : 'bg-[#0d0718]/70 border border-[#ff2a85]/20 text-zinc-300 hover:text-white hover:border-[#ff2a85]/40 backdrop-blur-md'
                 }`}
               >
                 {cat}
@@ -205,21 +205,21 @@ export default function CertificationsPage() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
-              className="group flex flex-col rounded-3xl liquid-glass-interactive overflow-hidden shadow-2xl"
+              className="group flex flex-col rounded-3xl liquid-glass-interactive border-[#ff2a85]/20 hover:border-[#ff2a85]/50 overflow-hidden shadow-[0_0_35px_rgba(255,42,133,0.12)]"
             >
               {/* Certificate Image Preview */}
               <div
                 onClick={() => setPreviewCert(cert)}
-                className="relative h-56 w-full overflow-hidden bg-[#090611] cursor-pointer"
+                className="relative h-56 w-full overflow-hidden bg-[#0a0514] cursor-pointer"
               >
                 {cert.type === 'pdf' ? (
-                  <div className="w-full h-full flex flex-col items-center justify-center p-4 bg-[#090611] text-zinc-400 group-hover:text-white transition-colors">
-                    <FileText className="w-16 h-16 text-purple-400 mb-2" />
+                  <div className="w-full h-full flex flex-col items-center justify-center p-4 bg-[#0a0514] text-zinc-300 group-hover:text-white transition-colors">
+                    <FileText className="w-16 h-16 text-[#ff2a85] mb-2" />
                     <span className="text-xs font-mono font-medium">PDF Certificate Document</span>
-                    <span className="text-[10px] text-zinc-500 mt-1">Click to preview full-screen</span>
+                    <span className="text-[10px] text-pink-300/70 mt-1">Click to preview full-screen</span>
                   </div>
                 ) : (
-                  <div className="relative w-full h-full bg-[#090611]">
+                  <div className="relative w-full h-full bg-[#0a0514]">
                     <img
                       src={cert.image}
                       alt={cert.title}
@@ -233,28 +233,28 @@ export default function CertificationsPage() {
                       }}
                     />
                     <div
-                      className="cert-fallback hidden w-full h-full flex-col items-center justify-center p-4 bg-gradient-to-br from-[#0e0720] via-[#150a2b] to-[#090611] text-center border-b border-purple-500/20"
+                      className="cert-fallback hidden w-full h-full flex-col items-center justify-center p-4 bg-gradient-to-br from-[#120724] via-[#1a0a33] to-[#0a0514] text-center border-b border-[#ff2a85]/20"
                     >
-                      <Award className="w-12 h-12 text-purple-400 mb-2 opacity-80" />
+                      <Award className="w-12 h-12 text-[#ff2a85] mb-2 opacity-80" />
                       <span className="text-sm font-bold text-white line-clamp-1 px-2">{cert.title}</span>
-                      <span className="text-xs text-purple-300 font-mono mt-1">{cert.issuer}</span>
-                      <span className="text-[10px] text-zinc-400 mt-2 bg-purple-950/60 px-2 py-0.5 rounded-full border border-purple-500/30">
+                      <span className="text-xs text-pink-300 font-mono mt-1">{cert.issuer}</span>
+                      <span className="text-[10px] text-zinc-300 mt-2 bg-[#ff2a85]/15 px-2 py-0.5 rounded-full border border-[#ff2a85]/30">
                         Image link unavailable
                       </span>
                     </div>
                   </div>
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050308] via-black/30 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#07040d] via-black/30 to-transparent" />
 
                 {/* Top Badges */}
                 <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium liquid-pill text-emerald-400">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium liquid-pill text-emerald-400 border-emerald-500/30">
                     <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
                     Verified
                   </span>
 
                   {cert.featured && (
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium liquid-pill text-purple-200">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium liquid-pill text-pink-200 border-[#ff2a85]/30">
                       <Star className="w-3 h-3 text-amber-300 fill-amber-300" />
                       Original
                     </span>
@@ -263,7 +263,7 @@ export default function CertificationsPage() {
 
                 {/* Hover overlay hint */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/60 backdrop-blur-sm">
-                  <span className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-xs font-semibold shadow-lg">
+                  <span className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#ff2a85] via-[#9333ea] to-[#f59e0b] text-white text-xs font-semibold shadow-lg">
                     <Eye className="w-4 h-4" />
                     View Certificate
                   </span>
@@ -274,7 +274,7 @@ export default function CertificationsPage() {
               <div className="p-6 flex-1 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center gap-2 text-xs font-mono text-zinc-400 mb-2">
-                    <Calendar className="w-3.5 h-3.5 text-purple-400" />
+                    <Calendar className="w-3.5 h-3.5 text-[#ff2a85]" />
                     <span>Issued {cert.issueDate}</span>
                     <span className="text-zinc-600">&bull;</span>
                     <span className="truncate">{cert.category}</span>
@@ -282,7 +282,7 @@ export default function CertificationsPage() {
 
                   <h3
                     onClick={() => setPreviewCert(cert)}
-                    className="text-lg font-bold text-white group-hover:text-purple-300 transition-colors cursor-pointer line-clamp-2"
+                    className="text-lg font-bold text-white group-hover:text-pink-200 transition-colors cursor-pointer line-clamp-2"
                   >
                     {cert.title}
                   </h3>
@@ -292,7 +292,7 @@ export default function CertificationsPage() {
                     <span className="font-medium text-zinc-300">{cert.issuer}</span>
                   </div>
 
-                  <p className="mt-3 text-xs text-zinc-400 line-clamp-2 leading-relaxed font-normal">
+                  <p className="mt-3 text-xs text-zinc-300 line-clamp-2 leading-relaxed font-normal">
                     {cert.description}
                   </p>
 
@@ -302,13 +302,13 @@ export default function CertificationsPage() {
                       {cert.skills.slice(0, 4).map((skill) => (
                         <span
                           key={skill}
-                          className="px-2.5 py-1 rounded-md text-[11px] font-mono font-medium bg-purple-950/40 text-purple-200 border border-purple-500/20"
+                          className="px-2.5 py-1 rounded-md text-[11px] font-mono font-medium bg-[#ff2a85]/10 text-pink-200 border border-[#ff2a85]/25"
                         >
                           {skill}
                         </span>
                       ))}
                       {cert.skills.length > 4 && (
-                        <span className="px-2 py-1 rounded-md text-[10px] font-mono text-purple-400 bg-purple-950/20">
+                        <span className="px-2 py-1 rounded-md text-[10px] font-mono text-pink-400 bg-[#ff2a85]/10">
                           +{cert.skills.length - 4}
                         </span>
                       )}
@@ -317,10 +317,10 @@ export default function CertificationsPage() {
                 </div>
 
                 {/* Footer Actions */}
-                <div className="mt-6 pt-4 border-t border-purple-500/10 flex items-center justify-between gap-3">
+                <div className="mt-6 pt-4 border-t border-[#ff2a85]/15 flex items-center justify-between gap-3">
                   <button
                     onClick={() => setPreviewCert(cert)}
-                    className="text-xs font-semibold text-purple-300 hover:text-purple-200 transition-colors inline-flex items-center gap-1.5 cursor-pointer"
+                    className="text-xs font-semibold text-[#06b6d4] hover:text-cyan-300 transition-colors inline-flex items-center gap-1.5 cursor-pointer"
                   >
                     <Eye className="w-3.5 h-3.5" />
                     <span>View Full</span>
@@ -328,7 +328,7 @@ export default function CertificationsPage() {
 
                   <button
                     onClick={() => setPreviewCert(cert)}
-                    className="px-3.5 py-1.5 rounded-xl liquid-pill hover:bg-purple-950/40 text-zinc-200 text-xs font-medium transition-all inline-flex items-center gap-1.5 cursor-pointer"
+                    className="px-3.5 py-1.5 rounded-xl liquid-pill hover:bg-[#ff2a85]/15 text-zinc-200 border-[#ff2a85]/25 hover:border-[#ff2a85]/60 text-xs font-medium transition-all inline-flex items-center gap-1.5 cursor-pointer"
                   >
                     <span>Inspect</span>
                     <ExternalLink className="w-3.5 h-3.5" />
@@ -341,8 +341,8 @@ export default function CertificationsPage() {
 
         {/* Loading & Empty States */}
         {isLoading ? (
-          <div className="py-24 text-center rounded-3xl liquid-glass mt-8 flex flex-col items-center justify-center">
-            <div className="w-10 h-10 border-2 border-purple-500/20 border-t-purple-400 rounded-full animate-spin mb-4" />
+          <div className="py-24 text-center rounded-3xl liquid-glass border-[#ff2a85]/20 mt-8 flex flex-col items-center justify-center">
+            <div className="w-10 h-10 border-2 border-[#ff2a85]/20 border-t-[#ff2a85] rounded-full animate-spin mb-4" />
             <p className="text-sm font-mono text-zinc-400">Loading verified credentials from MongoDB...</p>
           </div>
         ) : filteredCertificates.length === 0 ? (
@@ -372,12 +372,12 @@ export default function CertificationsPage() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="relative w-full max-w-4xl bg-[#090611] border border-purple-500/25 rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.9)] overflow-hidden z-10 max-h-[92vh] flex flex-col"
+              className="relative w-full max-w-4xl bg-[#0d0718] border border-[#ff2a85]/35 rounded-3xl shadow-[0_25px_60px_rgba(255,42,133,0.2)] overflow-hidden z-10 max-h-[92vh] flex flex-col"
             >
               {/* Header */}
-              <div className="p-4 sm:p-5 border-b border-purple-500/15 flex items-center justify-between bg-[#050308]/90">
+              <div className="p-4 sm:p-5 border-b border-[#ff2a85]/20 flex items-center justify-between bg-[#07040d]/90">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-xl bg-purple-950/50 text-white border border-purple-500/25">
+                  <div className="p-2 rounded-xl bg-pink-950/40 text-white border border-[#ff2a85]/30">
                     <ShieldCheck className="w-5 h-5 text-emerald-400" />
                   </div>
                   <div>
@@ -385,11 +385,11 @@ export default function CertificationsPage() {
                       <h3 className="text-base sm:text-lg font-bold text-white line-clamp-1">
                         {previewCert.title}
                       </h3>
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold liquid-pill text-emerald-400 shrink-0">
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold liquid-pill text-emerald-400 shrink-0 border-emerald-500/30">
                         Verified
                       </span>
                     </div>
-                    <p className="text-xs text-zinc-400 font-mono">
+                    <p className="text-xs text-pink-200/80 font-mono">
                       Issued by {previewCert.issuer} &bull; {previewCert.issueDate}
                     </p>
                   </div>
@@ -401,15 +401,15 @@ export default function CertificationsPage() {
                     download={previewCert.fileName || `${previewCert.title}.jpg`}
                     target="_blank"
                     rel="noreferrer"
-                    className="p-2 rounded-xl liquid-pill text-zinc-300 hover:text-white transition-colors"
+                    className="p-2 rounded-xl liquid-pill text-zinc-300 hover:text-white border-[#ff2a85]/30 transition-colors"
                     title="Download Certificate"
                   >
-                    <Download className="w-4 h-4" />
+                    <Download className="w-4 h-4 text-[#ff2a85]" />
                   </a>
 
                   <button
                     onClick={() => setPreviewCert(null)}
-                    className="p-2 rounded-xl liquid-pill text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                    className="p-2 rounded-xl liquid-pill text-zinc-300 hover:text-white border-[#ff2a85]/30 transition-colors cursor-pointer"
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -417,30 +417,30 @@ export default function CertificationsPage() {
               </div>
 
               {/* Preview Container */}
-              <div className="p-4 sm:p-6 bg-[#050308] flex-1 flex items-center justify-center overflow-auto max-h-[60vh]">
+              <div className="p-4 sm:p-6 bg-[#07040d] flex-1 flex items-center justify-center overflow-auto max-h-[60vh]">
                 {previewCert.type === 'pdf' ? (
                   <iframe
                     src={previewCert.image}
                     title={previewCert.title}
-                    className="w-full h-[55vh] rounded-xl border border-purple-500/20"
+                    className="w-full h-[55vh] rounded-xl border border-[#ff2a85]/20"
                   />
                 ) : (
                   <div className="relative max-w-full max-h-[55vh] flex items-center justify-center">
                     <img
                       src={previewCert.image}
                       alt={previewCert.title}
-                      className="max-w-full max-h-[55vh] object-contain rounded-xl shadow-2xl border border-purple-500/20"
+                      className="max-w-full max-h-[55vh] object-contain rounded-xl shadow-2xl border border-[#ff2a85]/20"
                       onError={(e) => {
                         e.currentTarget.style.display = 'none';
                         const fallback = e.currentTarget.parentElement.querySelector('.modal-fallback');
                         if (fallback) fallback.style.display = 'flex';
                       }}
                     />
-                    <div className="modal-fallback hidden flex-col items-center justify-center p-8 bg-[#0e0720] rounded-2xl border border-purple-500/30 text-center max-w-md shadow-2xl">
-                      <Award className="w-16 h-16 text-purple-400 mb-3" />
+                    <div className="modal-fallback hidden flex-col items-center justify-center p-8 bg-[#140826] rounded-2xl border border-[#ff2a85]/30 text-center max-w-md shadow-2xl">
+                      <Award className="w-16 h-16 text-[#ff2a85] mb-3" />
                       <h4 className="text-lg font-bold text-white mb-1">{previewCert.title}</h4>
-                      <p className="text-sm text-purple-300 mb-2">{previewCert.issuer}</p>
-                      <p className="text-xs text-zinc-400">
+                      <p className="text-sm text-pink-300 mb-2">{previewCert.issuer}</p>
+                      <p className="text-xs text-zinc-300">
                         Image link unavailable or invalid. Please check the direct image URL in MongoDB Atlas.
                       </p>
                     </div>
@@ -449,7 +449,7 @@ export default function CertificationsPage() {
               </div>
 
               {/* Footer info */}
-              <div className="p-5 border-t border-purple-500/15 bg-[#090611] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="p-5 border-t border-[#ff2a85]/20 bg-[#0d0718] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="text-xs text-zinc-400">
                   {previewCert.credentialId && (
                     <div>
@@ -465,7 +465,7 @@ export default function CertificationsPage() {
                       href={previewCert.credentialUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="px-5 py-2.5 rounded-xl font-semibold text-xs text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-md shadow-purple-950/50 transition-colors inline-flex items-center gap-1.5"
+                      className="px-5 py-2.5 rounded-xl font-semibold text-xs text-white bg-gradient-to-r from-[#ff2a85] via-[#9333ea] to-[#f59e0b] hover:from-[#ff3d95] hover:to-[#fbbf24] shadow-[0_0_20px_rgba(255,42,133,0.4)] transition-all inline-flex items-center gap-1.5"
                     >
                       <span>Verify Credential</span>
                       <ExternalLink className="w-3.5 h-3.5" />

@@ -128,7 +128,7 @@ export default function ContactPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-purple-300 border-purple-500/20 bg-purple-950/40 text-xs font-mono tracking-wider uppercase mb-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-pink-200 border-[#ff2a85]/30 bg-[#ff2a85]/10 text-xs font-mono tracking-wider uppercase mb-3">
             Get In Touch
           </div>
           <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight">
@@ -154,7 +154,7 @@ export default function ContactPage() {
                   href={`https://wa.me/${cleanPhone}?text=Hi%20Yazan,%20I%20am%20reaching%20out%20from%20your%20portfolio.`}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center justify-between p-4 rounded-2xl bg-[#090611]/80 border border-emerald-500/30 hover:border-emerald-400 hover:bg-[#090611] transition-all group"
+                  className="flex items-center justify-between p-4 rounded-2xl bg-[#0d0718]/80 border border-emerald-500/30 hover:border-emerald-400 hover:bg-[#0d0718] transition-all group"
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xl bg-emerald-950/40 text-emerald-400 flex items-center justify-center border border-emerald-500/30 group-hover:scale-105 transition-transform shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]">
@@ -174,16 +174,16 @@ export default function ContactPage() {
                 </a>
 
                 {/* Email card */}
-                <div className="flex items-center justify-between p-4 rounded-2xl bg-[#090611]/80 border border-purple-500/15">
+                <div className="flex items-center justify-between p-4 rounded-2xl bg-[#0d0718]/80 border border-[#ff2a85]/15">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-purple-950/50 text-purple-300 flex items-center justify-center border border-purple-500/25 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]">
-                      <Mail className="w-5 h-5 text-purple-300" />
+                    <div className="w-10 h-10 rounded-xl bg-[#0d0718] text-pink-200 flex items-center justify-center border border-[#ff2a85]/25 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]">
+                      <Mail className="w-5 h-5 text-pink-200" />
                     </div>
                     <div>
-                      <div className="text-xs text-purple-300/80 font-medium font-mono">Email Address</div>
+                      <div className="text-xs text-pink-200/80 font-medium font-mono">Email Address</div>
                       <a
                         href={`mailto:${personalData.email}`}
-                        className="text-sm font-semibold text-white hover:text-purple-300 transition-colors"
+                        className="text-sm font-semibold text-white hover:text-pink-200 transition-colors"
                       >
                         {personalData.email}
                       </a>
@@ -203,16 +203,16 @@ export default function ContactPage() {
                 </div>
 
                 {/* Phone card */}
-                <div className="flex items-center justify-between p-4 rounded-2xl bg-[#090611]/80 border border-purple-500/15">
+                <div className="flex items-center justify-between p-4 rounded-2xl bg-[#0d0718]/80 border border-[#ff2a85]/15">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-purple-950/50 text-purple-300 flex items-center justify-center border border-purple-500/25 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]">
-                      <Phone className="w-5 h-5 text-purple-300" />
+                    <div className="w-10 h-10 rounded-xl bg-[#0d0718] text-pink-200 flex items-center justify-center border border-[#ff2a85]/25 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]">
+                      <Phone className="w-5 h-5 text-pink-200" />
                     </div>
                     <div>
-                      <div className="text-xs text-purple-300/80 font-medium font-mono">Phone Number</div>
+                      <div className="text-xs text-pink-200/80 font-medium font-mono">Phone Number</div>
                       <a
                         href={`tel:${personalData.phone}`}
-                        className="text-sm font-semibold text-white hover:text-purple-300 transition-colors"
+                        className="text-sm font-semibold text-white hover:text-pink-200 transition-colors"
                       >
                         {personalData.phone}
                       </a>
@@ -232,12 +232,12 @@ export default function ContactPage() {
                 </div>
 
                 {/* Location card */}
-                <div className="flex items-center gap-3 p-4 rounded-2xl bg-[#090611]/80 border border-purple-500/15">
-                  <div className="w-10 h-10 rounded-xl bg-purple-950/50 text-purple-300 flex items-center justify-center border border-purple-500/25 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]">
-                    <MapPin className="w-5 h-5 text-purple-300" />
+                <div className="flex items-center gap-3 p-4 rounded-2xl bg-[#0d0718]/80 border border-[#ff2a85]/15">
+                  <div className="w-10 h-10 rounded-xl bg-[#0d0718] text-pink-200 flex items-center justify-center border border-[#ff2a85]/25 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]">
+                    <MapPin className="w-5 h-5 text-pink-200" />
                   </div>
                   <div>
-                    <div className="text-xs text-purple-300/80 font-medium font-mono">Location</div>
+                    <div className="text-xs text-pink-200/80 font-medium font-mono">Location</div>
                     <div className="text-sm font-semibold text-white">
                       {personalData.location}
                     </div>
@@ -246,8 +246,8 @@ export default function ContactPage() {
               </div>
 
               {/* Social Channels */}
-              <div className="mt-8 pt-6 border-t border-purple-500/10">
-                <span className="text-xs font-mono uppercase tracking-wider text-purple-400 font-semibold block mb-3">
+              <div className="mt-8 pt-6 border-t border-[#ff2a85]/10">
+                <span className="text-xs font-mono uppercase tracking-wider text-[#ff2a85] font-semibold block mb-3">
                   Find me online
                 </span>
                 <div className="grid grid-cols-2 gap-3">
@@ -255,16 +255,16 @@ export default function ContactPage() {
                     href={personalData.socials.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl liquid-pill text-xs font-mono text-zinc-300 hover:text-white hover:border-purple-500/30 transition-all"
+                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl liquid-pill text-xs font-mono text-zinc-300 hover:text-white hover:border-[#ff2a85]/30 transition-all"
                   >
-                    <Github className="w-4 h-4 text-purple-300" />
+                    <Github className="w-4 h-4 text-pink-200" />
                     <span>GitHub</span>
                   </a>
                   <a
                     href={personalData.socials.linkedin}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl liquid-pill text-xs font-mono text-zinc-300 hover:text-white hover:border-purple-500/30 transition-all"
+                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl liquid-pill text-xs font-mono text-zinc-300 hover:text-white hover:border-[#ff2a85]/30 transition-all"
                   >
                     <Linkedin className="w-4 h-4 text-indigo-300" />
                     <span>LinkedIn</span>
@@ -273,7 +273,7 @@ export default function ContactPage() {
                     href={personalData.socials.instagram}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl liquid-pill text-xs font-mono text-zinc-300 hover:text-white hover:border-purple-500/30 transition-all"
+                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl liquid-pill text-xs font-mono text-zinc-300 hover:text-white hover:border-[#ff2a85]/30 transition-all"
                   >
                     <Instagram className="w-4 h-4 text-fuchsia-300" />
                     <span>Instagram</span>
@@ -303,11 +303,11 @@ export default function ContactPage() {
                 </span>
               </div>
               <p className="text-sm text-zinc-400 mb-6 font-normal">
-                Fill out the form below. Submissions reach <strong className="text-purple-300 font-mono">{personalData.email}</strong>.
+                Fill out the form below. Submissions reach <strong className="text-pink-200 font-mono">{personalData.email}</strong>.
               </p>
 
               {submitted ? (
-                <div className="p-8 text-center rounded-2xl bg-purple-950/20 border border-purple-500/20 text-zinc-200">
+                <div className="p-8 text-center rounded-2xl bg-[#0d0718]/70 border border-[#ff2a85]/20 text-zinc-200">
                   <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mx-auto mb-4 border border-emerald-500/20">
                     <CheckCircle2 className="w-9 h-9" />
                   </div>
@@ -332,7 +332,7 @@ export default function ContactPage() {
                       href={generateGmailLink()}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-semibold text-sm shadow-lg shadow-purple-950/50 transition-all"
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#ff2a85] via-[#9333ea] to-[#f59e0b] hover:from-[#ff3d95] hover:to-[#fbbf24] text-white font-semibold text-sm shadow-lg shadow-purple-950/50 transition-all"
                     >
                       <Mail className="w-5 h-5" />
                       <span>Open in Gmail App</span>
@@ -340,9 +340,9 @@ export default function ContactPage() {
                   </div>
 
                   {/* Message Preview & One-click Copy */}
-                  <div className="mt-6 p-4 rounded-2xl bg-[#090611] border border-purple-500/15 text-left">
+                  <div className="mt-6 p-4 rounded-2xl bg-[#0d0718] border border-[#ff2a85]/15 text-left">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-xs font-mono uppercase text-purple-400 tracking-wider">Message Content</span>
+                      <span className="text-xs font-mono uppercase text-[#ff2a85] tracking-wider">Message Content</span>
                       <button
                         onClick={handleCopyFullMessage}
                         className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg liquid-pill text-xs text-zinc-300 hover:text-white transition-colors cursor-pointer"
@@ -362,7 +362,7 @@ export default function ContactPage() {
                       setSubmitted(false);
                       setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
                     }}
-                    className="mt-6 text-xs text-purple-400 hover:text-purple-300 underline cursor-pointer"
+                    className="mt-6 text-xs text-[#ff2a85] hover:text-pink-200 underline cursor-pointer"
                   >
                     Write another message
                   </button>
@@ -383,7 +383,7 @@ export default function ContactPage() {
                         required
                         value={formData.name}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-xl bg-[#090611]/80 border border-purple-500/20 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-colors"
+                        className="w-full px-4 py-3 rounded-xl bg-[#0d0718]/80 border border-[#ff2a85]/20 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-colors"
                       />
                     </div>
                     <div>
@@ -396,7 +396,7 @@ export default function ContactPage() {
                         required
                         value={formData.email}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-xl bg-[#090611]/80 border border-purple-500/20 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-colors"
+                        className="w-full px-4 py-3 rounded-xl bg-[#0d0718]/80 border border-[#ff2a85]/20 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-colors"
                       />
                     </div>
                   </div>
@@ -411,7 +411,7 @@ export default function ContactPage() {
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-xl bg-[#090611]/80 border border-purple-500/20 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-colors"
+                        className="w-full px-4 py-3 rounded-xl bg-[#0d0718]/80 border border-[#ff2a85]/20 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-colors"
                       />
                     </div>
                     <div>
@@ -424,7 +424,7 @@ export default function ContactPage() {
                         required
                         value={formData.subject}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-xl bg-[#090611]/80 border border-purple-500/20 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-colors"
+                        className="w-full px-4 py-3 rounded-xl bg-[#0d0718]/80 border border-[#ff2a85]/20 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-colors"
                       />
                     </div>
                   </div>
@@ -439,7 +439,7 @@ export default function ContactPage() {
                       required
                       value={formData.message}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl bg-[#090611]/80 border border-purple-500/20 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-colors resize-none"
+                      className="w-full px-4 py-3 rounded-xl bg-[#0d0718]/80 border border-[#ff2a85]/20 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-colors resize-none"
                     />
                   </div>
 
@@ -447,7 +447,7 @@ export default function ContactPage() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="flex-1 py-3.5 px-6 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 transition-all duration-300 shadow-[0_0_20px_rgba(168,85,247,0.35)] hover:shadow-[0_0_30px_rgba(168,85,247,0.45)] flex items-center justify-center gap-2 disabled:opacity-50 text-sm cursor-pointer"
+                      className="flex-1 py-3.5 px-6 rounded-xl font-semibold text-white bg-gradient-to-r from-[#ff2a85] via-[#9333ea] to-[#f59e0b] hover:from-[#ff3d95] hover:to-[#fbbf24] transition-all duration-300 shadow-[0_0_20px_rgba(168,85,247,0.35)] hover:shadow-[0_0_30px_rgba(168,85,247,0.45)] flex items-center justify-center gap-2 disabled:opacity-50 text-sm cursor-pointer"
                     >
                       {isSubmitting ? (
                         <span className="inline-flex items-center gap-2">
@@ -475,7 +475,7 @@ export default function ContactPage() {
                   </div>
 
                   <p className="text-[11px] text-center text-zinc-500 pt-1">
-                    Direct delivery guaranteed &bull; Delivers straight to <strong className="text-purple-300 font-mono">{personalData.email}</strong> &amp; WhatsApp
+                    Direct delivery guaranteed &bull; Delivers straight to <strong className="text-pink-200 font-mono">{personalData.email}</strong> &amp; WhatsApp
                   </p>
                 </form>
               )}
@@ -487,7 +487,7 @@ export default function ContactPage() {
         {faqsData && faqsData.length > 0 && (
           <div className="mt-20 max-w-4xl mx-auto">
             <div className="text-center mb-10">
-              <span className="text-xs font-mono uppercase tracking-wider text-purple-400 font-semibold">
+              <span className="text-xs font-mono uppercase tracking-wider text-[#ff2a85] font-semibold">
                 Common Inquiries
               </span>
               <h2 className="text-2xl sm:text-3xl font-bold text-white mt-1">
@@ -505,17 +505,17 @@ export default function ContactPage() {
                   >
                     <button
                       onClick={() => setOpenFaq(isOpen ? null : idx)}
-                      className="w-full p-5 text-left flex items-center justify-between text-sm sm:text-base font-semibold text-white hover:text-purple-300 transition-colors cursor-pointer"
+                      className="w-full p-5 text-left flex items-center justify-between text-sm sm:text-base font-semibold text-white hover:text-pink-200 transition-colors cursor-pointer"
                     >
                       <span>{faq.question}</span>
                       <ChevronDown
-                        className={`w-4 h-4 text-purple-400 transition-transform ${
+                        className={`w-4 h-4 text-[#ff2a85] transition-transform ${
                           isOpen ? 'rotate-180' : ''
                         }`}
                       />
                     </button>
                     {isOpen && (
-                      <div className="px-5 pb-5 text-xs sm:text-sm text-zinc-400 leading-relaxed border-t border-purple-500/10 pt-3 font-normal">
+                      <div className="px-5 pb-5 text-xs sm:text-sm text-zinc-400 leading-relaxed border-t border-[#ff2a85]/10 pt-3 font-normal">
                         {faq.answer}
                       </div>
                     )}

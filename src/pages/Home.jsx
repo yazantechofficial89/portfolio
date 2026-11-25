@@ -58,32 +58,32 @@ export default function Home() {
       {/* Hero Section */}
       <Hero />
 
-      {/* About Preview Section - Space Theme */}
-      <section className="py-20 relative border-t border-purple-500/15 bg-[#050308]/40 backdrop-blur-sm">
+      {/* About Preview Section - GTA 6 Vice City Theme */}
+      <section className="py-20 relative border-t border-[#ff2a85]/20 bg-[#07040d]/40 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full liquid-pill text-purple-200 text-xs font-mono tracking-wider uppercase mb-3">
-                <Sparkles className="w-3.5 h-3.5 text-purple-400" />
-                Meet The Developer
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full liquid-pill text-pink-200 border-[#ff2a85]/30 text-xs font-mono tracking-wider uppercase mb-3">
+                <Sparkles className="w-3.5 h-3.5 text-[#ff2a85]" />
+                🌴 Meet The Developer
               </div>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
                 Crafting robust applications with <span className="text-gradient">modern engineering</span>
               </h2>
-              <p className="mt-4 text-base text-zinc-400 leading-relaxed font-normal">
+              <p className="mt-4 text-base text-zinc-300 leading-relaxed font-normal">
                 {personalData.bio}
               </p>
               <div className="mt-6 flex flex-wrap gap-4">
                 <Link
                   to="/about"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-md shadow-black/50 hover:shadow-lg transition-all"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-[#ff2a85] via-[#9333ea] to-[#f59e0b] hover:from-[#ff3d95] hover:to-[#fbbf24] shadow-[0_0_22px_rgba(255,42,133,0.4)] hover:shadow-[0_0_32px_rgba(255,42,133,0.6)] transition-all"
                 >
                   <span>Read Full Story &amp; Philosophy</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
                 <Link
                   to="/experience"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium text-zinc-400 hover:text-purple-300 transition-colors"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium text-pink-200/80 hover:text-white transition-colors"
                 >
                   <span>View Career Timeline</span>
                   <ChevronRight className="w-4 h-4" />
@@ -92,22 +92,22 @@ export default function Home() {
             </div>
 
             <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-6 rounded-2xl liquid-glass-interactive">
-                <div className="w-10 h-10 rounded-xl bg-[#0c0915] text-purple-400 border border-purple-500/25 flex items-center justify-center mb-4 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
-                  <Code2 className="w-5 h-5 text-purple-300" />
+              <div className="p-6 rounded-2xl liquid-glass-interactive border-[#ff2a85]/20 hover:border-[#ff2a85]/50">
+                <div className="w-10 h-10 rounded-xl bg-[#0d0718] text-[#ff2a85] border border-[#ff2a85]/30 flex items-center justify-center mb-4 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
+                  <Code2 className="w-5 h-5 text-pink-300" />
                 </div>
                 <h3 className="text-lg font-bold text-white">Frontend Mastery</h3>
-                <p className="text-xs text-zinc-400 mt-2 leading-relaxed">
+                <p className="text-xs text-zinc-300 mt-2 leading-relaxed">
                   Fast, accessible, and responsive client applications with React 19, Next.js, and Tailwind CSS.
                 </p>
               </div>
 
-              <div className="p-6 rounded-2xl liquid-glass-interactive">
-                <div className="w-10 h-10 rounded-xl bg-[#0c0915] text-purple-400 border border-purple-500/25 flex items-center justify-center mb-4 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
-                  <Layers className="w-5 h-5 text-purple-300" />
+              <div className="p-6 rounded-2xl liquid-glass-interactive border-[#ff2a85]/20 hover:border-[#ff2a85]/50">
+                <div className="w-10 h-10 rounded-xl bg-[#0d0718] text-[#ff2a85] border border-[#ff2a85]/30 flex items-center justify-center mb-4 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
+                  <Layers className="w-5 h-5 text-pink-300" />
                 </div>
                 <h3 className="text-lg font-bold text-white">Scalable APIs</h3>
-                <p className="text-xs text-zinc-400 mt-2 leading-relaxed">
+                <p className="text-xs text-zinc-300 mt-2 leading-relaxed">
                   High-throughput REST backends &amp; WebSockets powered by Node.js, Express, and modern cloud databases.
                 </p>
               </div>
@@ -116,24 +116,24 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Projects Section - Dark Purple Glass */}
-      <section className="py-24 relative bg-transparent border-t border-purple-500/15">
+      {/* Featured Projects Section - GTA 6 Sunset Glass */}
+      <section className="py-24 relative bg-transparent border-t border-[#ff2a85]/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
             <div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full liquid-pill text-purple-200 text-xs font-mono tracking-wider uppercase mb-3">
-                Selected Work
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full liquid-pill text-pink-200 border-[#ff2a85]/30 text-xs font-mono tracking-wider uppercase mb-3">
+                🌴 Selected Work
               </div>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
                 Featured <span className="text-gradient">Projects</span>
               </h2>
-              <p className="mt-3 text-base text-zinc-400 max-w-xl font-normal">
+              <p className="mt-3 text-base text-zinc-300 max-w-xl font-normal">
                 A glimpse of full-stack products engineered for real-world impact and reliability.
               </p>
             </div>
             <Link
               to="/projects"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-md shadow-black/50 hover:shadow-lg transition-all self-start md:self-auto"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-[#ff2a85] via-[#9333ea] to-[#f59e0b] hover:from-[#ff3d95] hover:to-[#fbbf24] shadow-[0_0_22px_rgba(255,42,133,0.4)] hover:shadow-[0_0_32px_rgba(255,42,133,0.6)] transition-all self-start md:self-auto"
             >
               <span>Explore All Projects</span>
               <ArrowRight className="w-4 h-4" />
@@ -141,10 +141,10 @@ export default function Home() {
           </div>
 
           {featuredProjects.length === 0 ? (
-            <div className="py-16 text-center rounded-3xl liquid-glass">
-              <Code2 className="w-12 h-12 text-zinc-600 mx-auto mb-3" />
+            <div className="py-16 text-center rounded-3xl liquid-glass border-[#ff2a85]/20">
+              <Code2 className="w-12 h-12 text-zinc-500 mx-auto mb-3" />
               <h3 className="text-lg font-bold text-white">No projects loaded yet</h3>
-              <p className="text-sm text-zinc-500 mt-1">
+              <p className="text-sm text-zinc-400 mt-1">
                 Upload your projects to MongoDB Atlas to showcase them here!
               </p>
             </div>
@@ -153,7 +153,7 @@ export default function Home() {
               {featuredProjects.map((project) => (
                 <div
                   key={project.id || project._id}
-                  className="group flex flex-col rounded-3xl liquid-glass-interactive overflow-hidden shadow-2xl"
+                  className="group flex flex-col rounded-3xl liquid-glass-interactive border-[#ff2a85]/20 hover:border-[#ff2a85]/50 overflow-hidden shadow-[0_0_35px_rgba(255,42,133,0.12)]"
                 >
                   {/* Multi-Image Carousel Preview */}
                   <div className="relative">
@@ -165,10 +165,10 @@ export default function Home() {
                       className={featuredProjects.length === 1 ? 'h-56 sm:h-64' : 'h-48'}
                     />
                     <div className="absolute top-3 left-3 flex items-center gap-2 pointer-events-none z-10">
-                      <span className="px-3 py-1 rounded-full text-xs font-mono font-medium liquid-pill text-purple-200">
+                      <span className="px-3 py-1 rounded-full text-xs font-mono font-medium liquid-pill text-pink-200 border-[#ff2a85]/30">
                         {project.category}
                       </span>
-                      <span className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium liquid-pill text-purple-200">
+                      <span className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium liquid-pill text-pink-200 border-[#ff2a85]/30">
                         <Star className="w-3 h-3 text-amber-300 fill-amber-300" />
                         Featured
                       </span>
@@ -177,17 +177,17 @@ export default function Home() {
 
                   <div className="p-6 flex-1 flex flex-col justify-between">
                     <div>
-                      <h3 className="text-lg font-bold text-white group-hover:text-purple-200 transition-colors line-clamp-1">
+                      <h3 className="text-lg font-bold text-white group-hover:text-pink-200 transition-colors line-clamp-1">
                         {project.title}
                       </h3>
-                      <p className="mt-2 text-xs sm:text-sm text-zinc-400 line-clamp-2 leading-relaxed font-normal">
+                      <p className="mt-2 text-xs sm:text-sm text-zinc-300 line-clamp-2 leading-relaxed font-normal">
                         {project.description}
                       </p>
                       <div className="mt-4 flex flex-wrap gap-1.5">
                         {(project.tags || []).slice(0, 4).map((tag) => (
                           <span
                             key={tag}
-                            className="px-2.5 py-1 rounded-md text-[11px] font-mono font-medium bg-purple-950/40 text-purple-200 border border-purple-500/20"
+                            className="px-2.5 py-1 rounded-md text-[11px] font-mono font-medium bg-[#ff2a85]/10 text-pink-200 border border-[#ff2a85]/25"
                           >
                             {tag}
                           </span>
@@ -195,13 +195,13 @@ export default function Home() {
                       </div>
                     </div>
 
-                    <div className="mt-6 pt-4 border-t border-purple-500/20 flex items-center justify-between">
+                    <div className="mt-6 pt-4 border-t border-[#ff2a85]/20 flex items-center justify-between">
                       {project.demoUrl && project.demoUrl !== '#' && (
                         <a
                           href={project.demoUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors"
+                          className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#06b6d4] hover:text-cyan-300 transition-colors"
                         >
                           <span>Live Demo</span>
                           <ArrowUpRight className="w-3.5 h-3.5" />
@@ -228,35 +228,35 @@ export default function Home() {
       </section>
 
       {/* Skills & Architecture Teaser Banner */}
-      <section className="py-20 relative border-t border-purple-500/15 bg-[#050308]/40 backdrop-blur-sm">
+      <section className="py-20 relative border-t border-[#ff2a85]/20 bg-[#07040d]/40 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="rounded-3xl liquid-glass p-8 sm:p-12 relative overflow-hidden">
+          <div className="rounded-3xl liquid-glass border border-[#ff2a85]/25 shadow-[0_0_35px_rgba(255,42,133,0.12)] p-8 sm:p-12 relative overflow-hidden">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               <div className="lg:col-span-8">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full liquid-pill text-purple-200 text-xs font-mono font-medium uppercase mb-3">
-                  <Sparkles className="w-3.5 h-3.5 text-purple-400" />
-                  Full-Stack Architecture
+                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full liquid-pill text-pink-200 border-[#ff2a85]/30 text-xs font-mono font-medium uppercase mb-3">
+                  <Sparkles className="w-3.5 h-3.5 text-[#ff2a85]" />
+                  🌴 Full-Stack Architecture
                 </div>
                 <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
                   Engineered with Modern Technologies &amp; Clean Patterns
                 </h3>
-                <p className="mt-3 text-sm text-zinc-400 max-w-xl leading-relaxed font-normal">
+                <p className="mt-3 text-sm text-zinc-300 max-w-xl leading-relaxed font-normal">
                   Specializing in the React ecosystem, Node.js backend services, cloud databases, and scalable web solutions built for peak performance.
                 </p>
               </div>
               <div className="lg:col-span-4 flex flex-wrap gap-3 lg:justify-end">
                 <Link
                   to="/skills"
-                  className="px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-md shadow-black/50 hover:shadow-lg transition-all text-sm inline-flex items-center gap-2"
+                  className="px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-[#ff2a85] via-[#9333ea] to-[#f59e0b] hover:from-[#ff3d95] hover:to-[#fbbf24] shadow-[0_0_20px_rgba(255,42,133,0.4)] transition-all text-sm inline-flex items-center gap-2"
                 >
                   <span>Explore Skills Matrix</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
                 <Link
                   to="/certifications"
-                  className="px-5 py-3 rounded-xl font-medium text-purple-200 liquid-pill hover:bg-purple-950/40 transition-all text-sm inline-flex items-center gap-2"
+                  className="px-5 py-3 rounded-xl font-medium text-pink-200 liquid-pill border-[#ff2a85]/30 hover:border-[#ff2a85]/60 hover:text-white transition-all text-sm inline-flex items-center gap-2"
                 >
-                  <Award className="w-4 h-4 text-purple-400" />
+                  <Award className="w-4 h-4 text-[#ff2a85]" />
                   <span>Certifications</span>
                 </Link>
               </div>
@@ -266,28 +266,28 @@ export default function Home() {
       </section>
 
       {/* Final Hire Me Call To Action */}
-      <section className="py-24 relative overflow-hidden text-center bg-transparent border-t border-purple-500/15">
+      <section className="py-24 relative overflow-hidden text-center bg-transparent border-t border-[#ff2a85]/20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-pill text-purple-200 text-xs font-mono font-medium mb-4">
-            <Sparkles className="w-4 h-4 text-purple-400" />
-            Let's Collaborate
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-pill text-pink-200 border-[#ff2a85]/30 text-xs font-mono font-medium mb-4">
+            <Sparkles className="w-4 h-4 text-[#ff2a85]" />
+            🌴 Let's Collaborate
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
             Have a project in mind or looking to hire?
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-zinc-400 max-w-2xl mx-auto font-normal">
+          <p className="mt-4 text-base sm:text-lg text-zinc-300 max-w-2xl mx-auto font-normal">
             I'm currently open for full-time software engineering roles and high-impact freelance projects. Let's build something exceptional together.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <Link
               to="/contact"
-              className="px-8 py-3.5 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 hover:from-purple-500 hover:to-indigo-500 transition-all duration-300 shadow-lg shadow-black/60 text-sm sm:text-base border border-purple-400/30"
+              className="px-8 py-3.5 rounded-xl font-semibold text-white bg-gradient-to-r from-[#ff2a85] via-[#9333ea] to-[#f59e0b] hover:from-[#ff3d95] hover:to-[#fbbf24] transition-all duration-300 shadow-[0_0_28px_rgba(255,42,133,0.45)] hover:shadow-[0_0_38px_rgba(255,42,133,0.65)] text-sm sm:text-base border border-pink-300/30"
             >
               Get In Touch With Me
             </Link>
             <Link
               to="/projects"
-              className="px-8 py-3.5 rounded-xl font-medium text-purple-200 liquid-pill hover:bg-purple-950/40 hover:text-white transition-all text-sm sm:text-base"
+              className="px-8 py-3.5 rounded-xl font-medium text-pink-200 liquid-pill border-[#ff2a85]/30 hover:border-[#ff2a85]/60 hover:text-white transition-all text-sm sm:text-base"
             >
               Browse Portfolio
             </Link>

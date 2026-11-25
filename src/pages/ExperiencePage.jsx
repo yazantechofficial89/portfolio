@@ -24,7 +24,7 @@ export default function ExperiencePage() {
       particleCount: 80,
       spread: 70,
       origin: { y: 0.65 },
-      colors: ['#c084fc', '#a855f7', '#818cf8', '#ffffff'],
+      colors: ['#ff2a85', '#f59e0b', '#7c3aed', '#06b6d4', '#ffffff'],
     });
     trackResumeDownload('experience');
   };
@@ -46,9 +46,9 @@ export default function ExperiencePage() {
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-purple-300 border-purple-500/20 bg-purple-950/40 text-xs font-mono tracking-wider uppercase mb-3">
-            <Sparkles className="w-3.5 h-3.5 text-purple-400" />
-            Career Journey &amp; Academic Foundation
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-pink-200 border-[#ff2a85]/30 bg-[#ff2a85]/10 text-xs font-mono tracking-wider uppercase mb-3">
+            <Sparkles className="w-3.5 h-3.5 text-[#ff2a85]" />
+            🌴 Career Journey &amp; Academic Foundation
           </div>
           <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight">
             Work Experience &amp; <span className="text-gradient">Education</span>
@@ -64,7 +64,7 @@ export default function ExperiencePage() {
               target="_blank"
               rel="noreferrer"
               onClick={handleDownload}
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-[0_0_20px_rgba(168,85,247,0.35)] transition-all text-sm cursor-pointer"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl font-semibold text-white bg-gradient-to-r from-[#ff2a85] via-[#9333ea] to-[#f59e0b] hover:from-[#ff3d95] hover:to-[#fbbf24] shadow-[0_0_20px_rgba(168,85,247,0.35)] transition-all text-sm cursor-pointer"
             >
               <Download className="w-4 h-4" />
               <span>Download Complete Resume</span>
@@ -72,10 +72,10 @@ export default function ExperiencePage() {
 
             <Link
               to="/projects"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium text-zinc-300 liquid-pill hover:bg-purple-950/40 hover:text-white transition-all text-sm"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium text-zinc-300 liquid-pill hover:bg-[#ff2a85]/10 hover:text-white transition-all text-sm"
             >
               <span>Explore Projects</span>
-              <ArrowRight className="w-4 h-4 text-purple-400" />
+              <ArrowRight className="w-4 h-4 text-[#ff2a85]" />
             </Link>
           </div>
         </div>
@@ -83,8 +83,8 @@ export default function ExperiencePage() {
         {/* 3 Metric Cards - Liquid Glass */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
           <div className="p-6 rounded-2xl liquid-glass-interactive">
-            <div className="w-10 h-10 rounded-xl bg-purple-950/50 border border-purple-500/25 flex items-center justify-center text-purple-300 mb-3 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
-              <Clock className="w-5 h-5 text-purple-300" />
+            <div className="w-10 h-10 rounded-xl bg-[#0d0718] border border-[#ff2a85]/25 flex items-center justify-center text-pink-200 mb-3 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
+              <Clock className="w-5 h-5 text-pink-200" />
             </div>
             <div className="text-2xl font-extrabold text-white text-gradient">1 Year</div>
             <div className="text-xs font-medium text-zinc-300 font-mono mt-0.5">Hands-on MERN Experience</div>
@@ -94,8 +94,8 @@ export default function ExperiencePage() {
           </div>
 
           <div className="p-6 rounded-2xl liquid-glass-interactive">
-            <div className="w-10 h-10 rounded-xl bg-purple-950/50 border border-purple-500/25 flex items-center justify-center text-purple-300 mb-3 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
-              <GraduationCap className="w-5 h-5 text-purple-300" />
+            <div className="w-10 h-10 rounded-xl bg-[#0d0718] border border-[#ff2a85]/25 flex items-center justify-center text-pink-200 mb-3 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
+              <GraduationCap className="w-5 h-5 text-pink-200" />
             </div>
             <div className="text-2xl font-extrabold text-white text-gradient">2024–2028</div>
             <div className="text-xs font-medium text-zinc-300 font-mono mt-0.5">B.Tech in Computer Science</div>
@@ -105,8 +105,8 @@ export default function ExperiencePage() {
           </div>
 
           <div className="p-6 rounded-2xl liquid-glass-interactive">
-            <div className="w-10 h-10 rounded-xl bg-purple-950/50 border border-purple-500/25 flex items-center justify-center text-purple-300 mb-3 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
-              <Layers className="w-5 h-5 text-purple-300" />
+            <div className="w-10 h-10 rounded-xl bg-[#0d0718] border border-[#ff2a85]/25 flex items-center justify-center text-pink-200 mb-3 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
+              <Layers className="w-5 h-5 text-pink-200" />
             </div>
             <div className="text-2xl font-extrabold text-white text-gradient">SevaSetu</div>
             <div className="text-xs font-medium text-zinc-300 font-mono mt-0.5">Live Production MERN App</div>
@@ -117,15 +117,15 @@ export default function ExperiencePage() {
         </div>
 
         {/* Timeline */}
-        <div className="relative pl-6 sm:pl-10 border-l border-purple-500/20 space-y-12">
+        <div className="relative pl-6 sm:pl-10 border-l border-[#ff2a85]/20 space-y-12">
           {experienceData.map((exp, idx) => {
             const IconComp = getTimelineIcon(exp.role);
 
             return (
               <div key={idx} className="relative group">
                 {/* Timeline Marker - Purple Obsidian Glass Node */}
-                <div className="absolute -left-[31px] sm:-left-[47px] top-1.5 w-8 h-8 rounded-full bg-[#090611] border-2 border-purple-500 flex items-center justify-center text-purple-300 shadow-[0_0_15px_rgba(168,85,247,0.35)] group-hover:scale-110 group-hover:border-purple-400 transition-all">
-                  <IconComp className="w-4 h-4 text-purple-300" />
+                <div className="absolute -left-[31px] sm:-left-[47px] top-1.5 w-8 h-8 rounded-full bg-[#090611] border-2 border-purple-500 flex items-center justify-center text-pink-200 shadow-[0_0_18px_rgba(255,42,133,0.45)] group-hover:scale-110 group-hover:border-purple-400 transition-all">
+                  <IconComp className="w-4 h-4 text-pink-200" />
                 </div>
 
                 {/* Card Container - Liquid Glass */}
@@ -133,19 +133,19 @@ export default function ExperiencePage() {
                   
                   {/* Top Bar: Period & Type */}
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-                    <span className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-purple-200 liquid-pill px-3 py-1 rounded-full">
-                      <Calendar className="w-3.5 h-3.5 text-purple-400" />
+                    <span className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-pink-100 liquid-pill px-3 py-1 rounded-full">
+                      <Calendar className="w-3.5 h-3.5 text-[#ff2a85]" />
                       {exp.period}
                     </span>
                     {exp.type && (
-                      <span className="text-[11px] font-mono font-medium px-2.5 py-1 rounded-full liquid-pill text-purple-300">
+                      <span className="text-[11px] font-mono font-medium px-2.5 py-1 rounded-full liquid-pill text-pink-200">
                         {exp.type}
                       </span>
                     )}
                   </div>
 
                   {/* Role & Company */}
-                  <h3 className="text-xl sm:text-2xl font-bold text-white group-hover:text-purple-300 transition-colors">
+                  <h3 className="text-xl sm:text-2xl font-bold text-white group-hover:text-pink-200 transition-colors">
                     {exp.role}
                   </h3>
 
@@ -161,8 +161,8 @@ export default function ExperiencePage() {
 
                   {/* Key Highlights */}
                   {exp.highlights && exp.highlights.length > 0 && (
-                    <div className="mt-5 pt-4 border-t border-purple-500/10 space-y-2.5">
-                      <span className="text-xs font-mono uppercase tracking-wider text-purple-400 font-semibold block mb-1">
+                    <div className="mt-5 pt-4 border-t border-[#ff2a85]/10 space-y-2.5">
+                      <span className="text-xs font-mono uppercase tracking-wider text-[#ff2a85] font-semibold block mb-1">
                         Key Responsibilities &amp; Milestones:
                       </span>
                       {exp.highlights.map((highlight, hIdx) => (
@@ -176,12 +176,12 @@ export default function ExperiencePage() {
 
                   {/* Skills tags */}
                   {exp.skills && exp.skills.length > 0 && (
-                    <div className="mt-5 pt-4 border-t border-purple-500/10 flex flex-wrap gap-2 items-center">
+                    <div className="mt-5 pt-4 border-t border-[#ff2a85]/10 flex flex-wrap gap-2 items-center">
                       <span className="text-xs font-mono text-zinc-500 mr-1">Skills:</span>
                       {exp.skills.map((skill, sIdx) => (
                         <span
                           key={sIdx}
-                          className="px-2.5 py-1 rounded-md text-xs font-mono font-medium bg-purple-950/40 text-purple-200 border border-purple-500/20"
+                          className="px-2.5 py-1 rounded-md text-xs font-mono font-medium bg-[#ff2a85]/10 text-pink-100 border border-[#ff2a85]/20"
                         >
                           {skill}
                         </span>
@@ -191,13 +191,13 @@ export default function ExperiencePage() {
 
                   {/* Action Link (if applicable) */}
                   {exp.link && (
-                    <div className="mt-5 pt-4 border-t border-purple-500/10 flex justify-end">
+                    <div className="mt-5 pt-4 border-t border-[#ff2a85]/10 flex justify-end">
                       {exp.link.startsWith('http') ? (
                         <a
                           href={exp.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-semibold text-xs shadow-md shadow-purple-950/50 transition-colors"
+                          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#ff2a85] via-[#9333ea] to-[#f59e0b] hover:from-[#ff3d95] hover:to-[#fbbf24] text-white font-semibold text-xs shadow-md shadow-purple-950/50 transition-colors"
                         >
                           <span>{exp.linkText || 'View Details'}</span>
                           <ExternalLink className="w-3.5 h-3.5" />
@@ -205,10 +205,10 @@ export default function ExperiencePage() {
                       ) : (
                         <Link
                           to={exp.link}
-                          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl liquid-pill hover:bg-purple-950/40 text-zinc-200 text-xs font-semibold transition-colors"
+                          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl liquid-pill hover:bg-[#ff2a85]/10 text-zinc-200 text-xs font-semibold transition-colors"
                         >
                           <span>{exp.linkText || 'View Details'}</span>
-                          <ArrowRight className="w-3.5 h-3.5 text-purple-400" />
+                          <ArrowRight className="w-3.5 h-3.5 text-[#ff2a85]" />
                         </Link>
                       )}
                     </div>
@@ -233,13 +233,13 @@ export default function ExperiencePage() {
           <div className="flex flex-wrap items-center gap-3">
             <Link
               to="/projects"
-              className="px-5 py-2.5 rounded-xl liquid-pill text-zinc-300 hover:text-white text-xs font-semibold hover:bg-purple-950/40 transition-all"
+              className="px-5 py-2.5 rounded-xl liquid-pill text-zinc-300 hover:text-white text-xs font-semibold hover:bg-[#ff2a85]/10 transition-all"
             >
               Explore Projects
             </Link>
             <Link
               to="/contact"
-              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-semibold shadow-lg shadow-purple-950/50 transition-all flex items-center gap-1.5"
+              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#ff2a85] via-[#9333ea] to-[#f59e0b] hover:from-[#ff3d95] hover:to-[#fbbf24] text-white text-xs font-semibold shadow-lg shadow-purple-950/50 transition-all flex items-center gap-1.5"
             >
               <span>Get in Touch</span>
               <ArrowRight className="w-3.5 h-3.5" />

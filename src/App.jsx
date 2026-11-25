@@ -23,7 +23,7 @@ const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 function RouteLoader() {
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="w-8 h-8 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+      <div className="w-8 h-8 border-2 border-pink-500/40 border-t-[#ff2a85] rounded-full animate-spin" />
     </div>
   );
 }
@@ -33,8 +33,8 @@ export default function App() {
     <BrowserRouter>
       <ScrollToTop />
       <VisitorTracker />
-      <div className="min-h-screen bg-[#050308] text-zinc-100 selection:bg-purple-600/30 selection:text-purple-200 flex flex-col justify-between relative overflow-hidden">
-        {/* Living Cosmic Starfield & Meteors */}
+      <div className="min-h-screen bg-[#07040d] text-zinc-100 selection:bg-[#ff2a85]/35 selection:text-pink-100 flex flex-col justify-between relative overflow-hidden">
+        {/* GTA 6 Vice City Dusk Starfield & Neon Meteors */}
         <Starfield />
 
         <Navbar />

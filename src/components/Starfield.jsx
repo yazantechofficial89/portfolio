@@ -49,13 +49,15 @@ export default function Starfield() {
     const starPalette = [
       '#ffffff',
       '#ffffff',
-      '#f5f3ff', // stellar white
-      '#e9d5ff', // pale purple
-      '#d8b4fe', // light violet
-      '#c084fc', // cosmic purple
-      '#818cf8', // celestial indigo
-      '#38bdf8', // cyan starlight
-      '#f472b6', // nebula pink
+      '#fff1f2', // warm stellar white
+      '#fce7f3', // pale flamingo
+      '#f472b6', // neon pink
+      '#ff2a85', // Vice City signature flamingo pink
+      '#fb923c', // miami sunset orange
+      '#f59e0b', // miami golden amber
+      '#c084fc', // dusk purple
+      '#38bdf8', // starlight cyan
+      '#06b6d4', // biscayne ocean turquoise
     ];
 
     const initScene = () => {
@@ -117,23 +119,31 @@ export default function Starfield() {
         spikeLength: Math.random() * 6 + 5,
       }));
 
-      // Floating nebulae gas clouds (Subtle, low glow)
+      // Floating nebulae gas clouds (GTA 6 Vice City Sunset Dusk Mesh)
       nebulae = [
         {
           x: width * 0.25,
-          y: height * 0.3,
-          radius: Math.min(width, height) * 0.35,
-          color: 'rgba(147, 51, 234, 0.018)',
+          y: height * 0.25,
+          radius: Math.min(width, height) * 0.42,
+          color: 'rgba(255, 42, 133, 0.035)', // Vice City Flamingo Pink dusk glow
           driftX: 0.015,
           driftY: 0.01,
         },
         {
-          x: width * 0.78,
-          y: height * 0.6,
-          radius: Math.min(width, height) * 0.32,
-          color: 'rgba(99, 102, 241, 0.015)',
-          driftX: -0.01,
+          x: width * 0.8,
+          y: height * 0.55,
+          radius: Math.min(width, height) * 0.38,
+          color: 'rgba(245, 158, 11, 0.025)', // Miami Sunset Amber glow
+          driftX: -0.012,
           driftY: 0.01,
+        },
+        {
+          x: width * 0.5,
+          y: height * 0.85,
+          radius: Math.min(width, height) * 0.35,
+          color: 'rgba(124, 58, 237, 0.028)', // Dusk Purple
+          driftX: 0.008,
+          driftY: -0.01,
         },
       ];
     };
@@ -157,18 +167,19 @@ export default function Starfield() {
         const startY = Math.random() * (height * 0.45);
         const angle = Math.PI / 4 + (Math.random() * 0.26 - 0.13); // ~45 degrees downward
         const speed = Math.random() * 11 + 9;
-        const isFireball = Math.random() < 0.3;
+        const isFireball = Math.random() < 0.35;
+        const meteorColor = Math.random() < 0.5 ? '#ff2a85' : '#06b6d4';
 
         meteors.push({
           x: startX,
           y: startY,
-          length: isFireball ? Math.random() * 130 + 90 : Math.random() * 85 + 50,
+          length: isFireball ? Math.random() * 140 + 90 : Math.random() * 85 + 50,
           speed: speed,
           angle: angle,
           alpha: 1,
-          decay: isFireball ? 0.013 : 0.018,
-          lineWidth: isFireball ? 2.4 : 1.7,
-          color: isFireball ? '#38bdf8' : '#c084fc',
+          decay: isFireball ? 0.012 : 0.017,
+          lineWidth: isFireball ? 2.5 : 1.8,
+          color: meteorColor,
         });
       }
     };
@@ -313,11 +324,11 @@ export default function Starfield() {
         const endX = m.x - Math.cos(m.angle) * m.length;
         const endY = m.y - Math.sin(m.angle) * m.length;
 
-        // Radiant comet tail gradient
+        // Radiant Vice City comet tail gradient
         const grad = ctx.createLinearGradient(m.x, m.y, endX, endY);
         grad.addColorStop(0, `rgba(255, 255, 255, ${m.alpha})`);
-        grad.addColorStop(0.2, m.color === '#38bdf8' ? `rgba(56, 189, 248, ${m.alpha * 0.95})` : `rgba(192, 132, 252, ${m.alpha * 0.95})`);
-        grad.addColorStop(0.6, `rgba(147, 51, 234, ${m.alpha * 0.4})`);
+        grad.addColorStop(0.2, m.color === '#ff2a85' ? `rgba(255, 42, 133, ${m.alpha * 0.95})` : `rgba(6, 182, 212, ${m.alpha * 0.95})`);
+        grad.addColorStop(0.65, m.color === '#ff2a85' ? `rgba(245, 158, 11, ${m.alpha * 0.5})` : `rgba(124, 58, 237, ${m.alpha * 0.5})`);
         grad.addColorStop(1, 'transparent');
 
         // Draw meteor streak

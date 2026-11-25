@@ -58,25 +58,25 @@ export default function ProjectImageCarousel({
 
       {/* Fallback Display if image is unavailable */}
       <div className="carousel-fallback hidden w-full h-full flex-col items-center justify-center p-4 bg-gradient-to-br from-[#120726] via-[#1a0c36] to-[#090611] text-center">
-        <Code2 className="w-10 h-10 text-purple-400 mb-2 opacity-80" />
+        <Code2 className="w-10 h-10 text-[#ff2a85] mb-2 opacity-80" />
         <span className="text-sm font-bold text-white line-clamp-1 px-2">{title}</span>
-        <span className="text-xs text-purple-300 font-mono mt-1">{category}</span>
+        <span className="text-xs text-pink-300 font-mono mt-1">{category}</span>
       </div>
 
       {/* Gradient Overlay for Text Readability */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#050308]/90 via-black/20 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#07040d]/90 via-black/20 to-transparent pointer-events-none" />
 
       {/* Multiple Images Indicator Badge */}
       {hasMultiple && (
-        <div className="absolute bottom-3 right-3 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-mono font-semibold liquid-pill text-purple-200 border border-purple-500/30 bg-[#090611]/80 backdrop-blur-md">
-          <Images className="w-3.5 h-3.5 text-purple-400" />
+        <div className="absolute bottom-3 right-3 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-mono font-semibold liquid-pill text-pink-200 border border-[#ff2a85]/35 bg-[#0d0718]/80 backdrop-blur-md">
+          <Images className="w-3.5 h-3.5 text-[#ff2a85]" />
           <span>{currentIndex + 1} / {allImages.length}</span>
         </div>
       )}
 
       {/* Full Screen Zoom Button Hint */}
       {onOpenGallery && (
-        <div className="absolute top-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-xl liquid-pill text-zinc-300 hover:text-white bg-[#090611]/80 backdrop-blur-md">
+        <div className="absolute top-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-xl liquid-pill text-zinc-300 hover:text-white bg-[#0d0718]/80 backdrop-blur-md border-[#ff2a85]/25">
           <Maximize2 className="w-3.5 h-3.5" />
         </div>
       )}
@@ -87,14 +87,14 @@ export default function ProjectImageCarousel({
           <button
             onClick={handlePrev}
             aria-label="Previous screenshot"
-            className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-black/60 hover:bg-purple-900/80 border border-purple-500/30 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all backdrop-blur-md cursor-pointer hover:scale-110"
+            className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-black/60 hover:bg-[#ff2a85]/80 border border-[#ff2a85]/40 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all backdrop-blur-md cursor-pointer hover:scale-110"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
           <button
             onClick={handleNext}
             aria-label="Next screenshot"
-            className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-black/60 hover:bg-purple-900/80 border border-purple-500/30 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all backdrop-blur-md cursor-pointer hover:scale-110"
+            className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-black/60 hover:bg-[#ff2a85]/80 border border-[#ff2a85]/40 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all backdrop-blur-md cursor-pointer hover:scale-110"
           >
             <ChevronRight className="w-4 h-4" />
           </button>
@@ -110,7 +110,7 @@ export default function ProjectImageCarousel({
               onClick={(e) => handleDotClick(e, idx)}
               className={`h-1.5 rounded-full transition-all cursor-pointer ${
                 currentIndex === idx
-                  ? 'w-4 bg-purple-400 shadow-[0_0_8px_rgba(168,85,247,0.8)]'
+                  ? 'w-4 bg-[#ff2a85] shadow-[0_0_8px_rgba(255,42,133,0.9)]'
                   : 'w-1.5 bg-white/40 hover:bg-white/70'
               }`}
               aria-label={`Jump to screenshot ${idx + 1}`}

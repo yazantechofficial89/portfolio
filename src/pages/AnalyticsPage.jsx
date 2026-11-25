@@ -65,8 +65,8 @@ export default function AnalyticsPage() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10 pb-6 border-b border-white/10">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium text-purple-300 bg-purple-500/10 border border-purple-500/20 mb-3">
-            <Activity className="w-3.5 h-3.5 text-purple-400 animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium text-pink-200 bg-[#ff2a85]/10 border border-[#ff2a85]/30 mb-3">
+            <Activity className="w-3.5 h-3.5 text-[#ff2a85] animate-pulse" />
             <span>Real-Time Visitor Telemetry</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
@@ -82,7 +82,7 @@ export default function AnalyticsPage() {
           disabled={isLoading}
           className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-medium text-xs font-mono text-zinc-200 bg-white/5 hover:bg-white/10 border border-white/10 transition-all self-start sm:self-auto cursor-pointer"
         >
-          <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin text-purple-400' : ''}`} />
+          <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin text-[#ff2a85]' : ''}`} />
           <span>Refresh</span>
           <span className="text-zinc-500 text-[11px] ml-1">
             ({lastRefreshed.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })})
@@ -96,11 +96,11 @@ export default function AnalyticsPage() {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="relative p-6 rounded-2xl bg-gradient-to-b from-purple-900/20 to-black/40 border border-purple-500/20 shadow-xl overflow-hidden"
+          className="relative p-6 rounded-2xl bg-gradient-to-b from-[#ff2a85]/20 to-black/40 border border-[#ff2a85]/30 shadow-xl overflow-hidden"
         >
-          <div className="flex items-center justify-between text-purple-300 mb-3">
+          <div className="flex items-center justify-between text-pink-200 mb-3">
             <span className="text-xs font-mono uppercase tracking-wider">Total Page Views</span>
-            <Eye className="w-5 h-5 text-purple-400" />
+            <Eye className="w-5 h-5 text-[#ff2a85]" />
           </div>
           <div className="text-4xl font-black text-white tracking-tight">
             {isLoading && !data ? '...' : stats.totalVisits.toLocaleString()}
@@ -115,7 +115,7 @@ export default function AnalyticsPage() {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.1 }}
-          className="relative p-6 rounded-2xl bg-gradient-to-b from-indigo-900/20 to-black/40 border border-indigo-500/20 shadow-xl overflow-hidden"
+          className="relative p-6 rounded-2xl bg-gradient-to-b from-[#9333ea]/20 to-black/40 border border-[#ff2a85]/30 shadow-xl overflow-hidden"
         >
           <div className="flex items-center justify-between text-indigo-300 mb-3">
             <span className="text-xs font-mono uppercase tracking-wider">Unique Visitors</span>
@@ -156,7 +156,7 @@ export default function AnalyticsPage() {
         <div className="p-6 rounded-2xl bg-black/40 border border-white/10 shadow-xl backdrop-blur-md">
           <div className="flex items-center justify-between mb-5">
             <div className="flex items-center gap-2">
-              <Compass className="w-4 h-4 text-purple-400" />
+              <Compass className="w-4 h-4 text-[#ff2a85]" />
               <h2 className="text-base font-bold text-white">Top Referral Links & Sources</h2>
             </div>
             <span className="text-xs font-mono text-zinc-400">Where visitors come from</span>
@@ -172,7 +172,7 @@ export default function AnalyticsPage() {
                 return (
                   <div key={idx} className="group">
                     <div className="flex items-center justify-between text-xs mb-1">
-                      <span className="font-medium text-zinc-200 group-hover:text-purple-300 transition-colors">
+                      <span className="font-medium text-zinc-200 group-hover:text-pink-200 transition-colors">
                         {item.source}
                       </span>
                       <span className="font-mono text-zinc-400">
@@ -216,7 +216,7 @@ export default function AnalyticsPage() {
                       key={idx}
                       className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-zinc-200"
                     >
-                      <span className="text-purple-400 font-semibold">{p.path}</span>
+                      <span className="text-[#ff2a85] font-semibold">{p.path}</span>
                       <span className="text-zinc-500">({p.count})</span>
                     </div>
                   ))
@@ -291,7 +291,7 @@ export default function AnalyticsPage() {
                       <td className="py-3 px-3 text-zinc-400 whitespace-nowrap">
                         {timeFormatted}
                       </td>
-                      <td className="py-3 px-3 whitespace-nowrap font-medium text-purple-300">
+                      <td className="py-3 px-3 whitespace-nowrap font-medium text-pink-200">
                         {v.source}
                       </td>
                       <td className="py-3 px-3 whitespace-nowrap font-semibold text-white">
