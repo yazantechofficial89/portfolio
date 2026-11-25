@@ -10,15 +10,6 @@
       ]
     },
     {
-      "source": "/(.*\\.(?:ico|png|jpg|jpeg|svg|webp|avif|woff2|woff|ttf|pdf|webmanifest))",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=86400, s-maxage=31536000, stale-while-revalidate=604800"
-        }
-      ]
-    },
-    {
       "source": "/(.*)",
       "headers": [
         {
@@ -53,7 +44,9 @@
     }
   ],
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/$1" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }

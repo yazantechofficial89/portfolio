@@ -7,7 +7,7 @@ import {
   Copy,
   Sparkles
 } from 'lucide-react';
-import { Github, Linkedin, Twitter, WhatsApp } from './Icons';
+import { Github, Linkedin, Twitter, WhatsApp, Instagram } from './Icons';
 import { personalData } from '../data/portfolioData';
 
 export default function Contact() {
