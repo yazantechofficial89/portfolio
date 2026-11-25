@@ -10,7 +10,7 @@
       ]
     },
     {
-      "source": "/(.*\\.(jpg|jpeg|png|webp|svg|ico|pdf|woff|woff2|webmanifest))",
+      "source": "/(.*\\.(?:ico|png|jpg|jpeg|svg|webp|avif|woff2|woff|ttf|pdf|webmanifest))",
       "headers": [
         {
           "key": "Cache-Control",
@@ -54,6 +54,6 @@
   ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
