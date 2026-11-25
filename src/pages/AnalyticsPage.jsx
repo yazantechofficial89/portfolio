@@ -16,6 +16,7 @@ import {
   Shield,
   Activity
 } from 'lucide-react';
+import PageBackground from '../components/PageBackground';
 
 export default function AnalyticsPage() {
   const [data, setData] = useState(null);
@@ -61,8 +62,14 @@ export default function AnalyticsPage() {
   };
 
   return (
-    <div className="min-h-screen pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-zinc-100">
-      {/* Page Header */}
+    <div className="min-h-screen pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-zinc-100 relative">
+      <PageBackground
+        image="/images/gta/gta6-skyline-twilight.jpg"
+        alt="GTA 6 Skyline Analytics"
+        opacity="opacity-30 sm:opacity-35"
+      />
+      <div className="relative z-10">
+        {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10 pb-6 border-b border-white/10">
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium text-pink-200 bg-[#ff2a85]/10 border border-[#ff2a85]/30 mb-3">
@@ -310,6 +317,7 @@ export default function AnalyticsPage() {
             </table>
           </div>
         )}
+      </div>
       </div>
     </div>
   );

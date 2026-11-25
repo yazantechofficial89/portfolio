@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { personalData, faqsData } from '../data/portfolioData';
 import { Github, Linkedin, WhatsApp, Instagram } from '../components/Icons';
+import PageBackground from '../components/PageBackground';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -125,7 +126,12 @@ export default function ContactPage() {
 
   return (
     <div className="pt-28 pb-20 bg-transparent text-zinc-100 min-h-screen relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <PageBackground
+        image="/images/gta/gta6-retro-supercar.jpg"
+        alt="GTA 6 Retro Supercar"
+        opacity="opacity-30 sm:opacity-35"
+      />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-pill text-pink-200 border-[#ff2a85]/30 bg-[#ff2a85]/10 text-xs font-mono tracking-wider uppercase mb-3">

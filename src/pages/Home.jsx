@@ -14,6 +14,7 @@ import Hero from '../components/Hero';
 import { personalData, projectsData } from '../data/portfolioData';
 import { Github } from '../components/Icons';
 import ProjectImageCarousel from '../components/ProjectImageCarousel';
+import PageBackground from '../components/PageBackground';
 
 export default function Home() {
   const [projects, setProjects] = useState(() => {
@@ -54,7 +55,13 @@ export default function Home() {
   const featuredProjects = projects.filter((p) => p.featured !== false).slice(0, 3);
 
   return (
-    <div className="bg-transparent text-zinc-100">
+    <div className="bg-transparent text-zinc-100 relative">
+      <PageBackground
+        image="/images/gta/gta6-sunset-highway.jpg"
+        alt="GTA 6 Sunset Highway"
+        opacity="opacity-30 sm:opacity-35"
+      />
+
       {/* Hero Section */}
       <Hero />
 

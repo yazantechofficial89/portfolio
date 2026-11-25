@@ -13,6 +13,7 @@ import {
 import { Github } from '../components/Icons';
 import ProjectImageCarousel from '../components/ProjectImageCarousel';
 import { projectsData } from '../data/portfolioData';
+import PageBackground from '../components/PageBackground';
 
 const PROJECTS_CACHE_KEY = 'yazan_live_projects';
 
@@ -86,7 +87,12 @@ export default function ProjectsPage() {
 
   return (
     <div className="pt-28 pb-20 bg-transparent text-zinc-100 min-h-screen relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <PageBackground
+        image="/images/gta/gta6-duo-car.jpg"
+        alt="GTA 6 Lucia and Jason"
+        opacity="opacity-30 sm:opacity-35"
+      />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="max-w-3xl">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full liquid-pill text-pink-200 border-[#ff2a85]/30 text-xs font-mono tracking-wider uppercase mb-3">

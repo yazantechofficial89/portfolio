@@ -13,6 +13,7 @@ import {
   Star,
   X
 } from 'lucide-react';
+import PageBackground from '../components/PageBackground';
 
 const CACHE_KEY = 'yazan_live_certificates';
 
@@ -94,7 +95,12 @@ export default function CertificationsPage() {
 
   return (
     <div className="pt-28 pb-20 bg-transparent text-zinc-100 min-h-screen relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <PageBackground
+        image="/images/gta/gta6-sunset-highway.jpg"
+        alt="GTA 6 Horizon"
+        opacity="opacity-30 sm:opacity-35"
+      />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">

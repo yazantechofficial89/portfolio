@@ -1,11 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Home } from 'lucide-react';
+import PageBackground from '../components/PageBackground';
 
 export default function NotFoundPage() {
   return (
     <div className="min-h-[75vh] flex items-center justify-center pt-28 pb-20 px-4 text-center bg-transparent text-zinc-100 relative overflow-hidden">
-      <div className="max-w-md mx-auto p-8 rounded-3xl liquid-glass border-[#ff2a85]/25 shadow-[0_0_40px_rgba(255,42,133,0.18)]">
+      <PageBackground
+        image="/images/gta/gta6-sunset-highway.jpg"
+        alt="GTA 6 Sunset Background"
+        opacity="opacity-30 sm:opacity-35"
+      />
+      <div className="max-w-md mx-auto p-8 rounded-3xl liquid-glass border-[#ff2a85]/25 shadow-[0_0_40px_rgba(255,42,133,0.18)] relative z-10">
         <span className="text-7xl font-black text-gradient block mb-4">404</span>
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Page Not Found</h1>
         <p className="text-sm text-zinc-300 mb-8 font-normal">

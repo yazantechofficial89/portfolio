@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { experienceData, personalData } from '../data/portfolioData';
 import { trackResumeDownload } from '../utils/trackResumeDownload';
+import PageBackground from '../components/PageBackground';
 
 export default function ExperiencePage() {
   const handleDownload = () => {
@@ -42,7 +43,12 @@ export default function ExperiencePage() {
 
   return (
     <div className="pt-28 pb-24 relative overflow-hidden bg-transparent text-zinc-100 min-h-screen">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+      <PageBackground
+        image="/images/gta/gta6-retro-supercar.jpg"
+        alt="GTA 6 Retro Supercar"
+        opacity="opacity-30 sm:opacity-35"
+      />
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 relative z-10">
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto">
