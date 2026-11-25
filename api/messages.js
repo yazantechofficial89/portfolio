@@ -1,5 +1,5 @@
-import dbConnect from './lib/dbConnect.js';
-import Contact from './models/Contact.js';
+import dbConnect from './_lib/dbConnect.js';
+import Contact from './_models/Contact.js';
 
 export default async function handler(req, res) {
   // CORS configuration

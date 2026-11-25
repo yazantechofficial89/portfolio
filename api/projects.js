@@ -1,5 +1,5 @@
-import dbConnect from './lib/dbConnect.js';
-import Project from './models/Project.js';
+import dbConnect from './_lib/dbConnect.js';
+import Project from './_models/Project.js';
 
 const DEFAULT_PROJECTS = [
   {

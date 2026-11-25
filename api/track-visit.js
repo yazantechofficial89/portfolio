@@ -1,5 +1,5 @@
-import dbConnect from './lib/dbConnect.js';
-import Visitor from './models/Visitor.js';
+import dbConnect from './_lib/dbConnect.js';
+import Visitor from './_models/Visitor.js';
 
 function parseUserAgent(ua = '') {
   const lower = ua.toLowerCase();

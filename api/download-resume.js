@@ -1,5 +1,5 @@
-import dbConnect from './lib/dbConnect.js';
-import ResumeDownload from './models/ResumeDownload.js';
+import dbConnect from './_lib/dbConnect.js';
+import ResumeDownload from './_models/ResumeDownload.js';
 
 export default async function handler(req, res) {
   // CORS configuration

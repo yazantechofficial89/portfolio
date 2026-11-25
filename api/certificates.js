@@ -1,5 +1,5 @@
-import dbConnect from './lib/dbConnect.js';
-import Certificate from './models/Certificate.js';
+import dbConnect from './_lib/dbConnect.js';
+import Certificate from './_models/Certificate.js';
 
 export default async function handler(req, res) {
   // CORS configuration
