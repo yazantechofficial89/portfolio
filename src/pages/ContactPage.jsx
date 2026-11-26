@@ -301,16 +301,7 @@ export default function ContactPage() {
           {/* Right Column: Direct Dispatch Form - Liquid Glass */}
           <div className="lg:col-span-7">
             <div className="p-8 sm:p-10 rounded-3xl liquid-glass">
-              <div className="flex items-center justify-between mb-2">
-                <h2 className="text-xl font-bold text-white">Send an Enquiry</h2>
-                <span className="text-xs font-mono text-emerald-400 liquid-pill px-2.5 py-1 rounded-full flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  Direct to Inbox
-                </span>
-              </div>
-              <p className="text-sm text-zinc-400 mb-6 font-normal">
-                Fill out the form below. Submissions reach <strong className="text-pink-200 font-mono">{personalData.email}</strong>.
-              </p>
+              <h2 className="text-xl font-bold text-white mb-6">Send an Enquiry</h2>
 
               {submitted ? (
                 <div className="p-8 text-center rounded-2xl bg-[#0d0718]/70 border border-[#ff2a85]/20 text-zinc-200">
