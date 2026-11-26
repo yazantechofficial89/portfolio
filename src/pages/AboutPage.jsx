@@ -459,7 +459,7 @@ export default function AboutPage() {
 
             {/* Email */}
             <a
-              href="mailto:yazangupta39@gmail.com"
+              href="mailto:yazangupta89.fullstack@gmail.com"
               className="p-5 rounded-2xl liquid-glass-interactive group flex items-center gap-3.5"
             >
               <div className="w-10 h-10 rounded-xl bg-[#0d0718] border border-[#ff2a85]/25 flex items-center justify-center text-pink-200 group-hover:scale-105 transition-transform shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]">
@@ -468,7 +468,7 @@ export default function AboutPage() {
               <div className="overflow-hidden">
                 <span className="text-[11px] font-mono text-zinc-500 block">Direct Email</span>
                 <span className="text-sm font-bold text-white group-hover:text-pink-200 transition-colors truncate block">
-                  yazangupta39@gmail.com
+                  yazangupta89.fullstack@gmail.com
                 </span>
               </div>
             </a>

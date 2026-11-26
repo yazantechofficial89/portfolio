@@ -90,7 +90,7 @@ npm run build
 - 🌐 Portfolio: [yazangupta.online](https://www.yazangupta.online)
 - 🐙 GitHub: [@yazantechofficial89](https://github.com/yazantechofficial89)
 - 💼 LinkedIn: [Yazan Gupta](https://www.linkedin.com/in/yazan-gupta-939b46281)
-- 📧 Email: [yazangupta39@gmail.com](mailto:yazangupta39@gmail.com)
+- 📧 Email: [yazangupta89.fullstack@gmail.com](mailto:yazangupta89.fullstack@gmail.com)
 - 📱 WhatsApp: [+91 7011906923](https://wa.me/917011906923)
 
 ---

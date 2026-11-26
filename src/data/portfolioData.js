@@ -4,7 +4,7 @@ export const personalData = {
   tagline: "Computer Science & Data Science student at Echelon Institute of Technology (2024–2028) & Full-Stack MERN Developer.",
   status: "Available for new opportunities",
   location: "Faridabad, Haryana | Remote Worldwide",
-  email: "yazangupta39@gmail.com",
+  email: "yazangupta89.fullstack@gmail.com",
   phone: "+91 7011906923",
   resumeUrl: "/Yazan_Gupta_Resume.pdf",
   bio: `I’m a Computer Science & Data Science student at Echelon Institute of Technology, pursuing a B.Tech from 2024 to 2028. I’m passionate about full-stack web development and data science, building responsive, user-friendly applications with practical impact.`,
@@ -48,7 +48,7 @@ I enjoy learning by building projects, exploring new technologies, and solving c
     linkedin: "https://www.linkedin.com/in/yazan-gupta-939b46281?utm_source=share_via&utm_content=profile&utm_medium=member_android",
     instagram: "https://www.instagram.com/yazan2006.tech?psln=YWtkcTM2amVtZnVr",
     whatsapp: "https://wa.me/917011906923",
-    email: "mailto:yazangupta39@gmail.com",
+    email: "mailto:yazangupta89.fullstack@gmail.com",
   },
 };
 
