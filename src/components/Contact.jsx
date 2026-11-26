@@ -422,10 +422,6 @@ export default function Contact() {
                       <span>Send via WhatsApp</span>
                     </a>
                   </div>
-
-                  <p className="text-[11px] text-center text-zinc-400 pt-1">
-                    Direct delivery guaranteed &bull; Delivers straight to <strong className="text-pink-300 font-mono">{personalData.email}</strong> &amp; WhatsApp
-                  </p>
                 </form>
               )}
             </div>
